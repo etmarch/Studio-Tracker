@@ -40,3 +40,7 @@ FlowRouter.route('/expenses', {
     Utils.cl("Expenses Listing - "+JSON.stringify(params));
   }
 });
+
+let renderLayoutWith = (component) => {
+
+};

@@ -1,5 +1,5 @@
 
-// Subscribe to Contracts
+// Subscribe to Contracts ToDo: Place these in better area
 Meteor.subscribe("allContracts");
 Meteor.subscribe("allUsers");
 Meteor.subscribe("userStatus");
@@ -59,13 +59,6 @@ App = React.createClass({
 
 
   renderContracts() {
-
-    //Testing modal Standard Actions
-    let standardActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit' }
-    ];
-
     // Get contracts from this.data.contracts
     return this.data.contracts.map((contract) => {
       //return <Contract key={contract._id} contract={contract} />;
@@ -183,7 +176,7 @@ App = React.createClass({
             </form>
 
             <div className="row">
-              <List subheader="Today">
+              <List subheader="Current Contracts">
                 {this.renderContracts()}
               </List>
             </div>
