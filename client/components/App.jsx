@@ -107,9 +107,10 @@ App = React.createClass({
 
     // Sample Code for Links in the left hidden nav menu
     let menuItems = [
-      { route: '/', text: 'New Contract' },
-      { route: '/contracts/', text: 'Contracts' },
-      { route: 'expensesList', text: 'Expenses' }
+      { route: '/', text: 'Home' },
+      { route: '/contracts', text: 'Contracts' },
+      { route: '/contracts/add', text: 'New Contract' },
+      { route: '/expenses', text: 'Expenses' }
     ];
 
     // Sample code for menu items in a toolbar Toolbar
@@ -166,7 +167,10 @@ App = React.createClass({
                 ref="leftNav"
                 docked={false}
                 menuItems={menuItems}
+                header={<div className='logo'>Header Title.</div>}
                 onChange={this.leftNavChange} />
+
+
 
             <form className="new-contract" onSubmit={this.handleSubmit}>
               <input
@@ -174,6 +178,10 @@ App = React.createClass({
                   ref="textInput"
                   placeholder="Type to add new tasks"/>
             </form>
+
+            <IconButton icon="navigation-more-vert" />
+            <IconButton icon="action-favorite-outline" />
+            <IconButton icon="action-search" />
 
             <div className="row">
               <List subheader="Current Contracts">

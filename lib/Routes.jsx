@@ -33,14 +33,24 @@ FlowRouter.route('/contracts', {
 });
 
 
-// Expenses Listing
-FlowRouter.route('/expenses', {
-  name: 'expensesList',
+// Expenses and Payments Listing Across all contracts
+FlowRouter.route('/finances', {
+  name: 'financesList',
   action: function(params) {
-    Utils.cl("Expenses Listing - "+JSON.stringify(params));
+    Utils.cl("Finances Listing - "+JSON.stringify(params));
+  }
+});
+
+// Expenses and Payments Listing Across all contracts
+FlowRouter.route('/clients', {
+  name: 'clientsList',
+  action: function(params) {
+    Utils.cl("Clients Listing - "+JSON.stringify(params));
   }
 });
 
 let renderLayoutWith = (component) => {
-
+  ReactLayout.render(MainLayout, {
+    component: component
+  })
 };
