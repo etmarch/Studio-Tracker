@@ -7,6 +7,14 @@ Meteor.publish("allContracts", function () {
   return Contracts.find();
 });
 
+Meteor.publish("singleContract", function (contractId) {
+  return Contracts.find({_id: contractId});
+});
+
+Meteor.publish("allClients", function (clientId) {
+  return Clients.find({_id: clientId});
+});
+
 // All user data - for dev purposes only
 Meteor.publish("allUsers", function() {
   return Meteor.users.find();

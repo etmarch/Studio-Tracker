@@ -11,7 +11,8 @@ appBarClock = new Chronos.Timer(1000); // initializing global app clock
 let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
 // Material-UI Componenets
 const {RaisedButton, FlatButton, Checkbox, Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator,
-    DropDownMenu, ListItem, List, ListDivider, AppCanvas, AppBar, Avatar, Card, Dialog, IconButton, LeftNav, Toggle, FontIcon, Styles} = MUI;
+    DropDownMenu, ListItem, List, ListDivider, AppCanvas, Avatar, Card, Dialog, IconButton,
+    FontIcon, Styles} = MUI;
 
 // Reference Styles.Colors global variable
 const Colors = MUI.Styles.Colors;
@@ -47,16 +48,10 @@ App = React.createClass({
     let query = {};
     return {
       contracts: Contracts.find(query, {sort: {createdAt: -1}}).fetch(),
-      incompleteCount: Contracts.find({checked: {$ne: true}}).count(),
       currentUser: Meteor.user(),
       currentTime: appBarClock.time.get()
     }
   },
-
-  _handleCustomDialogTouchTap() {
-    this.refs.customDialog.show();
-  },
-
 
   renderContracts() {
     // Get contracts from this.data.contracts
@@ -75,16 +70,6 @@ App = React.createClass({
     });
   },
 
-  toggleIsLiveContract() {
-    this.setState({
-      liveContract: ! this.state.liveContract
-    });
-  },
-
-  // Shows / hides the side menu
-  toggleLeftNav() {
-    this.refs.leftNav.toggle();
-  },
 
   handleSubmit(event) {
     event.preventDefault();
@@ -94,35 +79,9 @@ App = React.createClass({
     let okay = Meteor.call("addContract", text); // call insert method
     // Clear form
     React.findDOMNode(this.refs.textInput).value = "";
-    console.log("success? - "+okay);
-  },
-
-  // Handle clicks on links on the left menu
-  leftNavChange(e, selectedIndex, menuItem) {
-    Utils.cl(e.target+"  Menu Item Object: "+JSON.stringify(menuItem));
-    FlowRouter.go(menuItem.route);
   },
 
   render() {
-
-    // Sample Code for Links in the left hidden nav menu
-    let menuItems = [
-      { route: '/', text: 'Home' },
-      { route: '/contracts', text: 'Contracts' },
-      { route: '/contracts/add', text: 'New Contract' },
-      { route: '/expenses', text: 'Expenses' }
-    ];
-
-    // Sample code for menu items in a toolbar Toolbar
-    let filterOptions = [
-      { payload: '1', text: 'All Broadcasts' },
-      { payload: '2', text: 'All Voice' },
-      { payload: '3', text: 'All Text' },
-      { payload: '4', text: 'Complete Voice' },
-      { payload: '5', text: 'Complete Text' },
-      { payload: '6', text: 'Active Voice' },
-      { payload: '7', text: 'Active Text' }
-    ];
 
     // Toggle button overwrite
     let toggleStyle = {
@@ -131,44 +90,16 @@ App = React.createClass({
 
     return (
         <AppCanvas className="">
-
-          {/* ToDo: Migrate this into its own component  --   <AppHeader /> for example */}
-          <AppBar title="Studio Marchand Contract Management Center" onLeftIconButtonTouchTap={this.toggleLeftNav} className="container-fluid">
-            <div>TimeOffset: {TimeSync.serverOffset()}   <ToolbarSeparator/>   {moment(this.data.currentTime).format('hh:mm A L')}</div>
-
-            <AccountsUIWrapper />
-
-            <Toggle
-                style={toggleStyle}
-                isToggled={this.state.liveContract}
-                onToggle={this.toggleIsLiveContract} />
-
-            <LiveLight
-                isLiveContract={this.state.liveContract} />
-
-            <IconButton iconClassName="material-icons" tooltipPosition="bottom-center" tooltip="Done">report_problem</IconButton>
-          </AppBar>
-
-
+          <Header liveState={this.state.liveContract} />
 
           <div className="container">
-            <div className="blocky"></div>
-
 
             <Toolbar>
               <ToolbarGroup key={0} float="left">
-                <DropDownMenu menuItems={filterOptions} />
                 <ToolbarSeparator/>
-                <ToolbarTitle text="SAMPLE HEADER" />
+                <ToolbarTitle text="Welcome" />
               </ToolbarGroup>
             </Toolbar>
-
-            <LeftNav
-                ref="leftNav"
-                docked={false}
-                menuItems={menuItems}
-                header={<div className='logo'>Header Title.</div>}
-                onChange={this.leftNavChange} />
 
 
 
@@ -178,10 +109,6 @@ App = React.createClass({
                   ref="textInput"
                   placeholder="Type to add new tasks"/>
             </form>
-
-            <IconButton icon="navigation-more-vert" />
-            <IconButton icon="action-favorite-outline" />
-            <IconButton icon="action-search" />
 
             <div className="row">
               <List subheader="Current Contracts">
@@ -194,19 +121,5 @@ App = React.createClass({
   }
 });
 
-LiveLight = React.createClass({
-  propTypes: {
-    // This component gets the contract to display through a React prop.
-    // We can use propTypes to indicate it is required
-  },
-  render() {
-    // checking if a contract is currently being worked on
-    const lightClassName = this.props.isLiveContract ? "live-light active" : "live-light ";
-
-    return (
-        <div className={lightClassName} />
-    );
-  }
-});
 
 /*Online? - {JSON.stringify(Meteor.user().status.online)} ||||   Time: {moment(TimeSync.serverTime(this.data.currentTime, 51000)).format()} | */

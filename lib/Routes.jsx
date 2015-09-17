@@ -50,7 +50,7 @@ FlowRouter.route('/clients', {
 });
 
 let renderLayoutWith = (component) => {
-  ReactLayout.render(MainLayout, {
+  ReactLayout.render(App, {
     component: component
   })
 };
