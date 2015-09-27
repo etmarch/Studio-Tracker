@@ -1,10 +1,11 @@
 
 Meteor.startup(function () {
-  injectTapEventPlugin();
+  injectTapEventPlugin(); // Workaround for Material-UI lib
+
   // Use Meteor.startup to render the component after the page is ready
   React.render(<App />, document.getElementById("app-wrapper"));
-  // start the clock when he client is ready
-  appBarClock.start();
+
+  appBarClock.start(); // Start the App Clock toDo: Remove this timer and package
 
   // sAlert package config options
   sAlert.config({
@@ -14,11 +15,6 @@ Meteor.startup(function () {
     html: false,
     onRouteClose: true,
     stack: true,
-    // or you can pass an object:
-    // stack: {
-    //     spacing: 10 // in px
-    //     limit: 3 // when fourth alert appears all previous ones are cleared
-    // }
     offset: 0, // in px - will be added to first alert (bottom or top - depends of the position in config)
     beep: false
     // examples:
@@ -33,12 +29,8 @@ Meteor.startup(function () {
 });
 
 
-// Subscribe to Contracts
-Meteor.subscribe("allContracts");
-Meteor.subscribe("allUsers");
-Meteor.subscribe("userStatus");
 
-// AccountsUI config
+// AccountsUI config toDo: Disable registration (since its internal app)
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });

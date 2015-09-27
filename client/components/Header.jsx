@@ -6,13 +6,15 @@ const {AppBar, LeftNav, FontIcon} = MUI;
 Header = React.createClass({
 
   // Shows / hides the side menu
-  toggleLeftNav() {
+  _toggleLeftNav(e) {
+    e.preventDefault();
     this.refs.leftNav.toggle();
   },
 
   // Handle clicks on links on the left menu
-  leftNavChange(e, selectedIndex, menuItem) {
+  _leftNavChange(e, selectedIndex, menuItem) {
     //Utils.cl(e.target+"  Menu Item Object: "+JSON.stringify(menuItem));
+    e.preventDefault();
     FlowRouter.go(menuItem.route);
   },
 
@@ -31,7 +33,7 @@ Header = React.createClass({
         <div>
         <AppBar
             title="Studio Marchand Contract Manager"
-            onLeftIconButtonTouchTap={this.toggleLeftNav}
+            onLeftIconButtonTouchTap={this._toggleLeftNav}
             className="container-fluid">
 
           <span className="panel panel-default">{moment(TimeSync.serverTime()).format('hh:mm s A L')}</span>
@@ -48,8 +50,8 @@ Header = React.createClass({
               ref="leftNav"
               docked={false}
               menuItems={sideMenuLinks}
-              header={<div className='logo'>Header Title.</div>}
-              onChange={this.leftNavChange} />
+              header={<h3 className='logo'>Navigation</h3>}
+              onChange={this._leftNavChange} />
         </div>
     )
   }
@@ -58,7 +60,6 @@ Header = React.createClass({
 LiveLight = React.createClass({
   propTypes: {
     // This component gets the contract to display through a React prop.
-    // We can use propTypes to indicate it is required
   },
   render() {
     // checking if a contract is currently being worked on

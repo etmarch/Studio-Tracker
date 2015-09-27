@@ -9,6 +9,7 @@ Meteor.subscribe("userStatus");
 appBarClock = new Chronos.Timer(1000); // initializing global app clock
 
 let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
+
 // Material-UI Componenets
 const {RaisedButton, FlatButton, Checkbox, Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator,
     DropDownMenu, ListItem, List, ListDivider, AppCanvas, Avatar, Card, Dialog, IconButton,
@@ -36,7 +37,7 @@ App = React.createClass({
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
 
-  // Initialize the client-side checkbox filter
+  // Initialize the 'liveContract' App State
   getInitialState() {
     return {
       liveContract: false
@@ -54,6 +55,7 @@ App = React.createClass({
   },
 
   renderContracts() {
+
     // Get contracts from this.data.contracts
     return this.data.contracts.map((contract) => {
       //return <Contract key={contract._id} contract={contract} />;
@@ -70,46 +72,13 @@ App = React.createClass({
     });
   },
 
-
-  handleSubmit(event) {
-    event.preventDefault();
-    // Find the text field via the React ref
-    var text = React.findDOMNode(this.refs.textInput).value.trim();
-
-    let okay = Meteor.call("addContract", text); // call insert method
-    // Clear form
-    React.findDOMNode(this.refs.textInput).value = "";
-  },
-
   render() {
-
-    // Toggle button overwrite
-    let toggleStyle = {
-      display: 'inline-block', width: 'auto'
-    }
 
     return (
         <AppCanvas className="">
           <Header liveState={this.state.liveContract} />
 
           <div className="container">
-
-            <Toolbar>
-              <ToolbarGroup key={0} float="left">
-                <ToolbarSeparator/>
-                <ToolbarTitle text="Welcome" />
-              </ToolbarGroup>
-            </Toolbar>
-
-
-
-            <form className="new-contract" onSubmit={this.handleSubmit}>
-              <input
-                  type="text"
-                  ref="textInput"
-                  placeholder="Type to add new tasks"/>
-            </form>
-
             <div className="row">
               <List subheader="Current Contracts">
                 {this.renderContracts()}
