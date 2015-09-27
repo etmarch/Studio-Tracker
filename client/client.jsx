@@ -3,7 +3,9 @@ Meteor.startup(function () {
   injectTapEventPlugin(); // Workaround for Material-UI lib
 
   // Use Meteor.startup to render the component after the page is ready
-  //React.render(<App />, document.getElementById("app-wrapper"));
+  /*ReactLayout.render(App, {
+    content: <Dashboard />
+  });*/
 
   appBarClock.start(); // Start the App Clock toDo: Remove this timer and package
 

@@ -1,10 +1,7 @@
 // Dashboard Page/Component Route
 
-
-Meteor.subscribe("allContracts");
-Meteor.subscribe("allUsers");
-Meteor.subscribe("userStatus");
-
+// Subscription:  ToDo: Place this in better area so its not global
+Meteor.subscribe('allContracts');
 
 const Colors = MUI.Styles.Colors;
 
@@ -41,7 +38,6 @@ Dashboard = React.createClass({
   renderContracts() {
     // Get contracts from this.data.contracts
     return this.data.contracts.map((contract) => {
-      //return <Contract key={contract._id} contract={contract} />;
       return <div><ListItem
           key={contract._id}
           primaryText={contract.text}
