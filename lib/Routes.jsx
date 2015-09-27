@@ -4,7 +4,8 @@
 FlowRouter.route('/', {
   name: 'dashboard',
   action: function(params) {
-    Utils.cl("dashboard - "+JSON.stringify(params));
+    Utils.cl(this.name+'  '+JSON.stringify(params));
+    ReactLayout.render(App, { content: <Dashboard /> });
   }
 });
 
@@ -12,7 +13,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/contracts/add', {
   name: 'addContract ',
   action: function(params) {
-    Utils.cl("Add Contract Form - "+JSON.stringify(params));
+    Utils.cl(this.name+'  '+JSON.stringify(params));
   }
 });
 
@@ -20,7 +21,7 @@ FlowRouter.route('/contracts/add', {
 FlowRouter.route('/contract/:_id', {
   name: 'showContract',
   action: function(params) {
-    Utils.cl("Single Contract - "+JSON.stringify(params));
+    Utils.cl(this.name+'  '+JSON.stringify(params));
   }
 });
 
@@ -28,7 +29,7 @@ FlowRouter.route('/contract/:_id', {
 FlowRouter.route('/contracts', {
   name: 'contractsList',
   action: function(params) {
-    Utils.cl("Contract List - "+JSON.stringify(params));
+    Utils.cl(this.name+'  '+JSON.stringify(params));
   }
 });
 
@@ -37,7 +38,7 @@ FlowRouter.route('/contracts', {
 FlowRouter.route('/finances', {
   name: 'financesList',
   action: function(params) {
-    Utils.cl("Finances Listing - "+JSON.stringify(params));
+    Utils.cl(this.name+'  '+JSON.stringify(params));
   }
 });
 
@@ -45,7 +46,7 @@ FlowRouter.route('/finances', {
 FlowRouter.route('/clients', {
   name: 'clientsList',
   action: function(params) {
-    Utils.cl("Clients Listing - "+JSON.stringify(params));
+    Utils.cl(this.name+'  '+JSON.stringify(params));
   }
 });
 

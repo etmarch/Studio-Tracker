@@ -1,9 +1,27 @@
-// Contains the top App Bar - also the "live light" component
+/*
+ * Header Component
+ * Children: LiveLight, AccountsUI Wrapper, LeftNav
+ * Data Needed: Reactive Current Time element, liveContract Boolean (Reactive)
+ *
+ */
+
 
 // Pulling in the Material-Ui components
 const {AppBar, LeftNav, FontIcon} = MUI;
 
 Header = React.createClass({
+
+  // This mixin makes the getMeteorData method work
+  mixins: [ReactMeteorData],
+
+  // Loads data from collections and puts them on this.data
+  getMeteorData() {
+    let query = {};
+    return {
+      currentUser: Meteor.user(),
+      currentTime: appBarClock.time.get()
+    }
+  },
 
   // Shows / hides the side menu
   _toggleLeftNav(e) {
@@ -31,20 +49,19 @@ Header = React.createClass({
 
     return (
         <div>
-        <AppBar
-            title="Studio Marchand Contract Manager"
-            onLeftIconButtonTouchTap={this._toggleLeftNav}
-            className="container-fluid">
+          <AppBar
+              title="Studio Marchand Contract Manager"
+              onLeftIconButtonTouchTap={this._toggleLeftNav}
+              className="container-fluid">
 
-          <span className="panel panel-default">{moment(TimeSync.serverTime()).format('hh:mm s A L')}</span>
+            <span className="panel panel-default">{moment(TimeSync.serverTime()).format('hh:mm s A L')}</span>
 
-          <AccountsUIWrapper />
+            <AccountsUIWrapper />
 
+            <LiveLight
+                isLiveContract={this.props.liveContract} />
 
-          <LiveLight
-              isLiveContract={this.props.liveContract} />
-
-        </AppBar>
+          </AppBar>
 
           <LeftNav
               ref="leftNav"
