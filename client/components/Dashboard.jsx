@@ -30,8 +30,7 @@ Dashboard = React.createClass({
     let query = {};
     return {
       contracts: Contracts.find(query, {sort: {createdAt: -1}}).fetch(),
-      currentUser: Meteor.user(),
-      currentTime: appBarClock.time.get()
+      currentUser: Meteor.user()
     }
   },
 

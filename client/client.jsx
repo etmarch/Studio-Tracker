@@ -7,7 +7,7 @@ Meteor.startup(function () {
     content: <Dashboard />
   });*/
 
-  appBarClock.start(); // Start the App Clock toDo: Remove this timer and package
+  //appBarClock.start(); // Start the App Clock toDo: Remove this timer and package
 
   // sAlert package config options
   sAlert.config({
@@ -28,6 +28,8 @@ Meteor.startup(function () {
     //     warning: '/beep-warning.mp3'
     // }
   });
+
+  TimeSync.loggingEnabled = false;
 });
 
 

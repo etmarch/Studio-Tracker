@@ -16,10 +16,9 @@ Header = React.createClass({
 
   // Loads data from collections and puts them on this.data
   getMeteorData() {
-    let query = {};
     return {
       currentUser: Meteor.user(),
-      currentTime: appBarClock.time.get()
+      currentTime: TimeSync.serverTime(null, 1000)
     }
   },
 
@@ -43,6 +42,7 @@ Header = React.createClass({
       { route: '/', text: 'Home' },
       { route: '/contracts', text: 'Contracts' },
       { route: '/contracts/add', text: 'New Contract' },
+      { route: '/clients', text: 'Clients' },
       { route: '/finances', text: 'Finances' }
     ];
 
@@ -54,7 +54,7 @@ Header = React.createClass({
               onLeftIconButtonTouchTap={this._toggleLeftNav}
               className="container-fluid">
 
-            <span className="panel panel-default">{moment(TimeSync.serverTime()).format('hh:mm s A L')}</span>
+            <span className="panel panel-default">{moment(this.data.currentTime).format('hh:mm:s A L')}</span>
 
             <AccountsUIWrapper />
 

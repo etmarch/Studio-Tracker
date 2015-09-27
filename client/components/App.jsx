@@ -1,6 +1,6 @@
 
 // Initiate the App Clock //toDo- Can probably remove this package and just use the server sync time from Mizzao
-appBarClock = new Chronos.Timer(1000); // initializing global app clock
+//appBarClock = new Chronos.Timer(1000); // initializing global app clock
 
 let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
 

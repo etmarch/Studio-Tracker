@@ -1,6 +1,6 @@
-// Seeing Data
+// Seeding Collection Data for Development
 /*
-if(contracts.find().count() < 5){
+if(Clients.find().count() < 5){
   _.each(_.range(25), function(){
     var randomEmail = faker.internet.email();
     var randomName = faker.name.findName();
