@@ -10,9 +10,6 @@ FlowRouter.subscriptions = function() {
 // Home - Dashboard
 FlowRouter.route('/', {
   name: 'dashboard',
-  subscriptions: function(params) { // Not working !!
-    this.register('allContracts', Meteor.subscribe('allConracts'));
-  },
   action: function(params) {
     Utils.cl(this.name+'  '+JSON.stringify(params));
     renderLayoutWith(<Dashboard />);

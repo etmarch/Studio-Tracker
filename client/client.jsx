@@ -6,9 +6,7 @@ Meteor.startup(function () {
   /*ReactLayout.render(App, {
     content: <Dashboard />
   });*/
-
-  //appBarClock.start(); // Start the App Clock toDo: Remove this timer and package
-
+  
   // sAlert package config options
   sAlert.config({
     effect: '',

@@ -2,16 +2,20 @@
  * Publishing in the server
  */
 
-// Publish Contracts
 Meteor.publish("allContracts", function () {
+  Meteor._sleepForMs(2000); // Simulate Loading
   return Contracts.find();
+});
+
+Meteor.publish("allClients", function () {
+  return Clients.find();
 });
 
 Meteor.publish("singleContract", function (contractId) {
   return Contracts.find({_id: contractId});
 });
 
-Meteor.publish("allClients", function (clientId) {
+Meteor.publish("singleClient", function (clientId) {
   return Clients.find({_id: clientId});
 });
 

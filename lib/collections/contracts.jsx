@@ -19,7 +19,8 @@ Contracts.attachSchema(new SimpleSchema({
   },
   costEstimation: { // Estimation of how much materials will cost Studio Marchand
     type: Number,
-    label: "Estimated total costs of Project"
+    label: "Estimated total costs of Project",
+    optional: true
   },
   costs: { // Array of all costs logged for this contract
     type: [Object],
@@ -49,7 +50,8 @@ Contracts.attachSchema(new SimpleSchema({
   },
   notes: {
     type: String,
-    label: "Comments/Notes"
+    label: "Comments/Notes",
+    optional: true
   },
   createdAt: {
     type: Date,

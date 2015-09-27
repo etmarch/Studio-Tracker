@@ -1,11 +1,10 @@
 // Dashboard Page/Component Route
 
-// Subscription:  ToDo: Place this in better area so its not global
-Meteor.subscribe('allContracts');
+Meteor.subscribe("allClients");
 
 const Colors = MUI.Styles.Colors;
 
-const {Checkbox, List, ListItem, ListDivider, Avatar, Styles} = MUI;
+const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles} = MUI;
 
 // Init the material-ui framework
 const ThemeManager = new MUI.Styles.ThemeManager();
@@ -28,21 +27,24 @@ Dashboard = React.createClass({
   // Retrieve the required data
   getMeteorData() {
     let query = {};
+    let handle = Meteor.subscribe("allContracts");
     return {
       contracts: Contracts.find(query, {sort: {createdAt: -1}}).fetch(),
-      currentUser: Meteor.user()
+      contractsLoading: ! handle.ready()
     }
   },
+
+
 
   renderContracts() {
     // Get contracts from this.data.contracts
     return this.data.contracts.map((contract) => {
       return <div><ListItem
           key={contract._id}
-          primaryText={contract.text}
+          primaryText={Utils.getClientName(contract.clientId)}
           initiallyOpen={true}
           leftCheckbox={<Checkbox name="checky" /> }
-          secondaryText="Hey you how are you man hey you how are yu mna hey yu how are yu man"
+          secondaryText={<FlatButton label={moment(contract.dateDue).format('hh:mm:ss A L')}>{contract.price}</FlatButton>}
           rightAvatar={<Avatar color={Colors.deepOrange300} backgroundColor={Colors.red300}></Avatar>} />
         <ListDivider inset={false} />
       </div>
@@ -50,13 +52,16 @@ Dashboard = React.createClass({
   },
 
   render () {
-
-    return (
-        <div className="row">
-          <List subheader="Current Contracts">
-            {this.renderContracts()}
-          </List>
-        </div>
-    )
+    if (this.data.contractsLoading) {
+      return (<Loading />);
+    } else {
+      return (
+          <div className="row">
+            <List subheader="Current Contracts">
+              {this.renderContracts()}
+            </List>
+          </div>
+      )
+    }
   }
 });

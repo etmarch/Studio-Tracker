@@ -1,6 +1,4 @@
-
-// Initiate the App Clock //toDo- Can probably remove this package and just use the server sync time from Mizzao
-//appBarClock = new Chronos.Timer(1000); // initializing global app clock
+// Main App Component Wrapper - the main "layout"
 
 let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
 
@@ -33,19 +31,28 @@ App = React.createClass({
     }
   },
 
+  mixins: [ReactMeteorData],
+
+  getMeteorData() {
+    return {
+      currentUser: Meteor.user() // To check if current user is logged in
+    }
+  },
+
   render() {
+    // Take user to login page if not currently signed in
+    if (!this.data.currentUser) {
+      return (<div className="panel panel-primary"> <AccountsUIWrapper /> </div>)
+    } else {
+      return (
+          <AppCanvas className="">
+            <Header liveState={this.state.liveContract}/>
 
-    return (
-        <AppCanvas className="">
-          <Header liveState={this.state.liveContract} />
-
-          <div className="container">
-            {this.props.content}
-          </div>
-        </AppCanvas>
-    );
+            <div className="container">
+              {this.props.content}
+            </div>
+          </AppCanvas>
+      );
+    }
   }
 });
-
-
-/*Online? - {JSON.stringify(Meteor.user().status.online)} ||||   Time: {moment(TimeSync.serverTime(this.data.currentTime, 51000)).format()} | */

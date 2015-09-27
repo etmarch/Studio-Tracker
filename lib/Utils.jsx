@@ -1,7 +1,10 @@
 // App-wide utility functions and helpers
 
 this.Utils = {};
-// Debugging
+
+/*
+ * DEBUGGING + LOGGING HELPERS
+ */
 
 // normal console.log
 Utils.cl = function(output) {
@@ -13,8 +16,7 @@ Utils.clJ = function(output) {
   console.log(JSON.stringify(output));
 };
 
-
-// Utility Functions for Objects
+// get object keys
 Utils.fGetKeys = function(obj){
   var keys = [];
   for(var key in obj){
@@ -23,6 +25,7 @@ Utils.fGetKeys = function(obj){
   return keys;
 };
 
+// list all properties in an object
 Utils.listAllProperties = function(o){
   var objectToInspect;
   var result = [];
@@ -32,6 +35,15 @@ Utils.listAllProperties = function(o){
   return result;
 };
 
+
+/*
+ * COLLECTION DATA HELPERS
+ */
+
+// Returns the client name after being passed in the clients ID
+Utils.getClientName = function(clientId) {
+  return Clients.findOne(clientId).name;
+};
 
 
 

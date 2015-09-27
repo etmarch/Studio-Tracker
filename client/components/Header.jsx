@@ -2,7 +2,7 @@
  * Header Component
  * Children: LiveLight, AccountsUI Wrapper, LeftNav
  * Data Needed: Reactive Current Time element, liveContract Boolean (Reactive)
- *
+ * Props: liveState - boolean - either show green light (live) or grey (no contracts live)
  */
 
 
@@ -11,10 +11,12 @@ const {AppBar, LeftNav, FontIcon} = MUI;
 
 Header = React.createClass({
 
-  // This mixin makes the getMeteorData method work
+  propTypes: {
+    liveState: React.PropTypes.bool
+  },
+
   mixins: [ReactMeteorData],
 
-  // Loads data from collections and puts them on this.data
   getMeteorData() {
     return {
       currentUser: Meteor.user(),
@@ -47,30 +49,34 @@ Header = React.createClass({
     ];
 
 
-    return (
-        <div>
-          <AppBar
-              title="Studio Marchand Contract Manager"
-              onLeftIconButtonTouchTap={this._toggleLeftNav}
-              className="container-fluid">
+    if (this.data.contractsLoading) {
+      return (<Loading />);
+    } else {
+      return (
+          <div>
+            <AppBar
+                title="Studio Marchand Contract Manager"
+                onLeftIconButtonTouchTap={this._toggleLeftNav}
+                className="container-fluid">
 
-            <span className="panel panel-default">{moment(this.data.currentTime).format('hh:mm:s A L')}</span>
+              <span className="panel panel-default">{moment(this.data.currentTime).format('hh:mm:ss A L')}</span>
 
-            <AccountsUIWrapper />
+              <AccountsUIWrapper />
 
-            <LiveLight
-                isLiveContract={this.props.liveContract} />
+              <LiveLight
+                  isLiveContract={this.props.liveState}/>
 
-          </AppBar>
+            </AppBar>
 
-          <LeftNav
-              ref="leftNav"
-              docked={false}
-              menuItems={sideMenuLinks}
-              header={<h3 className='logo'>Navigation</h3>}
-              onChange={this._leftNavChange} />
-        </div>
-    )
+            <LeftNav
+                ref="leftNav"
+                docked={false}
+                menuItems={sideMenuLinks}
+                header={<h3 className='logo'>Navigation</h3>}
+                onChange={this._leftNavChange}/>
+          </div>
+      )
+    }
   }
 });
 
