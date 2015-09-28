@@ -2,10 +2,10 @@
 
 // GLobal Subscription
 /*
-FlowRouter.subscriptions = function() {
-  this.register('allContracts', Meteor.subscribe('allContracts'));
-};
-*/
+ FlowRouter.subscriptions = function() {
+ this.register('allContracts', Meteor.subscribe('allContracts'));
+ };
+ */
 
 // Home - Dashboard
 FlowRouter.route('/', {
@@ -21,7 +21,13 @@ FlowRouter.route('/contracts/add', {
   name: 'addContract ',
   action: function(params) {
     Utils.cl(this.name+'  '+JSON.stringify(params));
-    renderLayoutWith(<Loading />);
+    //renderLayoutWith(<ContractAdd />);
+    ReactLayout.render(App, {
+          content() {
+            return <ContractAdd />;
+          }
+        }
+    );
   }
 });
 
@@ -62,8 +68,11 @@ FlowRouter.route('/clients', {
   }
 });
 
+// **NOT WORKING CORRECTLY FOR SOME REASON
 let renderLayoutWith = (component) => {
   ReactLayout.render(App, {
-    content: component
-  })
+    content() {
+      return component;
+    }
+  });
 };

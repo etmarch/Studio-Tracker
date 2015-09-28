@@ -57,7 +57,8 @@ Header = React.createClass({
             <AppBar
                 title="Studio Marchand Contract Manager"
                 onLeftIconButtonTouchTap={this._toggleLeftNav}
-                className="container-fluid">
+                className="container-fluid"
+                iconClassNameRight="material-icons add-circle">
 
               <span className="panel panel-default">{moment(this.data.currentTime).format('hh:mm:ss A L')}</span>
 

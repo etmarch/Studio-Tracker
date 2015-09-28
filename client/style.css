@@ -19,3 +19,12 @@ body {
 .live-light.active {
     background:lime;
 }
+
+
+.centered {
+    text-align: center;
+}
+
+.pizza-icon:before { content: "local_pizza"; }
+
+.add-circle:before { content: "add_circle"; }
