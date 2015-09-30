@@ -63,8 +63,7 @@ FlowRouter.route('/finances', {
 FlowRouter.route('/clients', {
   name: 'clientsList',
   action: function(params) {
-    Utils.cl(this.name+'  '+JSON.stringify(params));
-    renderLayoutWith(<Dashboard />);
+    renderLayoutWith(<ClientListing />);
   }
 });
 

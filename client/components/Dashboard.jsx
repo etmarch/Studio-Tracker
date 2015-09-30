@@ -1,6 +1,5 @@
 // Dashboard Page/Component Route
 
-Meteor.subscribe("allClients");
 
 const Colors = MUI.Styles.Colors;
 

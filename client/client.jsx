@@ -2,11 +2,6 @@
 Meteor.startup(function () {
   injectTapEventPlugin(); // Workaround for Material-UI lib
 
-  // Use Meteor.startup to render the component after the page is ready
-  /*ReactLayout.render(App, {
-    content: <Dashboard />
-  });*/
-  
   // sAlert package config options
   sAlert.config({
     effect: '',

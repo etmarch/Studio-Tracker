@@ -55,18 +55,60 @@ ContractAdd = React.createClass({
 
   // Insert the Client doc + Hide the Modal
   _onDialogSubmit() {
-    Utils.cl(this);
+    // retrieve input values
+    Utils.cl(this.refs.cName.getValue());
+    let name = this.refs.cName.getValue();
+    let address = this.refs.cAddress.getValue();
+    let phone = this.refs.cPhone.getValue();
+    let email = this.refs.cEmail.getValue();
+
+    Utils.cl(name+' '+address+' '+phone+' '+email);
+
+
+    // validate data before client insert
+    if (!name || !address || !phone || !email ) {
+      // Make sAlert here for the error message
+      this.refs.clientModal.dismiss();
+    } else {
+      // insert client document
+      let newClientId = Clients.insert({
+        name: name,
+        address: address,
+        phone: phone,
+        email: email
+      });
+
+      Utils.cl(newClientId);
+      this.selectedClient(newClientId); // Set selectedId to new client
+    }
+
     this.refs.clientModal.dismiss(); // Hide the modal
   },
 
-  _handleSelectValueChange(e) {
-    console.log(e.target.value);
-    console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
-    this.selectedClient(e.target.value); // current set value
+  _handleSelectValueChange(e, selectedIndex, menuItem) {
+    e.preventDefault();
+    console.log(selectedIndex);
+    console.log(menuItem);
+    //console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
+    let selectedValue = e.target.value;
+    // If last option is selected, display New Client modal
+    if (selectedIndex === this.refs.selectField.props.menuItems.length - 1) {
+      this.refs.clientModal.show();
+      this.selectedClient()
+    } else {
+      this.selectedClient(selectedValue); // Client selected, update state
+    }
   },
 
-  render () {
 
+
+  render () {
+    //let totalClientList = this.data.clientList;
+    let clientListLength = this.data.clientList.length;
+    let concatClientList = this.data.clientList.concat({_id: clientListLength, name: 'Add New Client'});
+
+    //console.log(totalClientList);
+    //console.log(allClients);
     //Standard Actions
     let contractModalActions = [
       { text: 'Cancel' },
@@ -85,10 +127,10 @@ ContractAdd = React.createClass({
                 <p>Step 1: Attach to client or create new</p>
 
                 <SelectField
-                    valueLink={this.linkState('selectedId')}
+                    value={this.state.selectedId}
                     onChange={this._handleSelectValueChange}
                     hintText="Select a Client"
-                    menuItems={this.data.clientList}
+                    menuItems={concatClientList}
                     displayMember="name"
                     valueMember="_id"
                     ref="selectField" />
@@ -127,8 +169,25 @@ ContractAdd = React.createClass({
 
                 <TextField
                     hintText="Client Name"
-                    ref="name"
+                    ref="cName"
                     type="text" />
+
+                <TextField
+                    hintText="Client Address"
+                    ref="cAddress"
+                    type="text" />
+
+
+                <TextField
+                    hintText="Client Phone"
+                    ref="cPhone"
+                    type="number" />
+
+
+                <TextField
+                    hintText="Client Email Address"
+                    ref="cEmail"
+                    type="email" />
 
               </Dialog>
 
