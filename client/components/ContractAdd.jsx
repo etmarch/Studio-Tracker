@@ -7,7 +7,7 @@
  */
 
 const {RaisedButton, DatePicker, TextField, TimePicker, List, ListItem, ListDivider, Dialog, FlatButton, IconButton,
-      FontIcon, SelectField} = MUI;
+    FontIcon, SelectField} = MUI;
 
 ContractAdd = React.createClass({
 
@@ -19,7 +19,7 @@ ContractAdd = React.createClass({
 
   },
 
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, React.addons.LinkedStateMixin],
 
   getMeteorData() {
     let handle = Meteor.subscribe('allClients');
@@ -46,31 +46,33 @@ ContractAdd = React.createClass({
     Utils.cl(this);
   },
 
-  _toggleContractModal(e) {
+  // Display the Modal
+  _toggleClientModal(e) {
     e.preventDefault();
     Utils.cl("Dialog Toggled!");
-    this.refs.contractModal.show();
+    this.refs.clientModal.show();
   },
 
-  // Insert the Client doc
-  _onDialogSubmit(e) {
-    Utils.cl("Dialog Submitted!");
-    e.preventDefault();
-    // Get
+  // Insert the Client doc + Hide the Modal
+  _onDialogSubmit() {
+    Utils.cl(this);
+    this.refs.clientModal.dismiss(); // Hide the modal
+  },
+
+  _handleSelectValueChange(e) {
+    console.log(e.target.value);
+    console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
+    this.selectedClient(e.target.value); // current set value
   },
 
   render () {
-
-    /*let clientSelectMenu = this.data.clientList.map((client) => {
-
-    }*/
 
     //Standard Actions
     let contractModalActions = [
       { text: 'Cancel' },
       { text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit' }
     ];
-    
+
     // check if Clients data is ready
     if (this.data.clientsLoading) {
       return (<Loading />);
@@ -79,32 +81,40 @@ ContractAdd = React.createClass({
           <div className="jumbotron">
             <h3 className="centered">Add Contract</h3>
             <form className="form add-contract" onSubmit={this.submitContractForm}>
-              <p>Step 1: Attach to client or create new</p>
+              <div className="panel panel-default centered">
+                <p>Step 1: Attach to client or create new</p>
 
-              <SelectField
-                  value={this.state.selectValue}
-                  onChange={console.log(this)}
-                  hintText="Hint Text"
-                  menuItems={this.data.clientList} />
+                <SelectField
+                    valueLink={this.linkState('selectedId')}
+                    onChange={this._handleSelectValueChange}
+                    hintText="Select a Client"
+                    menuItems={this.data.clientList}
+                    displayMember="name"
+                    valueMember="_id"
+                    ref="selectField" />
 
-              <IconButton
-                  iconClassName="material-icons add-circle"
-                  tooltip="GitHub"
-                  onClick={this._toggleContractModal} />
+                <IconButton
+                    iconClassName="material-icons add-circle"
+                    tooltip="Add New Client"
+                    onClick={this._toggleClientModal} />
+              </div>
+              <div className="panel panel-default centered">
+                <p>Step 2: Fill out contract details</p>
 
+                <TextField
+                    hintText="Contract Title"
+                    ref="title"
+                    type="text" />
 
-              <TextField
-                  hintText="Contract Title"
-                  ref="title"
-                  type="text" />
+                <TextField
+                    hintText="Price"
+                    type="number"
+                    min="0"
+                    ref="price" />
 
-              <TextField
-                  hintText="Price"
-                  type="number"
-                  min="0"
-                  ref="price" />
+                <DatePicker hintText="Portrait Dialog" />
 
-              <DatePicker hintText="Portrait Dialog" />
+              </div>
 
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />
 
@@ -113,8 +123,13 @@ ContractAdd = React.createClass({
                   actions={contractModalActions}
                   actionFocus="submit"
                   modal={this.state.modal}
-                  ref="contractModal">
-                The actions in this window are created from the json that's passed in.
+                  ref="clientModal">
+
+                <TextField
+                    hintText="Client Name"
+                    ref="name"
+                    type="text" />
+
               </Dialog>
 
             </form>
@@ -127,38 +142,42 @@ ContractAdd = React.createClass({
 // Renders the list of clients with a button "add new client" underneath
 // Props: clientList - list of all clients data
 // Actions: onClick on a client item - step 2 of the form
-ClientSelectList = React.createClass({
-  propTypes: {
-    clients: React.PropTypes.array.isRequired, // list of clients
-    onSelectClient: React.PropTypes.func
-  },
+/*
+ ClientAddForm = React.createClass({
+ propTypes: {
 
-  _logger(clientId) {
-    console.log(("Client: "+clientId));
-  },
+ },
 
-  selectClient(clientId) {
-    this.props.onSelectClient(clientId);
-  },
+ contextTypes: {
+ muiTheme: React.PropTypes.object
+ },
 
-  render() {
-    return <List className="col-sm-6">{
-      this.props.clients.map((client) => {
-        return [
-          <ListItem key={ client._id }
-                    primaryText={ client.name }
-                    onClick={ this.selectClient.bind(this, client._id) } />
-        ]
-      })
-    }</List>
-  }
-});
+ render() {
+
+
+ return (
+ <Dialog
+ title="Dialog With Standard Actions"
+ actions={contractModalActions}
+ actionFocus="submit"
+ //modal={this.state.modal}
+ ref="contractModal">
+
+ <TextField
+ hintText="Client Name"
+ ref="name"
+ type="text" />
+
+ </Dialog>
+ )
+ }
+ });*/
 
 // Sample Icon HTML Elements
 
 /*
-<!--
-<FontIcon className="material-icons add-circle" />
-<IconButton iconClassName="material-icons add-circle" tooltip="GitHub"/>
--->
-    */
+ <!--
+ <FontIcon className="material-icons add-circle" />
+ <IconButton iconClassName="material-icons add-circle" tooltip="GitHub"/>
+ -->
+ */

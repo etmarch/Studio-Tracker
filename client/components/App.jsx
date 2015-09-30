@@ -1,6 +1,6 @@
 // Main App Component Wrapper - the main "layout"
 
-let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
+//let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
 
 // Material-UI Componenets
 const {AppCanvas} = MUI;
@@ -42,7 +42,7 @@ App = React.createClass({
   render() {
     // Take user to login page if not currently signed in
     if (!this.data.currentUser) {
-      return (<div className="panel panel-primary"> <AccountsUIWrapper /> </div>)
+      return (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>)
     } else {
       return (
           <AppCanvas className="">
