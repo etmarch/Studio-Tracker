@@ -7,7 +7,7 @@
 
 
 // Pulling in the Material-Ui components
-const {AppBar, LeftNav, FontIcon} = MUI;
+const {AppBar, LeftNav, FontIcon, Paper} = MUI;
 
 Header = React.createClass({
 
@@ -39,6 +39,19 @@ Header = React.createClass({
 
   render () {
 
+    let fontStyle = {
+      top: 5,
+      right: 2,
+      color: 'rgba(0, 0, 0, 0.5)'
+    }
+
+    let clockPanel = (
+          <span className="clockFont"><h3>
+            <FontIcon className="material-icons schedule" style={fontStyle} />
+            {moment(this.data.currentTime).format('h:mm:ss A    M/D')}</h3>
+          </span>
+    );
+
     // Sample Code for Links in the left hidden nav menu
     let sideMenuLinks = [
       { route: '/', text: 'Home' },
@@ -57,12 +70,9 @@ Header = React.createClass({
             <AppBar
                 title="Studio Marchand Contract Manager"
                 onLeftIconButtonTouchTap={this._toggleLeftNav}
-                className="container-fluid"
-                iconClassNameRight="material-icons add-circle">
+                className="container-fluid">
 
-              <span className="panel panel-default">{moment(this.data.currentTime).format('hh:mm:ss A L')}</span>
-
-              <AccountsUIWrapper />
+              {clockPanel}
 
               <LiveLight
                   isLiveContract={this.props.liveState}/>

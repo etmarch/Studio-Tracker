@@ -3,7 +3,7 @@
  */
 
 Meteor.publish("allContracts", function () {
-  Meteor._sleepForMs(1000); // Simulate Loading
+  //Meteor._sleepForMs(1000); // Simulate Loading
   return Contracts.find();
 });
 
@@ -24,12 +24,12 @@ Meteor.publish("singleClient", function (clientId) {
 
 // All user data - for dev purposes only
 Meteor.publish("allUsers", function() {
-  Meteor._sleepForMs(1000);
+  //Meteor._sleepForMs(1000);
   return Meteor.users.find();
 });
 
 // User Status and when they were last online
 Meteor.publish("userStatus", function() {
-  Meteor._sleepForMs(1000);
+  //Meteor._sleepForMs(1000);
   return Meteor.users.find({ "status.online": true });
 });

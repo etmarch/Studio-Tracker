@@ -3,7 +3,7 @@
 
 //const Colors = MUI.Styles.Colors;
 
-const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles} = MUI;
+const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles, RaisedButton} = MUI;
 
 // Init the material-ui framework
 //const ThemeManager = new MUI.Styles.ThemeManager();
@@ -14,11 +14,11 @@ ClientListing = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function() {
+  /*getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
-  },
+  },*/
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -36,13 +36,15 @@ ClientListing = React.createClass({
 
 
   renderClients() {
+    let avatarStyle = {width: 40};
     // Get contracts from this.data.contracts
     return this.data.clients.map((client) => {
+
       return <div><ListItem
           key={client._id}
           primaryText={client.name}
           initiallyOpen={true}
-          leftCheckbox={<Checkbox name="checky" /> }
+          leftCheckbox={<Avatar style={avatarStyle}>{client.name.charAt(0)}</Avatar>}
           secondaryText={client.email+'  '+client.phone+'  '+client.address}
           rightAvatar={<RaisedButton label="View Contracts" primary={true} />} />
         <ListDivider inset={false} />

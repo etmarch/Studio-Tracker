@@ -1,6 +1,3 @@
-
-var {RaisedButton, Checkbox, ListItem, List} = MUI;
-
 /**
  * This component renders the single Contract Page
  * Render
@@ -30,11 +27,11 @@ SingleContract = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function() {
+  /*getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
-  },
+  },*/
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -42,9 +39,9 @@ SingleContract = React.createClass({
   // Retrieve the required data
   getMeteorData() {
     let query = {};
-    let handle = Meteor.subscribe("singleClient" /*FlowRouter Params Here*/);
+    let handle = Meteor.subscribe("singleContract" /*FlowRouter Params Here*/);
     return {
-      client: Clients.findOne(/*RouterParam*/),
+      contract: Contracts.findOne(/*RouterParam*/),
       dataLoading: ! handle.ready()
     }
   },
@@ -55,8 +52,12 @@ SingleContract = React.createClass({
     } else {
       return (
           <div className="row">
-            <div classname="jumbotron">
-              {this.renderClients()}
+            <div className="jumbotron">
+              <h3>{this.data.contract.title}</h3>
+              <div className="panel panel-primary centered">
+               <span><FontIcon className="material-icons add-circle" />{this.data.contract.price}</span>
+                <span>{moment(this.data.contract.dueDate).format()}</span>
+              </div>
             </div>
           </div>
       )

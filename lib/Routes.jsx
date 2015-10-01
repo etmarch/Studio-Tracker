@@ -12,7 +12,12 @@ FlowRouter.route('/', {
   name: 'dashboard',
   action: function(params) {
     Utils.cl(this.name+'  '+JSON.stringify(params));
-    renderLayoutWith(<Dashboard />);
+    ReactLayout.render(App, {
+          content() {
+            return <Dashboard />;
+          }
+        }
+    );
   }
 });
 
@@ -63,7 +68,13 @@ FlowRouter.route('/finances', {
 FlowRouter.route('/clients', {
   name: 'clientsList',
   action: function(params) {
-    renderLayoutWith(<ClientListing />);
+    //renderLayoutWith(<ClientListing />);
+    ReactLayout.render(App, {
+          content() {
+            return <ClientListing />;
+          }
+        }
+    );
   }
 });
 

@@ -7,7 +7,7 @@
  */
 
 const {RaisedButton, DatePicker, TextField, TimePicker, List, ListItem, ListDivider, Dialog, FlatButton, IconButton,
-    FontIcon, SelectField} = MUI;
+    FontIcon, SelectField, Snackbar} = MUI;
 
 ContractAdd = React.createClass({
 
@@ -68,7 +68,9 @@ ContractAdd = React.createClass({
     // validate data before client insert
     if (!name || !address || !phone || !email ) {
       // Make sAlert here for the error message
-      this.refs.clientModal.dismiss();
+      //sAlert.error('Fill out each field correctly!');
+      this.refs.errorSnackbar.show();
+      //this.refs.clientModal.dismiss();
     } else {
       // insert client document
       let newClientId = Clients.insert({
@@ -134,27 +136,43 @@ ContractAdd = React.createClass({
                     displayMember="name"
                     valueMember="_id"
                     ref="selectField" />
-
-                <IconButton
-                    iconClassName="material-icons add-circle"
+                
+                <RaisedButton
                     tooltip="Add New Client"
-                    onClick={this._toggleClientModal} />
+                    onClick={this._toggleClientModal}
+                    label="New Client"
+                    secondary={true} />
+
               </div>
               <div className="panel panel-default centered">
                 <p>Step 2: Fill out contract details</p>
 
-                <TextField
-                    hintText="Contract Title"
-                    ref="title"
-                    type="text" />
+                <div className="row">
+                  <div className="col-sm-6">
+                    <TextField
+                        hintText="Contract Title"
+                        ref="title"
+                        type="text" />
 
-                <TextField
-                    hintText="Price"
-                    type="number"
-                    min="0"
-                    ref="price" />
+                    <TextField
+                        hintText="Price"
+                        type="number"
+                        min="0"
+                        ref="price" />
 
-                <DatePicker hintText="Portrait Dialog" />
+                  </div>
+                  <div className="col-sm-6">
+
+                    <TextField
+                        hintText="Hours Estimation"
+                        type="number"
+                        min="0"
+                        ref="hourEstimation" />
+
+                    <DatePicker hintText="Contract Deadline" />
+                  </div>
+                </div>
+
 
               </div>
 
@@ -190,6 +208,11 @@ ContractAdd = React.createClass({
                     type="email" />
 
               </Dialog>
+
+              <Snackbar
+                  ref="errorSnackbar"
+                  message="Fill out all fields"
+                  action="okay"/>
 
             </form>
           </div>
