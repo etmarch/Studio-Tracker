@@ -11,7 +11,7 @@ Clients.attachSchema(new SimpleSchema({
     label: "Client Name"
   },
   address: {
-    type: String,
+    type: [Object],
     optional: true,
     max: 200,
     label: "Client Address"

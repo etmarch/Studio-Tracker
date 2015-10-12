@@ -1,10 +1,10 @@
 /*
-*
-* Transforms, security on Collections in Server
-*
-*/
+ *
+ * Contract Transforms, security on Collections in Server
+ *
+ */
 
-Clients.allow({
+Contracts.allow({
   insert: function (userId, doc) {
     return true;
   },

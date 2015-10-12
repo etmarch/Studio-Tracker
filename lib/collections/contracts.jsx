@@ -13,15 +13,17 @@ Contracts.attachSchema(new SimpleSchema({
     max: 200,
     label: "Contract Title"
   },
-  dateDue: {
+  dateDue: { // ToDo: if updated, automatically create note with reason why it was pushed back
     type: Date,
-    label: "Project Completion Date"
+    label: "Project Completion Date",
+    denyUpdate: false
   },
   costEstimation: { // Estimation of how much materials will cost Studio Marchand
     type: Number,
     label: "Estimated total costs of Project",
     optional: true
   },
+  // ToDo: List of common costs to choose from (Gas, Parking, etc..)
   costs: { // Array of all costs logged for this contract
     type: [Object],
     optional: true
@@ -34,7 +36,7 @@ Contracts.attachSchema(new SimpleSchema({
     type: String,
     optional: true
   },
-  'costs.$.price': { // Price of whatever the cost for the project was
+  'costs.$.amount': { // Actual monetary value
     type: Number,
     optional: true
   },
@@ -49,8 +51,16 @@ Contracts.attachSchema(new SimpleSchema({
     min: 0
   },
   notes: {
-    type: String,
+    type: [Object],
     label: "Comments/Notes",
+    optional: true
+  },
+  'notes.$.time': {
+    type: Date,
+    optional: true
+  },
+  'notes.$.content': {
+    type: String,
     optional: true
   },
   createdAt: {
@@ -83,12 +93,22 @@ Contracts.attachSchema(new SimpleSchema({
     optional: true,
     allowedValues: ['active', 'archived']
   },
-  // Keeping track of hours worked for this contract
-  // ToDo: May be better formatted as an array of objects logging start/stop times for 'live'
-  // For Now:
+  // ToDo: automatically update number when activity is posted
   currentHours: {
     type: Number,
     optional: true,
     min: 0
+  },
+  activity: {
+    type: [Object],
+    optional: true
+  },
+  'activity.$.timeStamp': {
+    type: Date,
+    optional: true
+  },
+  'activity.$.isLive': { // If switching live, set true, if ending session, set false
+    type: Boolean,
+    optional: true
   }
 }));

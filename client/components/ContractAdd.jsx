@@ -136,7 +136,7 @@ ContractAdd = React.createClass({
                     displayMember="name"
                     valueMember="_id"
                     ref="selectField" />
-                
+
                 <RaisedButton
                     tooltip="Add New Client"
                     onClick={this._toggleClientModal}
