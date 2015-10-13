@@ -21,6 +21,16 @@ FlowRouter.route('/', {
   }
 });
 
+// Contract Listing
+FlowRouter.route('/contracts', {
+  name: 'contractsList',
+  action: function(params) {
+    Utils.cl(this.name+'  '+JSON.stringify(params));
+    renderLayoutWith(<Dashboard />);
+  }
+});
+
+
 // New Contract
 FlowRouter.route('/contracts/add', {
   name: 'addContract ',
@@ -37,20 +47,19 @@ FlowRouter.route('/contracts/add', {
 });
 
 // Single Contract
-FlowRouter.route('/contract/:_id', {
-  name: 'showContract',
+FlowRouter.route('/contracts/:_id', {
+  name: 'contractSingle',
+  subscriptions: function(params) {
+    //this.register('singleContract', Meteor.subscribe('singleContract', params._id));
+  },
   action: function(params) {
     Utils.cl(this.name+'  '+JSON.stringify(params));
-    renderLayoutWith(<Dashboard />);
-  }
-});
-
-// Contract Listing
-FlowRouter.route('/contracts', {
-  name: 'contractsList',
-  action: function(params) {
-    Utils.cl(this.name+'  '+JSON.stringify(params));
-    renderLayoutWith(<Dashboard />);
+    ReactLayout.render(App, {
+          content() {
+            return <ContractSingle _id={params._id} />;
+          }
+        }
+    );
   }
 });
 
@@ -68,7 +77,6 @@ FlowRouter.route('/finances', {
 FlowRouter.route('/clients', {
   name: 'clientsList',
   action: function(params) {
-    //renderLayoutWith(<ClientListing />);
     ReactLayout.render(App, {
           content() {
             return <ClientListing />;

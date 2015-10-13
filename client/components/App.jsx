@@ -48,7 +48,7 @@ App = React.createClass({
           <AppCanvas className="">
             <Header liveState={this.state.liveContract}/>
 
-            <div className="container">
+            <div className="main container">
               {this.props.content()}
             </div>
           </AppCanvas>

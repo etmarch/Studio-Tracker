@@ -2,6 +2,10 @@ body {
     margin:0;
 }
 
+.main {
+    margin-top:1em;
+}
+
 .blocky {
     height:66px;
 }

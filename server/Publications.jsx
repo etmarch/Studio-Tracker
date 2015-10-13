@@ -14,7 +14,7 @@ Meteor.publish("allClients", function () {
 
 Meteor.publish("singleContract", function (contractId) {
   Meteor._sleepForMs(1000);
-  return Contracts.find({_id: contractId});
+  return Contracts.find({_id: contractId}); // ToDo: May need to switch this to findOne
 });
 
 Meteor.publish("singleClient", function (clientId) {

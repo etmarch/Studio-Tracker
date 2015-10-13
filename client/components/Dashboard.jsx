@@ -34,14 +34,19 @@ Dashboard = React.createClass({
     }
   },
 
-
+  _navigateToContract(event) {
+    //event.preventDefault();
+    //FlowRouter.go(`/contracts/${ this.props._id }`);
+  },
 
   renderContracts() {
     // Get contracts from this.data.contracts
     return this.data.contracts.map((contract) => {
+      let contractPath = `/contracts/${ contract._id}`;
       return <div><ListItem
           key={contract._id}
-          primaryText={Utils.getClientName(contract.clientId)}
+          primaryText={<a href={contractPath}>{contract.title}</a>}
+          //onClick={this._navigateToContract}
           initiallyOpen={true}
           leftCheckbox={<Checkbox name="checky" /> }
           secondaryText={<FlatButton label={moment(contract.dateDue).format('hh:mm:ss A L')}>{contract.price}</FlatButton>}

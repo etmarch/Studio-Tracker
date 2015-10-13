@@ -5,20 +5,11 @@
 
 const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles, RaisedButton} = MUI;
 
-// Init the material-ui framework
-//const ThemeManager = new MUI.Styles.ThemeManager();
-
 ClientListing = React.createClass({
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
-
-  /*getChildContext: function() {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme()
-    };
-  },*/
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -32,8 +23,6 @@ ClientListing = React.createClass({
       dataLoading: ! handle.ready()
     }
   },
-
-
 
   renderClients() {
     let avatarStyle = {width: 40};
@@ -66,3 +55,16 @@ ClientListing = React.createClass({
     }
   }
 });
+
+
+/*
+  OLD CODE:
+
+ // Init the material-ui framework
+ //const ThemeManager = new MUI.Styles.ThemeManager();
+
+ getChildContext: function() {
+ return {
+ muiTheme: ThemeManager.getCurrentTheme()
+ };
+ },*/
