@@ -38,7 +38,8 @@ Contracts.attachSchema(new SimpleSchema({
   },
   'costs.$.amount': { // Actual monetary value
     type: Number,
-    optional: true
+    optional: true,
+    decimal: true
   },
   price: { // price the client is being charged (price of the project according to contract)
     type: Number,
@@ -96,6 +97,7 @@ Contracts.attachSchema(new SimpleSchema({
   // ToDo: automatically update number when activity is posted
   currentHours: {
     type: Number,
+    decimal: true,
     optional: true,
     min: 0
   },

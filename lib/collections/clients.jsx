@@ -11,13 +11,13 @@ Clients.attachSchema(new SimpleSchema({
     label: "Client Name"
   },
   address: {
-    type: [Object],
+    type: String,
     optional: true,
     max: 200,
     label: "Client Address"
   },
   phone: {
-    type: Number,
+    type: String,
     optional: true,
     label: "Client Phone Number"
   },

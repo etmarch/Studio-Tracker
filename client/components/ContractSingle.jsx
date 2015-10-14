@@ -39,6 +39,38 @@ ContractSingle = React.createClass({
     Utils.cl(this.props._id+' Is PROP ID');
   },
 
+  _renderCosts() {
+    return this.data.contract.costs.map((cost) => {
+      Utils.clJ(cost);
+      return <ListItem
+            key={cost.date}
+            primaryText={cost.content}
+            secondaryText={cost.amount} />
+    });
+  },
+
+  _renderActivities() {
+    if (this.data.contract.activity) {
+      return this.data.contract.activity.map((activity) => {
+        Utils.clJ(activity);
+        return <ListItem
+            key={activity.timeStamp}
+            primaryText={activity.isLive}/>
+      });
+    } else {
+      return (<div>No activity yet, get working!</div>);
+    }
+  },
+
+  _renderNotes() {
+    return this.data.contract.notes.map((note) => {
+      Utils.clJ(note);
+      return <ListItem
+          key={note.time}
+          primaryText={note.content} />
+    });
+  },
+
   renderClients() {
     let avatarStyle = {width: 40};
     // Get contracts from this.data.contracts
@@ -66,10 +98,27 @@ ContractSingle = React.createClass({
             <div className="jumbotron-sm">
               <Card>
                 <CardHeader
-                    title={this.data.contract.title}
+                    title={<h2>{this.data.contract.title}</h2>}
                     subtitle={moment(this.data.contract.createdAt).format('L')} />
                 <CardText>
-                  <p>{this.data.contract.price}</p>
+                  <div className="panel panel-default">
+                    <span>EST: {this.data.contract.hoursEstimation}</span>
+                    <span>ACT: {this.data.contract.currentHours}</span>
+                    <span>DUE: {this.data.contract.dateDue}</span>
+                    <span>{this._renderNotes()}</span>
+                  </div>
+                  <div className="panel panel-default">
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <h4>Activity Log:</h4>
+                        <span>{this._renderActivities()}</span>
+                      </div>
+                      <div className="col-sm-6">
+                        <h4>Costs:</h4>
+                        <span>{this._renderCosts()}</span>
+                      </div>
+                    </div>
+                  </div>
                 </CardText>
               </Card>
             </div>

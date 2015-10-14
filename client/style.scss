@@ -1,0 +1,68 @@
+/*
+    Common Components
+*/
+
+body {
+    margin:0;
+}
+
+.main {
+    margin-top:1em;
+}
+
+
+/*
+ * Helpers
+ */
+
+
+.centered {
+    text-align: center;
+}
+
+/*
+ * Header
+ */
+
+.live-light {
+    display: inline-block;
+    border:1px solid grey;
+    width:30px;
+    height:30px;
+    border-radius: 100%;
+    vertical-align: middle;
+    background:lightgray;
+    .active {
+        background:lime;
+    }
+}
+
+.clockFont {
+    margin-right: 20%;
+    > h3 {
+        margin: 0;
+        padding-top: 0;
+        letter-spacing: 0;
+        font-size: 20px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.87);
+        line-height: 64px;
+    }
+}
+
+
+/*
+ * Single Contract
+ */
+
+
+
+/*
+ * Icons
+ */
+
+.pizza-icon:before { content: "local_pizza"; }
+
+.add-circle:before { content: "add_circle"; }
+
+.schedule:before { content: "schedule"; }
