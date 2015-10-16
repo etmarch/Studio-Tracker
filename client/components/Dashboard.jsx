@@ -3,10 +3,20 @@
 
 const Colors = MUI.Styles.Colors;
 
-const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles} = MUI;
+const {
+    Avatar,
+    Checkbox,
+    List,
+    ListItem,
+    ListDivider,
+    FlatButton,
+    Styles
+    } = MUI;
+
 
 // Init the material-ui framework
-const ThemeManager = new MUI.Styles.ThemeManager();
+const {ThemeManager, LightRawTheme} = Styles;
+
 
 Dashboard = React.createClass({
 
@@ -16,10 +26,10 @@ Dashboard = React.createClass({
 
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
     };
   },
-
+  
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
 

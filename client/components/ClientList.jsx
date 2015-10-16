@@ -3,7 +3,16 @@
 
 //const Colors = MUI.Styles.Colors;
 
-const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles, RaisedButton} = MUI;
+const {
+    Avatar,
+    Checkbox,
+    List,
+    ListItem,
+    ListDivider,
+    FlatButton,
+    Styles,
+    RaisedButton
+    } = MUI;
 
 ClientListing = React.createClass({
 
@@ -55,16 +64,3 @@ ClientListing = React.createClass({
     }
   }
 });
-
-
-/*
-  OLD CODE:
-
- // Init the material-ui framework
- //const ThemeManager = new MUI.Styles.ThemeManager();
-
- getChildContext: function() {
- return {
- muiTheme: ThemeManager.getCurrentTheme()
- };
- },*/

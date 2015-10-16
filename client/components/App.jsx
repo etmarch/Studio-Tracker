@@ -3,13 +3,17 @@
 //let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
 
 // Material-UI Componenets
-const {AppCanvas, Paper} = MUI;
+const {
+    AppCanvas,
+    Paper,
+    Styles
+    } = MUI;
 
 // Reference Styles.Colors global variable
 const Colors = MUI.Styles.Colors;
 
 // Init the material-ui framework
-const ThemeManager = new MUI.Styles.ThemeManager();
+const {ThemeManager, LightRawTheme} = Styles;
 
 // App component - represents the whole app
 App = React.createClass({
@@ -20,7 +24,7 @@ App = React.createClass({
 
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
     };
   },
 
