@@ -89,6 +89,11 @@ Contracts.attachSchema(new SimpleSchema({
     optional: false,
     denyUpdate: true
   },
+  clientName: {
+    type: String,
+    optional: true,
+    denyUpdate: true
+  },
   status: { // status of the contract - either 'active' or 'archived'
     type: String,
     optional: true,

@@ -43,7 +43,7 @@ ContractAdd = React.createClass({
 
   submitContractForm(e) {
     e.preventDefault();
-    Utils.cl(this);
+    Utils.clJ(this);
   },
 
   // Display the Modal
@@ -122,7 +122,7 @@ ContractAdd = React.createClass({
       return (<Loading />);
     } else {
       return (
-          <div className="jumbotron">
+          <div className="">
             <h3 className="centered">Add Contract</h3>
             <form className="form add-contract" onSubmit={this.submitContractForm}>
               <div className="panel panel-default centered">

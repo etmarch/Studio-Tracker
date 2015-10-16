@@ -1,12 +1,37 @@
 // Single Contract Page View
 
+// ToDo: Make prompt for when pressing the activate contract button.
 
 //const Colors = MUI.Styles.Colors;
 
-const {Checkbox, List, ListItem, ListDivider, FlatButton, Avatar, Styles, RaisedButton, Card, CardHeader, CardText} = MUI;
+const {
+    Checkbox,
+    List,
+    ListItem,
+    ListDivider,
+    FlatButton,
+    FloatingActionButton,
+    FontIcon,
+    Avatar,
+    Styles,
+    RaisedButton,
+    Card,
+    CardHeader,
+    CardText,
+    Tabs,
+    Tab,
+    Table,
+    TableHeader,
+    TableHeaderColumn,
+    TableBody,
+    TableRow,
+    TableRowColumn
+    } = MUI;
 
 // Init the material-ui framework
 //const ThemeManager = new MUI.Styles.ThemeManager();
+
+const Colors = MUI.Styles.Colors;
 
 ContractSingle = React.createClass({
 
@@ -28,10 +53,13 @@ ContractSingle = React.createClass({
     let query = {};
     var contractId = FlowRouter.getParam("_id");
     let contractHandle = Meteor.subscribe("singleContract", this.props._id );
+    let activeSession = Session.get('isLive');
     //let clientHandle = Meteor.subscribe("singleClient", this.props._id );
     return {
       contract: Contracts.findOne(contractId),
-      dataLoading: ! contractHandle.ready()
+      dataLoading: ! contractHandle.ready(),
+      isCurrentLive: activeSession
+
     }
   },
 
@@ -40,51 +68,94 @@ ContractSingle = React.createClass({
   },
 
   _renderCosts() {
-    return this.data.contract.costs.map((cost) => {
-      Utils.clJ(cost);
-      return <ListItem
-            key={cost.date}
-            primaryText={<p><span className="pull-left">{cost.content}</span><span className="pull-right">${cost.amount}</span></p>} />
+    Utils.clJ(this.data.contract.costs);
+    if (!this.data.contract.costs) {
+      return <div>No Costs Yet!</div>;
+    }
+
+    let costRows = this.data.contract.costs.map((cost) => {
+      return <TableRow key={cost.date}>
+        <TableRowColumn>{moment(cost.date).format('L')}</TableRowColumn>
+        <TableRowColumn>{cost.content}</TableRowColumn>
+        <TableRowColumn>${cost.amount}</TableRowColumn>
+      </TableRow>
     });
+
+    return (
+        <Table>
+          <TableHeader
+              adjustForCheckbox={false}
+              displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Cost'>What</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Amount'>Amount</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {costRows}
+          </TableBody>
+        </Table>
+    );
   },
 
   _renderActivities() {
-    if (this.data.contract.activity) {
-      return this.data.contract.activity.map((activity) => {
-        Utils.clJ(activity);
-        return <ListItem
-            key={activity.timeStamp}
-            primaryText={activity.isLive}/>
-      });
-    } else {
-      return (<div>No activity yet, get working!</div>);
+    Utils.clJ(this.data.contract.activity);
+    if (!this.data.contract.activity) {
+      return <div className="centered">No activity yet, get working!</div>;
     }
+
+    let activityRows = this.data.contract.activity.map((activity) => {
+      //Utils.clJ(activity);
+      return <TableRow key={activity.timeStamp}>
+        <TableRowColumn>{activity.timeStamp}</TableRowColumn>
+        <TableRowColumn>{activity.isLive}</TableRowColumn>
+      </TableRow>
+    });
+
+    return (
+        <Table>
+          <TableHeader
+              adjustForCheckbox={false}
+              displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Cost'>Live</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {activityRows}
+          </TableBody>
+        </Table>
+    );
   },
 
   _renderNotes() {
-    return this.data.contract.notes.map((note) => {
-      Utils.clJ(note);
+    if (!this.data.contract.notes) {
+      return <div className="centered">No Notes Yet!</div>;
+    }
+    let noteRows = this.data.contract.notes.map((note) => {
       return <ListItem
           key={note.time}
-          primaryText={note.content} />
+          primaryText={note.content}
+          rightAvatar={<FlatButton label={moment(note.time).format('L')} />} />
     });
+    return <List>{noteRows}</List>;
   },
 
-  renderClients() {
-    let avatarStyle = {width: 40};
-    // Get contracts from this.data.contracts
-    return this.data.clients.map((client) => {
+  activeButtonPress() { // This will turn the state of app to 'live' and the 'isLive' field to true of current app
+    Utils.cl("Button Pressed!");
+    if (!this.data.isCurrentLive) {
+      Session.set('isLive', true);
+    } else {
+      Session.set('isLive', false);
+    }
+  },
 
-      return <div><ListItem
-          key={client._id}
-          primaryText={client.name}
-          initiallyOpen={true}
-          leftCheckbox={<Avatar style={avatarStyle}>{client.name.charAt(0)}</Avatar>}
-          secondaryText={client.email+'  '+client.phone+'  '+client.address}
-          rightAvatar={<RaisedButton label="View Contracts" primary={true} />} />
-        <ListDivider inset={false} />
-      </div>
-    });
+  clientLink() {
+    Utils.cl(FlowRouter.path('client', this.data.contract.clientId));
+    let clientPath = "/clients/"+this.data.contract.clientId;
+    return <a href={clientPath}><Avatar />{this.data.contract.clientName ? this.data.contract.clientName.charAt(0) : "A"}</a>;
   },
 
   render () {
@@ -94,29 +165,44 @@ ContractSingle = React.createClass({
     } else {
       return (
           <div className="row">
-            <div className="jumbotron-sm">
+            <div className="">
               <Card>
                 <CardHeader
-                    title={<h2>{this.data.contract.title}   Due: {moment(this.data.contract.createdAt).format('L')}</h2>} />
+                    title={this.data.contract.title}
+                    subtitle={this.data.contract.clientName ? this.data.contract.clientName : this.data.contract.clientId}
+                    avatar={this.clientLink()}/>
                 <CardText>
+
+                  <div className="centered active-button">
+                    <FloatingActionButton onClick={this.activeButtonPress} backgroundColor={(this.data.isCurrentLive ? Colors.red300 : Colors.green300)}>
+                      <FontIcon className="material-icons add-circle" />
+                    </FloatingActionButton>
+                  </div>
+
                   <div className="panel panel-default">
-                    <span className="label label-primary">EST: {this.data.contract.hoursEstimation}</span>
-                    <span className="label label-info">ACT: {this.data.contract.currentHours}</span>
+                    <span className="label label-primary">EST: {this.data.contract.hoursEstimation} hrs</span>
+                    <span className="label label-info">ACT: {this.data.contract.currentHours} hrs</span>
+                    <span className="label label-warning">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hoursEstimation) * 100)}% EST</span>
+                    <span className="label label-default">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </span>
                     <span className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</span>
-                    <span>{this._renderNotes()}</span>
                   </div>
-                  <div className="panel panel-default">
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <h4>Activity Log:</h4>
-                        <span>{this._renderActivities()}</span>
-                      </div>
-                      <div className="col-sm-6">
-                        <h4>Costs:</h4>
-                        <span>{this._renderCosts()}</span>
-                      </div>
-                    </div>
-                  </div>
+
+                  <Tabs>
+                    <Tab label="Activity">
+                      <h4>Activity Log:</h4>
+                      {this._renderActivities()}
+                    </Tab>
+
+                    <Tab label="Costs">
+                      {this._renderCosts()}
+                    </Tab>
+
+                    <Tab label="Notes">
+                      <h4>Notes</h4>
+                      {this._renderNotes()}
+                    </Tab>
+                  </Tabs>
+
                 </CardText>
               </Card>
             </div>
@@ -128,3 +214,9 @@ ContractSingle = React.createClass({
 
 
 // Example of Diffing time to future: moment(this.data.contract.createdAt).to(moment(this.data.contract.dateDue))
+
+/*<GridList cols={3}>
+ <GridTile title={this.data.contract.hoursEstimation} />
+ <GridTile title={this.data.contract.currentHours} />
+ <GridTile title="hi" />
+ </GridList>*/

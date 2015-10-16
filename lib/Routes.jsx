@@ -7,6 +7,11 @@
  };
  */
 
+// Setting the class on the root element
+ReactLayout.setRootProps({
+  className: "app-canvas"
+});
+
 // Home - Dashboard
 FlowRouter.route('/', {
   name: 'dashboard',
@@ -76,6 +81,20 @@ FlowRouter.route('/finances', {
 // Expenses and Payments Listing Across all contracts
 FlowRouter.route('/clients', {
   name: 'clientsList',
+  action: function(params) {
+    ReactLayout.render(App, {
+          content() {
+            return <ClientListing />;
+          }
+        }
+    );
+  }
+});
+
+
+// Single Client Route
+FlowRouter.route('/clients/:_id', {
+  name: 'client',
   action: function(params) {
     ReactLayout.render(App, {
           content() {

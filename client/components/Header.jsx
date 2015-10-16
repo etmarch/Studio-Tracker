@@ -20,7 +20,8 @@ Header = React.createClass({
   getMeteorData() {
     return {
       currentUser: Meteor.user(),
-      currentTime: TimeSync.serverTime(null, 1000)
+      currentTime: TimeSync.serverTime(null, 1000),
+      isLiveSession: Session.get('isLive')
     }
   },
 
@@ -48,7 +49,7 @@ Header = React.createClass({
     let clockPanel = (
           <span className="clockFont"><h3>
             <FontIcon className="material-icons schedule" style={fontStyle} />
-            {moment(this.data.currentTime).format('h:mm:ss A    M/D')}</h3>
+            {moment(this.data.currentTime).format('LLLL')}</h3>
           </span>
     );
 
@@ -68,14 +69,14 @@ Header = React.createClass({
       return (
           <div>
             <AppBar
-                title="Studio Marchand Contract Manager"
+                title="Studio Tracker"
                 onLeftIconButtonTouchTap={this._toggleLeftNav}
                 className="container-fluid">
 
               {clockPanel}
 
               <LiveLight
-                  isLiveContract={this.props.liveState}/>
+                  isLiveContract={this.data.isLiveSession}/>
 
             </AppBar>
 

@@ -3,7 +3,7 @@
 //let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
 
 // Material-UI Componenets
-const {AppCanvas} = MUI;
+const {AppCanvas, Paper} = MUI;
 
 // Reference Styles.Colors global variable
 const Colors = MUI.Styles.Colors;
@@ -45,13 +45,13 @@ App = React.createClass({
       return (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>)
     } else {
       return (
-          <AppCanvas className="">
+          <div>
             <Header liveState={this.state.liveContract}/>
 
-            <div className="main container">
+            <Paper zDepth={1} className="main container">
               {this.props.content()}
-            </div>
-          </AppCanvas>
+            </Paper>
+          </div>
       );
     }
   }

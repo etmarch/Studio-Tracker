@@ -6,8 +6,14 @@ body {
     margin:0;
 }
 
+.app-canvas {
+    background: rgb(238, 238, 238);
+    padding-bottom:1em;
+}
+
 .main {
     margin-top:1em;
+    margin-bottom:1em;
 }
 
 
@@ -18,6 +24,11 @@ body {
 
 .centered {
     text-align: center;
+}
+
+.label {
+    font-size:1.1em;
+    font-weight: 300;
 }
 
 /*
@@ -32,7 +43,7 @@ body {
     border-radius: 100%;
     vertical-align: middle;
     background:lightgray;
-    .active {
+    &.active {
         background:lime;
     }
 }
