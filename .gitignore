@@ -24,3 +24,5 @@
 .meteor/release
 
 .meteor/versions
+
+.idea/watcherTasks.xml

@@ -44,8 +44,7 @@ ContractSingle = React.createClass({
       Utils.clJ(cost);
       return <ListItem
             key={cost.date}
-            primaryText={cost.content}
-            secondaryText={cost.amount} />
+            primaryText={<p><span className="pull-left">{cost.content}</span><span className="pull-right">${cost.amount}</span></p>} />
     });
   },
 
@@ -98,13 +97,12 @@ ContractSingle = React.createClass({
             <div className="jumbotron-sm">
               <Card>
                 <CardHeader
-                    title={<h2>{this.data.contract.title}</h2>}
-                    subtitle={moment(this.data.contract.createdAt).format('L')} />
+                    title={<h2>{this.data.contract.title}   Due: {moment(this.data.contract.createdAt).format('L')}</h2>} />
                 <CardText>
                   <div className="panel panel-default">
-                    <span>EST: {this.data.contract.hoursEstimation}</span>
-                    <span>ACT: {this.data.contract.currentHours}</span>
-                    <span>DUE: {this.data.contract.dateDue}</span>
+                    <span className="label label-primary">EST: {this.data.contract.hoursEstimation}</span>
+                    <span className="label label-info">ACT: {this.data.contract.currentHours}</span>
+                    <span className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</span>
                     <span>{this._renderNotes()}</span>
                   </div>
                   <div className="panel panel-default">
