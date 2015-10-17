@@ -84,7 +84,7 @@ Header = React.createClass({
                 ref="leftNav"
                 docked={false}
                 menuItems={sideMenuLinks}
-                header={<h3 className='logo'>Navigation</h3>}
+                header={<h3 className='logo centered'>Navigation</h3>}
                 onChange={this._leftNavChange}/>
           </div>
       )

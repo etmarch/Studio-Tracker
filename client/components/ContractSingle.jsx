@@ -153,7 +153,6 @@ ContractSingle = React.createClass({
   },
 
   clientLink() {
-    Utils.cl(FlowRouter.path('client', this.data.contract.clientId));
     let clientPath = "/clients/"+this.data.contract.clientId;
     return <a href={clientPath}><Avatar />{this.data.contract.clientName ? this.data.contract.clientName.charAt(0) : "A"}</a>;
   },

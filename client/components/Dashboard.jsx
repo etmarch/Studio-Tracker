@@ -13,10 +13,8 @@ const {
     Styles
     } = MUI;
 
-
 // Init the material-ui framework
 const {ThemeManager, LightRawTheme} = Styles;
-
 
 Dashboard = React.createClass({
 
@@ -29,7 +27,7 @@ Dashboard = React.createClass({
       muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
     };
   },
-  
+
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
 

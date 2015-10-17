@@ -45,14 +45,7 @@ ContractAdd = React.createClass({
     e.preventDefault();
     Utils.clJ(this);
   },
-
-  // Display the Modal
-  _toggleClientModal(e) {
-    e.preventDefault();
-    Utils.cl("Dialog Toggled!");
-    this.refs.clientModal.show();
-  },
-
+  
   // Insert the Client doc + Hide the Modal
   _onDialogSubmit() {
     // retrieve input values
@@ -105,13 +98,9 @@ ContractAdd = React.createClass({
 
 
   render () {
-    //let totalClientList = this.data.clientList;
     let clientListLength = this.data.clientList.length;
     let concatClientList = this.data.clientList.concat({_id: clientListLength, name: 'Add New Client'});
 
-    //console.log(totalClientList);
-    //console.log(allClients);
-    //Standard Actions
     let contractModalActions = [
       { text: 'Cancel' },
       { text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit' }
@@ -136,12 +125,6 @@ ContractAdd = React.createClass({
                     displayMember="name"
                     valueMember="_id"
                     ref="selectField" />
-
-                <RaisedButton
-                    tooltip="Add New Client"
-                    onClick={this._toggleClientModal}
-                    label="New Client"
-                    secondary={true} />
 
               </div>
               <div className="panel panel-default centered">
