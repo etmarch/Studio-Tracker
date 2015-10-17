@@ -18,8 +18,13 @@ Meteor.publish("singleContract", function (contractId) {
 });
 
 Meteor.publish("singleClient", function (clientId) {
-  Meteor._sleepForMs(1000);
+  Meteor._sleepForMs(500);
   return Clients.find({_id: clientId});
+});
+
+Meteor.publish("singleClientContracts", function (clientId) {
+  Meteor._sleepForMs(500);
+  return Contracts.find({clientId: clientId});
 });
 
 // All user data - for dev purposes only

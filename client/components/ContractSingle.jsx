@@ -39,11 +39,9 @@ ContractSingle = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  /*getChildContext: function() {
-   return {
-   muiTheme: ThemeManager.getCurrentTheme()
-   };
-   },*/
+  propTypes: {
+    contractId: String
+  },
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -52,11 +50,11 @@ ContractSingle = React.createClass({
   getMeteorData() {
     let query = {};
     var contractId = FlowRouter.getParam("_id");
-    let contractHandle = Meteor.subscribe("singleContract", this.props._id );
+    let contractHandle = Meteor.subscribe("singleContract", this.props.contractId );
     let activeSession = Session.get('isLive');
     //let clientHandle = Meteor.subscribe("singleClient", this.props._id );
     return {
-      contract: Contracts.findOne(contractId),
+      contract: Contracts.findOne(this.props.contractId),
       dataLoading: ! contractHandle.ready(),
       isCurrentLive: activeSession
 
@@ -64,7 +62,7 @@ ContractSingle = React.createClass({
   },
 
   _logger() {
-    Utils.cl(this.props._id+' Is PROP ID');
+    Utils.cl(this.props.contractId+' Is PROP ID');
   },
 
   _renderCosts() {

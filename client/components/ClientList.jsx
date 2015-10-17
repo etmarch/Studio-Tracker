@@ -37,10 +37,10 @@ ClientListing = React.createClass({
     let avatarStyle = {width: 40};
     // Get contracts from this.data.contracts
     return this.data.clients.map((client) => {
-
+      let clientPath = `/clients/${ client._id}`;
       return <div><ListItem
           key={client._id}
-          primaryText={client.name}
+          primaryText={<a href={clientPath}>{client.name}</a>}
           initiallyOpen={true}
           leftCheckbox={<Avatar style={avatarStyle}>{client.name.charAt(0)}</Avatar>}
           secondaryText={client.email+'  '+client.phone+'  '+client.address}

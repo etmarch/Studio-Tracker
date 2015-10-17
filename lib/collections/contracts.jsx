@@ -134,5 +134,9 @@ Contracts.attachSchema(new SimpleSchema({
   'activity.$.isLive': { // If switching live, set true, if ending session, set false
     type: Boolean,
     optional: true
+  },
+  address: {
+    type: String,
+    optional: true
   }
 }));

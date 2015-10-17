@@ -66,6 +66,7 @@ ContractAdd = React.createClass({
     let costEstimation = Number(this.refs.costEstimation.getValue());
     let note = this.refs.note.getValue();
     let clientId = this.state.selectedId;
+    let address = this.refs.address.getValue();
 
     Utils.cl("price: "+price);
 
@@ -94,7 +95,8 @@ ContractAdd = React.createClass({
       hourEstimation: hourEstimation,
       costEstimation: costEstimation,
       notes: addedNote,
-      clientId: clientId
+      clientId: clientId,
+      address: address
     };
 
     Utils.clJ(contractData);
@@ -210,6 +212,11 @@ ContractAdd = React.createClass({
                 <TextField
                     hintText="Contract Title"
                     ref="title"
+                    type="text" />
+
+                <TextField
+                    hintText="Address of Contract"
+                    ref="address"
                     type="text" />
 
                 <DatePicker

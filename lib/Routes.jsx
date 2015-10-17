@@ -54,14 +54,11 @@ FlowRouter.route('/contracts/add', {
 // Single Contract
 FlowRouter.route('/contracts/:_id', {
   name: 'contractSingle',
-  subscriptions: function(params) {
-    //this.register('singleContract', Meteor.subscribe('singleContract', params._id));
-  },
   action: function(params) {
-    Utils.cl(this.name+'  '+JSON.stringify(params));
+    //Utils.cl(this.name+'  '+JSON.stringify(params));
     ReactLayout.render(App, {
           content() {
-            return <ContractSingle _id={params._id} />;
+            return <ContractSingle contractId={params._id} />;
           }
         }
     );
@@ -98,7 +95,7 @@ FlowRouter.route('/clients/:_id', {
   action: function(params) {
     ReactLayout.render(App, {
           content() {
-            return <ClientListing />;
+            return <ClientSingle clientId={params._id} />;
           }
         }
     );
