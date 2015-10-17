@@ -49,7 +49,7 @@ Header = React.createClass({
     let clockPanel = (
           <span className="clockFont"><h3>
             <FontIcon className="material-icons schedule" style={fontStyle} />
-            {moment(this.data.currentTime).format('LLLL')}</h3>
+            {moment(this.data.currentTime).format("h:mm A  dddd, MMMM Do YYYY")}</h3>
           </span>
     );
 

@@ -179,9 +179,9 @@ ContractSingle = React.createClass({
                   </div>
 
                   <div className="panel panel-default">
-                    <span className="label label-primary">EST: {this.data.contract.hoursEstimation} hrs</span>
+                    <span className="label label-primary">EST: {this.data.contract.hourEstimation} hrs</span>
                     <span className="label label-info">ACT: {this.data.contract.currentHours} hrs</span>
-                    <span className="label label-warning">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hoursEstimation) * 100)}% EST</span>
+                    <span className="label label-warning">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</span>
                     <span className="label label-default">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </span>
                     <span className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</span>
                   </div>

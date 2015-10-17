@@ -27,13 +27,13 @@ Meteor.methods({
       price: Number,
       hourEstimation: Number,
       costEstimation: Number,
-      note: Object,
+      notes: [Object],
       clientId: String
     });
 
     // ToDo: add additional security (relying on schemas right now)
 
-    //Utils.clJ(contract);
+    Utils.clJ(contract);
 
     let clientName = Clients.findOne(contract.clientId).name;
 

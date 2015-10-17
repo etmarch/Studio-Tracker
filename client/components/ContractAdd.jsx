@@ -77,10 +77,10 @@ ContractAdd = React.createClass({
 
     let addedNote = {}; // Store note object, but only modified if there is a note
     if (note) {
-      addedNote = {
+      addedNote = [{
         time: new Date(),
         content: note
-      }
+      }]
     }
 
     if (clientId !== this.state.selectedId) {
@@ -93,9 +93,11 @@ ContractAdd = React.createClass({
       price: price,
       hourEstimation: hourEstimation,
       costEstimation: costEstimation,
-      note: addedNote,
+      notes: addedNote,
       clientId: clientId
     };
+
+    Utils.clJ(contractData);
 
     // Call Server Insert Function
     Meteor.call('contractInsert', contractData, (error, newContractId) => {
