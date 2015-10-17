@@ -41,12 +41,29 @@ Contracts.attachSchema(new SimpleSchema({
     optional: true,
     decimal: true
   },
+  payments: { // Array of all costs logged for this contract
+    type: [Object],
+    optional: true
+  },
+  'payments.$.date': { // Each new cost will have date automatically attached
+    type: Date,
+    optional: true
+  },
+  'payments.$.content': { // Message for what the cost was spent on
+    type: String,
+    optional: true
+  },
+  'payments.$.amount': { // Actual monetary value
+    type: Number,
+    optional: true,
+    decimal: true
+  },
   price: { // price the client is being charged (price of the project according to contract)
     type: Number,
     label: "Price ($) of Project",
     min: 0
   },
-  hoursEstimation: {
+  hourEstimation: {
     type: Number,
     label: "Estimate number of hours project will take",
     min: 0

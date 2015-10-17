@@ -21,13 +21,31 @@ Contracts.allow({
 Meteor.methods({
   contractInsert: function(contract) {
     check(this.userId, String);
+    check(contract, {
+      title: String,
+      dateDue: Date,
+      price: Number,
+      hourEstimation: Number,
+      costEstimation: Number,
+      note: Object,
+      clientId: String
+    });
 
     // ToDo: add additional security (relying on schemas right now)
 
-    // Make sure method is running on server and not client
-    // https://github.com/themeteorchef/server-only-methods/blob/master/server/methods/update-user-name.js
+    //Utils.clJ(contract);
 
-    var contractId = Contracts.insert(contract);
+    let clientName = Clients.findOne(contract.clientId).name;
+
+    let fullContract = _.extend(contract, {
+      currentHours: 0,
+      status: 'active',
+      clientName: clientName
+    });
+
+    //Utils.clJ(fullContract);
+
+    var contractId = Contracts.insert(fullContract);
     if (!contractId) {
       throw new Meteor.Error(422, 'Insert not done properly');
     } else {
