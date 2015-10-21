@@ -52,9 +52,9 @@ App = React.createClass({
           <div>
             <Header liveState={this.state.liveContract}/>
 
-            <Paper zDepth={1} className="main container">
+            <div className="container">
               {this.props.content()}
-            </Paper>
+            </div>
           </div>
       );
     }

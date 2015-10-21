@@ -308,39 +308,6 @@ ContractAdd = React.createClass({
   }
 });
 
-// Renders the list of clients with a button "add new client" underneath
-// Props: clientList - list of all clients data
-// Actions: onClick on a client item - step 2 of the form
-/*
- ClientAddForm = React.createClass({
- propTypes: {
-
- },
-
- contextTypes: {
- muiTheme: React.PropTypes.object
- },
-
- render() {
-
-
- return (
- <Dialog
- title="Dialog With Standard Actions"
- actions={contractModalActions}
- actionFocus="submit"
- //modal={this.state.modal}
- ref="contractModal">
-
- <TextField
- hintText="Client Name"
- ref="name"
- type="text" />
-
- </Dialog>
- )
- }
- });*/
 
 // Sample Icon HTML Elements
 
