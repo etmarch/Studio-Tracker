@@ -28,9 +28,6 @@ const {
     TableRowColumn
     } = MUI;
 
-// Init the material-ui framework
-//const ThemeManager = new MUI.Styles.ThemeManager();
-
 const Colors = MUI.Styles.Colors;
 
 ContractSingle = React.createClass({
@@ -65,6 +62,7 @@ ContractSingle = React.createClass({
     Utils.cl(this.props.contractId+' Is PROP ID');
   },
 
+  // ToDo: Put this into own component
   _renderCosts() {
     Utils.clJ(this.data.contract.costs);
     if (!this.data.contract.costs) {
