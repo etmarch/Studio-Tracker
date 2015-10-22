@@ -177,6 +177,48 @@ ContractAdd = React.createClass({
     let minDate = new Date();
     let maxDate = moment(new Date()).add(1, 'y').toDate();
 
+    let dialogHere = (
+        <Dialog
+            title="Enter New Client's Information"
+            actions={contractModalActions}
+            style={{"textAlign":"center"}}
+            actionFocus="submit"
+            modal={this.state.modal}
+            ref="clientModal">
+          <p>
+            <TextField
+                hintText="Client Name"
+                style={{"marginRight":"10px"}}
+                ref="cName"
+                type="text" />
+
+            <TextField
+                hintText="Client Address"
+                ref="cAddress"
+                type="text" />
+          </p>
+          <p>
+            <TextField
+                hintText="Client Phone"
+                style={{"marginRight":"10px"}}
+                ref="cPhone"
+                type="number" />
+
+            <TextField
+                hintText="Client Email Address"
+                ref="cEmail"
+                type="email" />
+          </p>
+        </Dialog>
+    );
+
+    let spanStyle = {
+      margin: "0 10px",
+      display: "inline-block",
+      verticalAlign: "top",
+      paddingTop: "5px"
+    };
+
     // check if Clients data is ready
     if (this.data.clientsLoading) {
       return (<Loading />);
@@ -197,6 +239,9 @@ ContractAdd = React.createClass({
                     valueMember="_id"
                     ref="selectField" />
 
+                <div style={spanStyle}>
+                  <span className="label label-default">OR</span>
+                </div>
                 <RaisedButton
                     primary={true}
                     labelPosition="after"
@@ -205,51 +250,22 @@ ContractAdd = React.createClass({
                   <FontIcon className="material-icons person-add" />
                   <span className="font-btn">Add Client</span>
                 </RaisedButton>
-                <Dialog
-                    title="Enter New Client's Information"
-                    actions={contractModalActions}
-                    actionFocus="submit"
-                    modal={this.state.modal}
-                    ref="clientModal">
-
-                  <TextField
-                      hintText="Client Name"
-                      ref="cName"
-                      type="text" />
-
-                  <TextField
-                      hintText="Client Address"
-                      ref="cAddress"
-                      type="text" />
-
-
-                  <TextField
-                      hintText="Client Phone"
-                      ref="cPhone"
-                      type="number" />
-
-
-                  <TextField
-                      hintText="Client Email Address"
-                      ref="cEmail"
-                      type="email" />
-
-                </Dialog>
 
               </div>
+
               <div className="panel panel-default">
                 <p>Step 2: Fill out contract details</p>
 
-                <TextField
+                <p><TextField
                     hintText="Contract Title"
                     ref="title"
-                    type="text" />
-  
-                <TextField
+                    type="text" /></p>
+
+                <p><TextField
                     hintText="Address of Contract"
                     ref="address"
                     type="text" />
-
+                </p>
                 <p>
                   <DatePicker
                       hintText="Contract Deadline"
@@ -259,14 +275,14 @@ ContractAdd = React.createClass({
                       autoOk={true}
                       disableYearSelection={true} />
                 </p>
-                <p>
-                  <TextField
-                      hintText="Price ($)"
-                      type="number"
-                      min="0"
-                      ref="price"
-                      style={numberStyles} />
-                </p>
+
+                <TextField
+                    hintText="Price ($)"
+                    type="number"
+                    min="0"
+                    ref="price"
+                    style={numberStyles} />
+
 
                 <p>
                   <TextField
@@ -284,18 +300,17 @@ ContractAdd = React.createClass({
                       ref="hourEstimation"
                       style={numberStyles} />
                 </p>
-                <TextField
+                <p>   <TextField
                     hintText="Any Notes/Comments to attach"
                     type="text"
                     multiLine={true}
-                    rows={3}
+                    rows={2}
                     ref="note" />
+                </p>
 
               </div>
 
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />
-
-
 
 
               <Snackbar
@@ -307,7 +322,7 @@ ContractAdd = React.createClass({
 
 
 
-
+            {dialogHere}
           </div>
       )
     }

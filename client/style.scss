@@ -10,8 +10,8 @@ body {
     margin-top:2em;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     border-radius:0;
-    padding-left:1em;
-    padding-right:1em;
+    padding:1em;
+    background-color: #ffffff;
 }
 
 
@@ -85,9 +85,9 @@ body {
  */
 
 form.add-contract {
-
+    background: whitesmoke;
+    padding:1em;
 }
-
 
 /*
  * Icons from https://www.google.com/design/icons/

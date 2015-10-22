@@ -33,7 +33,8 @@ DocHead.addLink({
 // Setting the class on the root element
 let theStyle = {
   backgroundColor: Colors.grey200,
-  minHeight: "100vh"
+  minHeight: "100vh",
+  paddingBottom: "2em"
 };
 
 ReactLayout.setRootProps({
