@@ -6,14 +6,12 @@ body {
     margin:0;
 }
 
-.app-canvas {
-    background: rgb(238, 238, 238);
-    padding-bottom:1em;
-}
-
-.main {
-    margin-top:1em;
-    margin-bottom:1em;
+.content {
+    margin-top:2em;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    border-radius:0;
+    padding-left:1em;
+    padding-right:1em;
 }
 
 
@@ -29,6 +27,20 @@ body {
 .label {
     font-size:1.1em;
     font-weight: 300;
+}
+
+.font-btn {
+    position: relative;
+    opacity: 1;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    padding: 0px 16px;
+    -webkit-user-select: none;
+    line-height: 36px;
+    color: #ffffff;
 }
 
 /*
@@ -69,11 +81,43 @@ body {
 
 
 /*
- * Icons
+ * Add Contract Form
  */
 
-.pizza-icon:before { content: "local_pizza"; }
+form.add-contract {
+
+}
+
+
+/*
+ * Icons from https://www.google.com/design/icons/
+ */
+
+button span.material-icons {
+    vertical-align: middle;
+    left:5%;
+}
+
+.phone:before { content: "phone"; }
+
+.contacts:before { content: "contacts"; }
+
+.mode-edit:before { content: "mode_edit"; }
+
+.insert-photo:before { content: "insert_photo"; }
+
+.flash-off:before { content: "flash_off"; }
+
+.flash-on:before { content: "flash_on"; }
 
 .add-circle:before { content: "add_circle"; }
 
 .schedule:before { content: "schedule"; }
+
+.insert-invitation:before { content: "insert_invitation"; }
+
+.account-circle:before { content: "account_circle"; }
+
+.timer:before { content: "timer"; }
+
+.person-add:before { content: "person_add"; }

@@ -1,19 +1,14 @@
 // Main App Component Wrapper - the main "layout"
 
-//let iconList = ["add_circle", "view_list", "attach_money"]; // list of icons that will be implemented
-
 // Material-UI Componenets
 const {
-    AppCanvas,
-    Paper,
-    Styles
+    Styles,
+    Card
     } = MUI;
 
-// Reference Styles.Colors global variable
-const Colors = MUI.Styles.Colors;
 
 // Init the material-ui framework
-const {ThemeManager, LightRawTheme} = Styles;
+const {ThemeManager, LightRawTheme, DarkRawTheme} = Styles;
 
 // App component - represents the whole app
 App = React.createClass({
@@ -24,7 +19,7 @@ App = React.createClass({
 
   getChildContext: function() {
     return {
-      muiTheme: ThemeManager.getMuiTheme(LightRawTheme)
+      muiTheme: ThemeManager.getMuiTheme(myTheme)
     };
   },
 
@@ -44,6 +39,7 @@ App = React.createClass({
   },
 
   render() {
+
     // Take user to login page if not currently signed in
     if (!this.data.currentUser) {
       return (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>)
@@ -53,7 +49,9 @@ App = React.createClass({
             <Header liveState={this.state.liveContract}/>
 
             <div className="container">
-              {this.props.content()}
+              <div className="content">
+                {this.props.content()}
+              </div>
             </div>
           </div>
       );

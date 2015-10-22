@@ -62,7 +62,6 @@ Header = React.createClass({
       { route: '/finances', text: 'Finances' }
     ];
 
-
     if (this.data.contractsLoading) {
       return (<Loading />);
     } else {
@@ -78,14 +77,16 @@ Header = React.createClass({
               <LiveLight
                   isLiveContract={this.data.isLiveSession}/>
 
+              <LeftNav
+                  ref="leftNav"
+                  docked={false}
+                  menuItems={sideMenuLinks}
+                  header={<h3 className='logo centered'>Navigation</h3>}
+                  onChange={this._leftNavChange}/>
+
             </AppBar>
 
-            <LeftNav
-                ref="leftNav"
-                docked={false}
-                menuItems={sideMenuLinks}
-                header={<h3 className='logo centered'>Navigation</h3>}
-                onChange={this._leftNavChange}/>
+
           </div>
       )
     }

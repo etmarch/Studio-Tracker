@@ -2,7 +2,7 @@
  *   ROUTER - /lib/
  */
 
-
+let Colors = MUI.Styles.Colors; // Pull in Colors for root styling
 
 //DocHead calls to set <head> element correctly
 
@@ -31,9 +31,16 @@ DocHead.addLink({
 
 
 // Setting the class on the root element
+let theStyle = {
+  backgroundColor: Colors.grey200,
+  minHeight: "100vh"
+};
+
 ReactLayout.setRootProps({
-  className: "app-canvas"
+  className: "app-canvas",
+  style: theStyle
 });
+
 
 /*
 *   Defining Routes for Flow Router

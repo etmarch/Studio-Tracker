@@ -199,11 +199,42 @@ ContractAdd = React.createClass({
 
                 <RaisedButton
                     primary={true}
-                    label="New Client"
-                    labelPosition={'after'}
+                    labelPosition="after"
+                    style={{verticalAlign: "top"}}
                     onClick={this._displayModal}>
-                  <FontIcon className="material-icons add-circle" />
+                  <FontIcon className="material-icons person-add" />
+                  <span className="font-btn">Add Client</span>
                 </RaisedButton>
+                <Dialog
+                    title="Enter New Client's Information"
+                    actions={contractModalActions}
+                    actionFocus="submit"
+                    modal={this.state.modal}
+                    ref="clientModal">
+
+                  <TextField
+                      hintText="Client Name"
+                      ref="cName"
+                      type="text" />
+
+                  <TextField
+                      hintText="Client Address"
+                      ref="cAddress"
+                      type="text" />
+
+
+                  <TextField
+                      hintText="Client Phone"
+                      ref="cPhone"
+                      type="number" />
+
+
+                  <TextField
+                      hintText="Client Email Address"
+                      ref="cEmail"
+                      type="email" />
+
+                </Dialog>
 
               </div>
               <div className="panel panel-default">
@@ -213,19 +244,21 @@ ContractAdd = React.createClass({
                     hintText="Contract Title"
                     ref="title"
                     type="text" />
-
+  
                 <TextField
                     hintText="Address of Contract"
                     ref="address"
                     type="text" />
 
-                <DatePicker
-                    hintText="Contract Deadline"
-                    ref="dueDate"
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    autoOk={true}
-                    disableYearSelection={true} />
+                <p>
+                  <DatePicker
+                      hintText="Contract Deadline"
+                      ref="dueDate"
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      autoOk={true}
+                      disableYearSelection={true} />
+                </p>
                 <p>
                   <TextField
                       hintText="Price ($)"
@@ -263,6 +296,8 @@ ContractAdd = React.createClass({
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />
 
 
+
+
               <Snackbar
                   ref="errorSnackbar"
                   message="Fill out all fields"
@@ -270,36 +305,7 @@ ContractAdd = React.createClass({
 
             </form>
 
-            <Dialog
-                title="Dialog With Standard Actions"
-                actions={contractModalActions}
-                actionFocus="submit"
-                modal={this.state.modal}
-                ref="clientModal">
 
-              <TextField
-                  hintText="Client Name"
-                  ref="cName"
-                  type="text" />
-
-              <TextField
-                  hintText="Client Address"
-                  ref="cAddress"
-                  type="text" />
-
-
-              <TextField
-                  hintText="Client Phone"
-                  ref="cPhone"
-                  type="number" />
-
-
-              <TextField
-                  hintText="Client Email Address"
-                  ref="cEmail"
-                  type="email" />
-
-            </Dialog>
 
 
           </div>
