@@ -123,15 +123,15 @@ Contracts.attachSchema(new SimpleSchema({
     optional: true,
     min: 0
   },
-  activity: {
+  activities: {
     type: [Object],
     optional: true
   },
-  'activity.$.timeStamp': {
+  'activities.$.startStamp': {
     type: Date,
     optional: true
   },
-  'activity.$.isLive': { // If switching live, set true, if ending session, set false
+  'activities.$.endStamp': { // If switching live, set true, if ending session, set false
     type: Boolean,
     optional: true
   },

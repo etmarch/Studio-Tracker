@@ -146,7 +146,6 @@ ContractAdd = React.createClass({
         }
       });
 
-      this.selectedClient(newClientId); // Set selectedId to new client
     }
 
     this.refs.clientModal.dismiss(); // Hide the modal
@@ -164,23 +163,19 @@ ContractAdd = React.createClass({
   },
 
   render () {
-    let contractModalActions = [
+    let clientModalActions = [
       { text: 'Cancel' },
       { text: 'Submit', onTouchTap: this.clientSubmit, ref: 'submit' }
     ];
 
-    let numberStyles = {
-      display: 'inline-block'
-    };
-
     // Hack to make the date picker faster (bug)
     let minDate = new Date();
-    let maxDate = moment(new Date()).add(1, 'y').toDate();
+    let maxDate = moment(new Date()).add(6, 'M').toDate();
 
     let dialogHere = (
         <Dialog
             title="Enter New Client's Information"
-            actions={contractModalActions}
+            actions={clientModalActions}
             style={{"textAlign":"center"}}
             actionFocus="submit"
             modal={this.state.modal}
@@ -247,7 +242,7 @@ ContractAdd = React.createClass({
                     labelPosition="after"
                     style={{verticalAlign: "top"}}
                     onClick={this._displayModal}>
-                  <FontIcon className="material-icons person-add" />
+                  <FontIcon className="material-icons person-add" style={{"left":".2em"}}/>
                   <span className="font-btn">Add Client</span>
                 </RaisedButton>
 
@@ -280,25 +275,21 @@ ContractAdd = React.createClass({
                     hintText="Price ($)"
                     type="number"
                     min="0"
-                    ref="price"
-                    style={numberStyles} />
-
+                    ref="price" />
 
                 <p>
                   <TextField
                       hintText="Cost Estimation ($)"
                       type="number"
                       min="0"
-                      ref="costEstimation"
-                      style={numberStyles} />
+                      ref="costEstimation" />
                 </p>
                 <p>
                   <TextField
                       hintText="Hours Estimation"
                       type="number"
                       min="0"
-                      ref="hourEstimation"
-                      style={numberStyles} />
+                      ref="hourEstimation" />
                 </p>
                 <p>   <TextField
                     hintText="Any Notes/Comments to attach"

@@ -1,6 +1,6 @@
 // App-wide utility functions and helpers
 
-this.Utils = {};
+Utils = {};
 
 /*
  * DEBUGGING + LOGGING HELPERS
@@ -44,9 +44,6 @@ Utils.listAllProperties = function(o){
 Utils.getClientName = function(clientId) {
   return Clients.findOne(clientId).name;
 };
-
-
-
 
 /*
 *** Examples of dealing with connection lost and connection regained

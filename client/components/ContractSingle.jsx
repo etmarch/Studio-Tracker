@@ -96,16 +96,17 @@ ContractSingle = React.createClass({
   },
 
   _renderActivities() {
-    Utils.clJ(this.data.contract.activity);
-    if (!this.data.contract.activity) {
+    Utils.clJ(this.data.contract.activities);
+    if (!this.data.contract.activities) {
       return <div className="centered">No activity yet, get working!</div>;
     }
 
-    let activityRows = this.data.contract.activity.map((activity) => {
-      //Utils.clJ(activity);
+    let activityRows = this.data.contract.activities.map((activity) => {
+      Utils.clJ(activity);
       return <TableRow key={activity.timeStamp}>
-        <TableRowColumn>{activity.timeStamp}</TableRowColumn>
-        <TableRowColumn>{activity.isLive}</TableRowColumn>
+        <TableRowColumn>{formatDatePrimary(activity.timeStamp)}</TableRowColumn>
+        <TableRowColumn>{activity.isLive ? `Start!` : `Stop!`}</TableRowColumn>
+        <TableRowColumn>{moment(activity.timeStamp).fromNow()}</TableRowColumn>
       </TableRow>
     });
 
@@ -117,6 +118,7 @@ ContractSingle = React.createClass({
             <TableRow>
               <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
               <TableHeaderColumn tooltip='Cost'>Live</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Time Ago'>Time Ago</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
@@ -140,12 +142,28 @@ ContractSingle = React.createClass({
   },
 
   activeButtonPress() { // This will turn the state of app to 'live' and the 'isLive' field to true of current app
-    Utils.cl("Button Pressed!");
+    Utils.cl("called! "+this.data.contract._id);
+    contract = {};
+    contract.id = this.data.contract._id;
+    contract.timeStamp = new Date();
+    contract.isLive = !this.data.isCurrentLive;
+
     if (!this.data.isCurrentLive) {
       Session.set('isLive', true);
     } else {
       Session.set('isLive', false);
     }
+
+    Meteor.call('addContractActivity', contract, function(error, result) {
+      if (error && error.error === "updateFailed") {
+        Session.set('errorMessage', "The update of the contract failed!");
+        return "noGood!";
+      } else {
+        Utils.cl("result "+result);
+        Session.set('successMessage', "Contract was succesful!");
+        return "Good! "+result;
+      }
+    });
   },
 
   clientLink() {
@@ -159,47 +177,49 @@ ContractSingle = React.createClass({
       return (<Loading />);
     } else {
       return (
-          <div className="row">
-            <div className="">
-              <Card>
-                <CardHeader
-                    title={this.data.contract.title}
-                    subtitle={this.data.contract.clientName ? this.data.contract.clientName : this.data.contract.clientId}
-                    avatar={this.clientLink()}/>
-                <CardText>
+          <div style={{"padding":"0 1em"}}>
+            <div className="row">
+              <div className="">
+                <Card>
+                  <CardHeader
+                      title={this.data.contract.title}
+                      subtitle={this.data.contract.clientName ? this.data.contract.clientName : this.data.contract.clientId}
+                      avatar={this.clientLink()}/>
+                  <CardText>
 
-                  <div className="centered active-button">
-                    <FloatingActionButton onClick={this.activeButtonPress} backgroundColor={(this.data.isCurrentLive ? Colors.red300 : Colors.green300)}>
-                      <FontIcon className="material-icons add-circle" />
-                    </FloatingActionButton>
-                  </div>
+                    <div className="centered active-button">
+                      <FloatingActionButton onClick={this.activeButtonPress} backgroundColor={(this.data.isCurrentLive ? Colors.red300 : Colors.green300)}>
+                        <FontIcon className="material-icons add-circle" />
+                      </FloatingActionButton>
+                    </div>
 
-                  <div className="panel panel-default">
-                    <span className="label label-primary">EST: {this.data.contract.hourEstimation} hrs</span>
-                    <span className="label label-info">ACT: {this.data.contract.currentHours} hrs</span>
-                    <span className="label label-warning">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</span>
-                    <span className="label label-default">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </span>
-                    <span className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</span>
-                  </div>
+                    <div className="panel panel-default">
+                      <span className="label label-primary">EST: {this.data.contract.hourEstimation} hrs</span>
+                      <span className="label label-info">ACT: {this.data.contract.currentHours} hrs</span>
+                      <span className="label label-warning">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</span>
+                      <span className="label label-default">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </span>
+                      <span className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</span>
+                    </div>
 
-                  <Tabs>
-                    <Tab label="Activity">
-                      <h4>Activity Log:</h4>
-                      {this._renderActivities()}
-                    </Tab>
+                    <Tabs>
+                      <Tab label="Activity">
+                        <h4>Activity Log:</h4>
+                        {this._renderActivities()}
+                      </Tab>
 
-                    <Tab label="Costs">
-                      {this._renderCosts()}
-                    </Tab>
+                      <Tab label="Costs">
+                        {this._renderCosts()}
+                      </Tab>
 
-                    <Tab label="Notes">
-                      <h4>Notes</h4>
-                      {this._renderNotes()}
-                    </Tab>
-                  </Tabs>
+                      <Tab label="Notes">
+                        <h4>Notes</h4>
+                        {this._renderNotes()}
+                      </Tab>
+                    </Tabs>
 
-                </CardText>
-              </Card>
+                  </CardText>
+                </Card>
+              </div>
             </div>
           </div>
       )

@@ -19,6 +19,9 @@ body {
  * Helpers
  */
 
+a, button {
+    cursor: pointer;
+}
 
 .centered {
     text-align: center;
@@ -26,7 +29,7 @@ body {
 
 .label {
     font-size:1.1em;
-    font-weight: 300;
+    //font-weight: 300;
 }
 
 .font-btn {
@@ -37,7 +40,7 @@ body {
     text-transform: uppercase;
     font-weight: 500;
     margin: 0;
-    padding: 0px 16px;
+    padding: 0px 10px;
     -webkit-user-select: none;
     line-height: 36px;
     color: #ffffff;
@@ -95,7 +98,6 @@ form.add-contract {
 
 button span.material-icons {
     vertical-align: middle;
-    left:5%;
 }
 
 .phone:before { content: "phone"; }
