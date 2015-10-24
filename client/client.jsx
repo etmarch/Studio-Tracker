@@ -1,7 +1,6 @@
 
 Meteor.startup(function () {
   injectTapEventPlugin(); // Workaround for Material-UI lib
-
   // sAlert package config options
   sAlert.config({
     effect: '',
@@ -20,6 +19,17 @@ Meteor.startup(function () {
     //     success: '/beep-success.mp3',
     //     warning: '/beep-warning.mp3'
     // }
+  });
+
+  Tracker.autorun(function() {
+    let handle = Meteor.subscribe('allContracts');
+    if (handle.ready()) {
+      let isLive = Contracts.find({_id: 'PcefmjhCAjWvEgG2a'},{limit: 1}).fetch();
+      Utils.cl("-------- AUTORUN ---------")
+      Utils.clJ(isLive);
+      isLive[0].isCurrentlyLive === false ? Session.set('isLive', false) : Session.set('isLive', true);
+      Utils.cl(isLive[0].isCurrentlyLive);
+    }
   });
 
   TimeSync.loggingEnabled = false;

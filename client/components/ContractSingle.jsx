@@ -46,25 +46,24 @@ ContractSingle = React.createClass({
   // Retrieve the required data
   getMeteorData() {
     let query = {};
-    var contractId = FlowRouter.getParam("_id");
     let contractHandle = Meteor.subscribe("singleContract", this.props.contractId );
-    let activeSession = Session.get('isLive');
+    //let activeSession = Session.get('isLive');
     //let clientHandle = Meteor.subscribe("singleClient", this.props._id );
+    //let thisContract = Contracts.findOne(this.props.contractId);
     return {
       contract: Contracts.findOne(this.props.contractId),
       dataLoading: ! contractHandle.ready(),
-      isCurrentLive: activeSession
-
+      isCurrentLive: Session.get('isLive')
     }
   },
 
   _logger() {
-    Utils.cl(this.props.contractId+' Is PROP ID');
+    Utils.cl("live from template ____data: "+this.data.isCurrentLive+" sess: "+Session.get('isLive'));
   },
 
   // ToDo: Put this into own component
   _renderCosts() {
-    Utils.clJ(this.data.contract.costs);
+    //Utils.clJ(this.data.contract.costs);
     if (!this.data.contract.costs) {
       return <div>No Costs Yet!</div>;
     }
@@ -96,14 +95,16 @@ ContractSingle = React.createClass({
   },
 
   _renderActivities() {
-    Utils.clJ(this.data.contract.activities);
+    //Utils.clJ(this.data.contract.activities);
     if (!this.data.contract.activities) {
       return <div className="centered">No activity yet, get working!</div>;
     }
+    let size = _.size(this.data.contract.activities);
+    //Utils.cl('# of activities  :'+size);
 
     let activityRows = this.data.contract.activities.map((activity) => {
-      Utils.clJ(activity);
-      return <TableRow key={activity.timeStamp}>
+      //Utils.clJ(activity);
+      return <TableRow key={activity.startStamp}>
         <TableRowColumn>{formatDatePrimary(activity.timeStamp)}</TableRowColumn>
         <TableRowColumn>{activity.isLive ? `Start!` : `Stop!`}</TableRowColumn>
         <TableRowColumn>{moment(activity.timeStamp).fromNow()}</TableRowColumn>
@@ -117,7 +118,7 @@ ContractSingle = React.createClass({
               displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
-              <TableHeaderColumn tooltip='Cost'>Live</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Cost'>Cost</TableHeaderColumn>
               <TableHeaderColumn tooltip='Time Ago'>Time Ago</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -142,26 +143,24 @@ ContractSingle = React.createClass({
   },
 
   activeButtonPress() { // This will turn the state of app to 'live' and the 'isLive' field to true of current app
-    Utils.cl("called! "+this.data.contract._id);
-    contract = {};
-    contract.id = this.data.contract._id;
-    contract.timeStamp = new Date();
-    contract.isLive = !this.data.isCurrentLive;
-
-    if (!this.data.isCurrentLive) {
+    let theLive = Contracts.findOne(this.props.contractId).isLive();
+    Utils.cl("ActiveButtonPress --- "+theLive);
+    contract = {
+      id: this.data.contract._id,
+      isLive: this.data.isCurrentLive
+    };
+    /*if (!this.data.isCurrentLive) {
       Session.set('isLive', true);
     } else {
       Session.set('isLive', false);
-    }
+    }*/
 
     Meteor.call('addContractActivity', contract, function(error, result) {
-      if (error && error.error === "updateFailed") {
-        Session.set('errorMessage', "The update of the contract failed!");
-        return "noGood!";
+      if (error) {
+        //Session.set('errorMessage', "The update of the contract failed!");
+        alert(error);
       } else {
         Utils.cl("result "+result);
-        Session.set('successMessage', "Contract was succesful!");
-        return "Good! "+result;
       }
     });
   },
@@ -172,10 +171,10 @@ ContractSingle = React.createClass({
   },
 
   render () {
-    this._logger();
     if (this.data.dataLoading) {
       return (<Loading />);
     } else {
+      this._logger();
       return (
           <div style={{"padding":"0 1em"}}>
             <div className="row">

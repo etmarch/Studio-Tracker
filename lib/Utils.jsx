@@ -45,6 +45,24 @@ Utils.getClientName = function(clientId) {
   return Clients.findOne(clientId).name;
 };
 
+Utils.isLiveQuery = function(activities) {
+  let activityList = activities;
+  let numIndex = _.size(activityList) -1;
+  if (numIndex === 0 || !numIndex) {
+    Utils.cl("No activities  --  Utils.isLiveQuery");
+    return false;
+  }
+  let liveStatus = activityList[numIndex].isLive;
+  Utils.cl("---- The Status of last activity ----"+liveStatus);
+
+};
+
+
+// helper for mutating moment date to normal date for DB storage
+Utils.backToDate = function(momentDate) {
+  return (momentDate).toDate();
+};
+
 /*
 *** Examples of dealing with connection lost and connection regained
 

@@ -9,6 +9,7 @@
 const {
     RaisedButton,
     DatePicker,
+    Checkbox,
     TextField,
     TimePicker,
     List,
@@ -57,7 +58,6 @@ ContractAdd = React.createClass({
 
   submitContractForm(e) {
     e.preventDefault();
-
     // Retrieve Input Values
     let title = this.refs.title.getValue();
     let dateDue = this.refs.dueDate.getDate();
@@ -67,8 +67,6 @@ ContractAdd = React.createClass({
     let note = this.refs.note.getValue();
     let clientId = this.state.selectedId;
     let address = this.refs.address.getValue();
-
-    Utils.cl("price: "+price);
 
     if (!title || !dateDue || !price || !hourEstimation || !costEstimation || !note ) {
       // Make sAlert here for the error message
@@ -114,16 +112,15 @@ ContractAdd = React.createClass({
     });
   },
 
-  // Insert the Client doc + Hide the Modal
   clientSubmit() {
     // retrieve input values
     let name = this.refs.cName.getValue();
     let address = this.refs.cAddress.getValue();
     let phone = this.refs.cPhone.getValue();
     let email = this.refs.cEmail.getValue();
-
+    let contractor = this.refs.cContractor.isChecked();
     // validate data before client insert
-    if (!name || !address || !phone || !email ) {
+    if (!name || !address || !phone || !email || !contractor ) {
       // Make sAlert here for the error message
       sAlert.error('Fill out each field correctly!');
       this.refs.errorSnackbar.show();
@@ -134,7 +131,8 @@ ContractAdd = React.createClass({
         name: name,
         address: address,
         phone: phone,
-        email: email
+        email: email,
+        isContractor: contractor
       };
 
       Meteor.call('clientInsert', newClient, (error, newClientId) => {
@@ -145,9 +143,7 @@ ContractAdd = React.createClass({
           this.selectedClient(newClientId)
         }
       });
-
     }
-
     this.refs.clientModal.dismiss(); // Hide the modal
   },
 
@@ -163,6 +159,7 @@ ContractAdd = React.createClass({
   },
 
   render () {
+    Utils.cl("---------RENDERING!!!----------");
     let clientModalActions = [
       { text: 'Cancel' },
       { text: 'Submit', onTouchTap: this.clientSubmit, ref: 'submit' }
@@ -204,6 +201,10 @@ ContractAdd = React.createClass({
                 ref="cEmail"
                 type="email" />
           </p>
+          <Checkbox
+              name="Is Contractor"
+              label="Is this client a contractor?"
+              ref="cContractor" />
         </Dialog>
     );
 

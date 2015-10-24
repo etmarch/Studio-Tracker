@@ -27,6 +27,10 @@ Clients.attachSchema(new SimpleSchema({
     label: "Client Email",
     regEx: SimpleSchema.RegEx.Email
   },
+  isContractor: {
+    type: Boolean,
+    label: "Is Contractor"
+  },
   contractIds: { // Array of all contract Ids attached to a client
     type: [String],
     optional: true,

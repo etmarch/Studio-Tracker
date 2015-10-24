@@ -7,6 +7,11 @@ Meteor.publish("allContracts", function () {
   return Contracts.find();
 });
 
+Meteor.publish("anyContractsLive", function () {
+  //Meteor._sleepForMs(1000); // Simulate Loading
+  return Contracts.find();
+});
+
 Meteor.publish("allClients", function () {
   Meteor._sleepForMs(1000);
   return Clients.find();

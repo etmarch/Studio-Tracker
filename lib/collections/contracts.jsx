@@ -1,10 +1,21 @@
 /**
  * Contract Collection Code - BOTH
  */
+Meteor.startup(() => {
 
+});
 
 // Define Contract Collection
 Contracts = new Mongo.Collection("contracts");
+
+
+// Collection Helpers
+Contracts.helpers({
+  isLive: function() {
+    Utils.cl("Live Status: "+this.isCurrentlyLive);
+    return this.isCurrentlyLive;
+  }
+});
 
 // Attach Contract Schema
 Contracts.attachSchema(new SimpleSchema({
@@ -114,7 +125,13 @@ Contracts.attachSchema(new SimpleSchema({
   status: { // status of the contract - either 'active' or 'archived'
     type: String,
     optional: true,
-    allowedValues: ['active', 'archived']
+    allowedValues: ['active', 'archived'],
+    defaultValue: 'active'
+  },
+  isCurrentlyLive: {
+    type: Boolean,
+    optional: true,
+    defaultValue: false
   },
   // ToDo: automatically update number when activity is posted
   currentHours: {
@@ -124,7 +141,13 @@ Contracts.attachSchema(new SimpleSchema({
     min: 0
   },
   activities: {
-    type: [Object],
+    type: Array,
+    optional: true,
+    blackbox: true,
+    defaultValue: []
+  },
+  'activities.$': {
+    type: Object,
     optional: true
   },
   'activities.$.startStamp': {
@@ -135,8 +158,13 @@ Contracts.attachSchema(new SimpleSchema({
     type: Boolean,
     optional: true
   },
+  'activities.$.sessionTime': { // ToDo switch to milliseconds if need to
+    type: Number,
+    optional: true
+  },
   address: {
     type: String,
     optional: true
   }
 }));
+

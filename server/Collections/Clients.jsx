@@ -27,7 +27,8 @@ Meteor.methods({
       email: String,
       phone: String,
       name: String,
-      address: String
+      address: String,
+      isContractor: Boolean
     });
 
     if (!this.userId) {
@@ -45,8 +46,11 @@ Meteor.methods({
     if (!client.address) {
       throw new Meteor.Error(422, 'Address should not be blank');
     }
+    if (!client.isContractor) {
+      throw new Meteor.Error(422, 'Is This a contractor?');
+    }
 
-    // Make sure method is running on server and not client
+    //ToDo: Make sure method is running on server and not client
     // https://github.com/themeteorchef/server-only-methods/blob/master/server/methods/update-user-name.js
 
     var clientId = Clients.insert(client);
