@@ -56,91 +56,10 @@ ContractSingle = React.createClass({
   _logger() {
     Utils.cl("-----RENDERING CONTRACT SINGLE-------");
   },
-
-  // ToDo: Put this into own component
-  _renderCosts() {
-    //Utils.clJ(this.data.contract.costs);
-    if (!this.data.contract.costs) {
-      return <div>No Costs Yet!</div>;
-    }
-
-    let costRows = this.data.contract.costs.map((cost) => {
-      return <TableRow key={Random.id()}>
-        <TableRowColumn>{moment(cost.date).format('L')}</TableRowColumn>
-        <TableRowColumn>{cost.content}</TableRowColumn>
-        <TableRowColumn>${cost.amount}</TableRowColumn>
-      </TableRow>
-    });
-
-    return (
-        <Table>
-          <TableHeader
-              adjustForCheckbox={false}
-              displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
-              <TableHeaderColumn tooltip='Cost'>What</TableHeaderColumn>
-              <TableHeaderColumn tooltip='Amount'>Amount</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {costRows}
-          </TableBody>
-        </Table>
-    );
-  },
-
-  _renderActivities() {
-    //Utils.clJ(this.data.contract.activities);
-    if (!this.data.contract.activities) {
-      return <div className="centered">No activity yet, get working!</div>;
-    }
-    let size = _.size(this.data.contract.activities);
-    //Utils.cl('# of activities  :'+size);
-
-    let activityRows = this.data.contract.activities.map((activity) => {
-      //Utils.clJ(activity);
-      return <TableRow key={Random.id()}>
-        <TableRowColumn>{Helpers.formatDatePrimary(activity.timeStamp)}</TableRowColumn>
-        <TableRowColumn>{activity.isLive ? `Start!` : `Stop!`}</TableRowColumn>
-        <TableRowColumn>{moment(activity.timeStamp).fromNow()}</TableRowColumn>
-      </TableRow>
-    });
-
-    return (
-        <Table>
-          <TableHeader
-              adjustForCheckbox={false}
-              displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
-              <TableHeaderColumn tooltip='Cost'>Cost</TableHeaderColumn>
-              <TableHeaderColumn tooltip='Time Ago'>Time Ago</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {activityRows}
-          </TableBody>
-        </Table>
-    );
-  },
-
-  _renderNotes() {
-    if (!this.data.contract.notes) {
-      return <div className="centered">No Notes Yet!</div>;
-    }
-    let noteRows = this.data.contract.notes.map((note) => {
-      return <ListItem
-          key={Random.id()}
-          primaryText={note.content}
-          rightAvatar={<FlatButton label={moment(note.time).format('L')} />} />
-    });
-    return <List>{noteRows}</List>;
-  },
-
+  
   activeButtonPress() { // This will turn the state of app to 'live' and the 'isLive' field to true of current app
-    let theLive = Contracts.findOne(this.props.contractId).isLive();
-    Utils.cl("ActiveButtonPress --- "+theLive);
+    //let theLive = Contracts.findOne(this.props.contractId).isLive();
+    Utils.cl("ActiveButtonPress --- "+this.data.isCurrentLive);
     contract = {
       id: this.data.contract._id,
       isLive: this.data.isCurrentLive
@@ -184,27 +103,29 @@ ContractSingle = React.createClass({
                       </FloatingActionButton>
                     </div>
 
-                    <div className="panel panel-default">
-                      <span className="label label-primary">EST: {this.data.contract.hourEstimation} hrs</span>
-                      <span className="label label-info">ACT: {this.data.contract.currentHours} hrs</span>
-                      <span className="label label-warning">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</span>
-                      <span className="label label-default">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </span>
-                      <span className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</span>
+                    <div className="panel panel-default centered">
+                      <div className="row">
+                        <div className="label label-primary col-sm-3">EST: {this.data.contract.hourEstimation} hrs</div>
+                        <div className="label label-info col-sm-3">ACT: {this.data.contract.currentHours} hrs</div>
+                        <div className="label label-warning col-sm-3">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</div>
+                        <div className="label label-default col-sm-3">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </div>
+                        <div className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</div>
+                      </div>
                     </div>
 
                     <Tabs>
                       <Tab label="Activity">
                         <h4>Activity Log:</h4>
-                        {this._renderActivities()}
+                        {<ActivitiesList activities={this.data.contract.activities} />}
                       </Tab>
 
                       <Tab label="Costs">
-                        {this._renderCosts()}
+                        {<CostsList costs={this.data.contract.costs} />}
                       </Tab>
 
                       <Tab label="Notes">
                         <h4>Notes</h4>
-                        {this._renderNotes()}
+                        {<NotesList notes={this.data.contract.notes} />}
                       </Tab>
                     </Tabs>
 
@@ -218,6 +139,101 @@ ContractSingle = React.createClass({
   }
 });
 
+
+ActivitiesList = React.createClass({
+  propTypes: {
+    activities: Array
+  },
+  render() {
+    if (!this.props.activities) {
+      return <div className="centered">No activity yet, get working!</div>;
+    }
+    let size = _.size(this.props.activities);
+    //Utils.cl('# of activities  :'+size);
+
+    let activityRows = this.props.activities.map((activity) => {
+      //Utils.clJ(activity);
+      return <TableRow key={Random.id()}>
+        <TableRowColumn>{Helpers.formatDatePrimary(activity.timeStamp)}</TableRowColumn>
+        <TableRowColumn>{activity.isLive ? `Start!` : `Stop!`}</TableRowColumn>
+        <TableRowColumn>{moment(activity.timeStamp).fromNow()}</TableRowColumn>
+      </TableRow>
+    });
+
+    return (
+        <Table>
+          <TableHeader
+              adjustForCheckbox={false}
+              displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Cost'>Cost</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Time Ago'>Time Ago</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {activityRows}
+          </TableBody>
+        </Table>
+    );
+  }
+});
+
+CostsList = React.createClass({
+  propTypes: {
+    costs: Array
+  },
+  render() {
+    if (!this.props.costs) {
+      return <div>No Costs Yet!</div>;
+    }
+
+    let costRows = this.props.costs.map((cost) => {
+      return <TableRow key={Random.id()}>
+        <TableRowColumn>{moment(cost.date).format('L')}</TableRowColumn>
+        <TableRowColumn>{cost.content}</TableRowColumn>
+        <TableRowColumn>${cost.amount}</TableRowColumn>
+      </TableRow>
+    });
+
+    return (
+        <Table>
+          <TableHeader
+              adjustForCheckbox={false}
+              displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Cost'>What</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Amount'>Amount</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {costRows}
+          </TableBody>
+        </Table>
+    );
+  }
+});
+
+
+
+NotesList = React.createClass({
+  propTypes: {
+    notes: Array
+  },
+  render() {
+    if (!this.props.notes) {
+      return <div className="centered">No Notes Yet!</div>;
+    }
+    let noteRows = this.props.notes.map((note) => {
+      return <ListItem
+          key={Random.id()}
+          primaryText={note.content}
+          rightAvatar= {<p>{moment(note.time).format('L')}</p>} />
+    });
+    return <List>{noteRows}</List>;
+  }
+});
 
 // Example of Diffing time to future: moment(this.data.contract.createdAt).to(moment(this.data.contract.dateDue))
 

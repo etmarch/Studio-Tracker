@@ -85,8 +85,6 @@ Header = React.createClass({
                   onChange={this._leftNavChange}/>
 
             </AppBar>
-
-
           </div>
       )
     }

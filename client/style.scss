@@ -10,11 +10,19 @@ body {
     margin-top:2em;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     border-radius:0;
-    padding:1em;
+    //padding:1em;
     background-color: #ffffff;
 }
 
+.container {
+    padding: 0;
+}
 
+@media (max-width: 800px) {
+    .container-fluid h1 {
+        display:none;
+    }
+}
 /*
  * Helpers
  */
@@ -123,3 +131,5 @@ button span.material-icons {
 .timer:before { content: "timer"; }
 
 .person-add:before { content: "person_add"; }
+
+.keyboard-arrow-right:before { content: "keyboard_arrow_right"; }

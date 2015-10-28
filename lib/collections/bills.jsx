@@ -31,7 +31,8 @@ Bills.attachSchema(new SimpleSchema({
   amount: { // Amount payed for the bill
     type: Number,
     label: "Price ($) of Project",
-    min: 0
+    min: 0,
+    decimal: true
   },
   createdAt: {
     type: Date,

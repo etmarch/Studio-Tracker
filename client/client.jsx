@@ -21,15 +21,21 @@ Meteor.startup(function () {
     // }
   });
 
+  Session.setDefault('isLive', false);
+
   Tracker.autorun(function() {
     Utils.cl("-------- AUTORUN STARTING---------")
     let handle = Meteor.subscribe('lastActive');
     if (handle.ready()) {
       let isLive = Contracts.find({},{limit: 1}).fetch()[0];
-      Utils.cl("-------- CONTRACT IS FOUND!! ---------");
-      Utils.clJ(isLive);
-      isLive.isCurrentlyLive === false ? Session.set('isLive', false) : Session.set('isLive', true);
-      Utils.cl("Client autorun -- isLive?: "+isLive.isCurrentlyLive);
+      if (!!isLive && _.size(isLive) > 0) {
+        Utils.cl("-------- CONTRACT IS FOUND!! ---------");
+        Utils.clJ(isLive);
+        isLive.isCurrentlyLive === false ? Session.set('isLive', false) : Session.set('isLive', true);
+        Utils.cl("Client autorun -- isLive?: " + isLive.isCurrentlyLive+'   is the Session Live?  '+Session.get('isLive'));
+      } else {
+        Utils.cl("No Last active yet!!");
+      }
     }
   });
 

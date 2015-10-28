@@ -5,9 +5,13 @@
 // Publish the most recently active Contract
 Meteor.publish('lastActive', function () {
   // Debugging
-  let lastActiveList = Contracts.find({lastActive: {$exists : true }}, {sort: {lastActive: -1}, fields: {lastActive: 1}}).fetch()
-  Utils.clJ(lastActiveList);
-  return Contracts.find({}, {sort: {lastActive: -1}, limit: 1});
+  let lastActiveList = Contracts.find({lastActive: {$exists : true }}, {sort: {lastActive: -1}, fields: {lastActive: 1}}).fetch();
+  if (!!lastActiveList) {
+    Utils.clJ(lastActiveList);
+    return Contracts.find({}, {sort: {lastActive: -1}, limit: 1});
+  }
+
+  return this.ready();
 });
 
 Meteor.publish("allContracts", function () {

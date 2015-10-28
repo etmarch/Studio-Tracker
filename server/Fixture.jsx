@@ -17,13 +17,19 @@ Meteor.startup(() => {
       var randomEmail = faker.internet.email();
       var randomName = faker.name.findName();
       var randomPhone = faker.phone.phoneNumberFormat();
-      let randomAddress = (faker.address.streetAddress()+' '+faker.address.city());
+      let randomAddress = {
+        street: faker.address.streetAddress(),
+        city: faker.address.city(),
+        state: faker.address.stateAbbr(),
+        zip: '10522'
+      };
 
       var seedClientId = Clients.insert({
         email: randomEmail,
         name: randomName,
         phone: randomPhone,
-        address: randomAddress
+        address: randomAddress,
+        isContractor: faker.random.boolean()
       });
 
       // create a contract for each
@@ -38,8 +44,9 @@ Meteor.startup(() => {
       var newContractId = Contracts.insert({
         title: randomTitle,
         clientId: seedClientId,
+        clientName: randomName,
         dateDue: randomDate,
-        hoursEstimation: randomHours,
+        hourEstimation: randomHours,
         price: randomPrice,
         costEstimation: randCostEstimate,
         status: seedStatus,
@@ -52,11 +59,22 @@ Meteor.startup(() => {
           content: faker.lorem.sentence(),
           amount: _.random(50, 250)
         }],
-        currentHours: _.random(5, 50)
+        currentHours: _.random(5, 50),
+        address: faker.address.streetAddress(),
+
       });
 
       // Log the created data Ids
       Utils.cl("Client: "+seedClientId+' contract: '+newContractId);
+
+      // Create Fake Bill Docs
+      let billId = Bills.insert({
+        note: faker.lorem.sentence(),
+        type: _.random(1,6),
+        amount: _.random(40, 400)
+      })
+
+      Utils.cl("Bill Id: "+billId);
 
     });
   }
