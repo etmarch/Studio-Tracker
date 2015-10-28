@@ -27,7 +27,7 @@ Meteor.methods({
       email: String,
       phone: String,
       name: String,
-      address: String,
+      address: Object,
       isContractor: Boolean
     });
 

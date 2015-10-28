@@ -22,19 +22,19 @@ Meteor.startup(function () {
   });
 
   Tracker.autorun(function() {
-    let handle = Meteor.subscribe('allContracts');
+    Utils.cl("-------- AUTORUN STARTING---------")
+    let handle = Meteor.subscribe('lastActive');
     if (handle.ready()) {
-      let isLive = Contracts.find({_id: 'PcefmjhCAjWvEgG2a'},{limit: 1}).fetch();
-      Utils.cl("-------- AUTORUN ---------")
+      let isLive = Contracts.find({},{limit: 1}).fetch()[0];
+      Utils.cl("-------- CONTRACT IS FOUND!! ---------");
       Utils.clJ(isLive);
-      isLive[0].isCurrentlyLive === false ? Session.set('isLive', false) : Session.set('isLive', true);
-      Utils.cl(isLive[0].isCurrentlyLive);
+      isLive.isCurrentlyLive === false ? Session.set('isLive', false) : Session.set('isLive', true);
+      Utils.cl("Client autorun -- isLive?: "+isLive.isCurrentlyLive);
     }
   });
 
   TimeSync.loggingEnabled = false;
 });
-
 
 
 // AccountsUI config toDo: Disable registration (since its internal app)

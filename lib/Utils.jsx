@@ -45,6 +45,7 @@ Utils.getClientName = function(clientId) {
   return Clients.findOne(clientId).name;
 };
 
+/* **NOT IN USE
 Utils.isLiveQuery = function(activities) {
   let activityList = activities;
   let numIndex = _.size(activityList) -1;
@@ -54,9 +55,8 @@ Utils.isLiveQuery = function(activities) {
   }
   let liveStatus = activityList[numIndex].isLive;
   Utils.cl("---- The Status of last activity ----"+liveStatus);
-
 };
-
+*/
 
 // helper for mutating moment date to normal date for DB storage
 Utils.backToDate = function(momentDate) {

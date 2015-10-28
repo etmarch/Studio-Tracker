@@ -2,13 +2,16 @@
  * Publishing in the server
  */
 
-Meteor.publish("allContracts", function () {
-  //Meteor._sleepForMs(1000); // Simulate Loading
-  return Contracts.find();
+// Publish the most recently active Contract
+Meteor.publish('lastActive', function () {
+  // Debugging
+  let lastActiveList = Contracts.find({lastActive: {$exists : true }}, {sort: {lastActive: -1}, fields: {lastActive: 1}}).fetch()
+  Utils.clJ(lastActiveList);
+  return Contracts.find({}, {sort: {lastActive: -1}, limit: 1});
 });
 
-Meteor.publish("anyContractsLive", function () {
-  //Meteor._sleepForMs(1000); // Simulate Loading
+Meteor.publish("allContracts", function () {
+  Meteor._sleepForMs(400); // Simulate Loading
   return Contracts.find();
 });
 

@@ -56,7 +56,7 @@ Meteor.methods({
   /* Accepts an object with id, timestamp, and isLive properties
   */
   addContractActivity: function(contract) {
-    Utils.clJ(contract);
+    //Utils.clJ(contract);
     check(this.userId, String);
     check(contract, {
       id: String,
@@ -75,7 +75,7 @@ Meteor.methods({
 
       // ToDo: For all Date/Time stuff, need to convert to Date object before saving
       let sessionStartDate = _.last(currentContract.activities).startStamp;
-      
+
       let timeDiff = (servTime.getTime() - sessionStartDate.getTime());
       let updatedHours = (currentContract.currentHours + timeDiff);
 
@@ -86,6 +86,7 @@ Meteor.methods({
       modifier.$set["activities." + indexNum + ".sessionTime"] = parseInt(timeDiff);
       modifier.$set["isCurrentlyLive"] = false;
       modifier.$set["currentHours"] = parseInt(updatedHours);
+      modifier.$set["lastActive"] = servTime;
 
       return Contracts.update({_id: contract.id }, modifier , function (error, result) {
             if (error) {
@@ -105,7 +106,7 @@ Meteor.methods({
           },
           {
             $addToSet: {activities: {startStamp: servTime, endStamp: null, sessionTime: parseInt(0)}},
-            $set: {isCurrentlyLive: true}
+            $set: {isCurrentlyLive: true, lastActive: servTime}
           }, function (error, result) {
             if (error) {
               throw new Meteor.Error("updateFailed", 'Contract Not Updated Properly ' + error);

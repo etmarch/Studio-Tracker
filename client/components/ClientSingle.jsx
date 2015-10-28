@@ -68,7 +68,7 @@ ClientSingle = React.createClass({
 
             <Card>
               <CardHeader
-                  title={this.data.client.name}
+                  title={this.data.client.name+'  '+Helpers.formatPhoneNumber(this.data.client.phone)}
                   subtitle={this.data.client.email}
                   avatar={<Avatar>{this.data.client.name.charAt(0)}</Avatar>} />
               <CardText>

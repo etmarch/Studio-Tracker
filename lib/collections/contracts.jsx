@@ -162,8 +162,19 @@ Contracts.attachSchema(new SimpleSchema({
     type: Number,
     optional: true
   },
+  lastActive: { // Basically keeps track of last updated
+    type: Date,
+    optional: true,
+    autoValue: function() {
+      if (!this.isInsert) {
+        return new Date;
+      } else {
+        this.unset();
+      }
+    }
+  },
   address: {
-    type: String,
+    type: AddressSchema, // Defined in the Client Schema
     optional: true
   }
 }));

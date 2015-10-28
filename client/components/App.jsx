@@ -33,7 +33,7 @@ App = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData() {
-    let handle = Meteor.subscribe('lastContract')
+    let handle = Meteor.subscribe('lastActive');
     return {
       currentUser: Meteor.user() // To check if current user is logged in
     }

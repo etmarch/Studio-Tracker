@@ -46,13 +46,20 @@ ContractAdd = React.createClass({
 
   getInitialState: function () {
     return {
-      selectedId: null
+      selectedId: null,
+      selectedState: null
     };
   },
 
   selectedClient(clientId) {
     this.setState({
       selectedId: clientId
+    })
+  },
+
+  selectedState(state) {
+    this.setState({
+      selectedState: state
     })
   },
 
@@ -107,7 +114,7 @@ ContractAdd = React.createClass({
         // Success, update UI and Redirect
         Utils.cl("successful! "+newContractId);
         sAlert.success("New Contract Created! "+newContractId);
-        FlowRouter.go('/');
+        FlowRouter.go('/'+newContractId);
       }
     });
   },
@@ -115,12 +122,15 @@ ContractAdd = React.createClass({
   clientSubmit() {
     // retrieve input values
     let name = this.refs.cName.getValue();
-    let address = this.refs.cAddress.getValue();
+    let street = this.refs.cStreet.getValue();
+    let city = this.refs.cCity.getValue();
+    let state = this.state.selectedState;
+    let zipcode = this.refs.cZipcode.getValue();
     let phone = this.refs.cPhone.getValue();
     let email = this.refs.cEmail.getValue();
     let contractor = this.refs.cContractor.isChecked();
     // validate data before client insert
-    if (!name || !address || !phone || !email || !contractor ) {
+    if (!name || !street || !phone || !email || !contractor || !zipcode || !state ) {
       // Make sAlert here for the error message
       sAlert.error('Fill out each field correctly!');
       this.refs.errorSnackbar.show();
@@ -129,7 +139,12 @@ ContractAdd = React.createClass({
       // insert client document
       let newClient = {
         name: name,
-        address: address,
+        address: {
+          street: street,
+          city: city,
+          state: state,
+          zip: zipcode
+        },
         phone: phone,
         email: email,
         isContractor: contractor
@@ -154,6 +169,13 @@ ContractAdd = React.createClass({
     this.selectedClient(selectedValue); // Client selected, update state
   },
 
+  _handleSelectState(e, selectedIndex, menuItem) {
+    e.preventDefault();
+    //console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
+    let selectedValue = e.target.value;
+    this.selectedState(selectedValue); // Client selected, update state
+  },
+
   _displayModal() {
     this.refs.clientModal.show();
   },
@@ -163,6 +185,11 @@ ContractAdd = React.createClass({
     let clientModalActions = [
       { text: 'Cancel' },
       { text: 'Submit', onTouchTap: this.clientSubmit, ref: 'submit' }
+    ];
+
+    let stateList = [
+      {name: 'NY'},
+      {name: 'CT'}
     ];
 
     // Hack to make the date picker faster (bug)
@@ -184,27 +211,53 @@ ContractAdd = React.createClass({
                 ref="cName"
                 type="text" />
 
+
             <TextField
-                hintText="Client Address"
-                ref="cAddress"
-                type="text" />
+                hintText="Client Phone"
+                ref="cPhone"
+                type="number" />
           </p>
           <p>
             <TextField
-                hintText="Client Phone"
-                style={{"marginRight":"10px"}}
-                ref="cPhone"
-                type="number" />
-
-            <TextField
                 hintText="Client Email Address"
                 ref="cEmail"
-                type="email" />
+                type="email"
+                style={{"marginRight":"10px"}} />
+
+            <Checkbox
+                name="Is Contractor"
+                label="Is this client a contractor?"
+                ref="cContractor"
+                style={{"display":"inline-block", "width":"initial"}} />
           </p>
-          <Checkbox
-              name="Is Contractor"
-              label="Is this client a contractor?"
-              ref="cContractor" />
+          <p>
+            <TextField
+                hintText="Client Street Address"
+                ref="cStreet"
+                type="text"
+                style={{"marginRight":"10px"}} />
+
+            <TextField
+                hintText="Client City"
+                ref="cCity"
+                type="text" />
+
+            <SelectField
+                value={this.state.selectedState}
+                onChange={this._handleSelectState}
+                hintText="Select a State"
+                menuItems={stateList}
+                displayMember="name"
+                valueMember="name"
+                ref="selectState"
+                style={{"marginRight":"10px"}} />
+
+            <TextField
+                hintText="Client Zipcode"
+                ref="cZipcode"
+                type="text" />
+
+          </p>
         </Dialog>
     );
 

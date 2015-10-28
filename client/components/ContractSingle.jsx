@@ -45,11 +45,7 @@ ContractSingle = React.createClass({
 
   // Retrieve the required data
   getMeteorData() {
-    let query = {};
     let contractHandle = Meteor.subscribe("singleContract", this.props.contractId );
-    //let activeSession = Session.get('isLive');
-    //let clientHandle = Meteor.subscribe("singleClient", this.props._id );
-    //let thisContract = Contracts.findOne(this.props.contractId);
     return {
       contract: Contracts.findOne(this.props.contractId),
       dataLoading: ! contractHandle.ready(),
@@ -58,7 +54,7 @@ ContractSingle = React.createClass({
   },
 
   _logger() {
-    Utils.cl("live from template ____data: "+this.data.isCurrentLive+" sess: "+Session.get('isLive'));
+    //Utils.cl("live from template ____data: "+this.data.isCurrentLive+" sess: "+Session.get('isLive'));
   },
 
   // ToDo: Put this into own component
@@ -69,7 +65,7 @@ ContractSingle = React.createClass({
     }
 
     let costRows = this.data.contract.costs.map((cost) => {
-      return <TableRow key={cost.date}>
+      return <TableRow key={Random.id()}>
         <TableRowColumn>{moment(cost.date).format('L')}</TableRowColumn>
         <TableRowColumn>{cost.content}</TableRowColumn>
         <TableRowColumn>${cost.amount}</TableRowColumn>
@@ -104,8 +100,8 @@ ContractSingle = React.createClass({
 
     let activityRows = this.data.contract.activities.map((activity) => {
       //Utils.clJ(activity);
-      return <TableRow key={activity.startStamp}>
-        <TableRowColumn>{formatDatePrimary(activity.timeStamp)}</TableRowColumn>
+      return <TableRow key={Random.id()}>
+        <TableRowColumn>{Helpers.formatDatePrimary(activity.timeStamp)}</TableRowColumn>
         <TableRowColumn>{activity.isLive ? `Start!` : `Stop!`}</TableRowColumn>
         <TableRowColumn>{moment(activity.timeStamp).fromNow()}</TableRowColumn>
       </TableRow>
@@ -135,7 +131,7 @@ ContractSingle = React.createClass({
     }
     let noteRows = this.data.contract.notes.map((note) => {
       return <ListItem
-          key={note.time}
+          key={Random.id()}
           primaryText={note.content}
           rightAvatar={<FlatButton label={moment(note.time).format('L')} />} />
     });
@@ -149,18 +145,13 @@ ContractSingle = React.createClass({
       id: this.data.contract._id,
       isLive: this.data.isCurrentLive
     };
-    /*if (!this.data.isCurrentLive) {
-      Session.set('isLive', true);
-    } else {
-      Session.set('isLive', false);
-    }*/
 
     Meteor.call('addContractActivity', contract, function(error, result) {
       if (error) {
         //Session.set('errorMessage', "The update of the contract failed!");
         alert(error);
       } else {
-        Utils.cl("result "+result);
+        Utils.cl("result "+result); // Always undefined
       }
     });
   },
