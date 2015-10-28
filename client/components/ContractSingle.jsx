@@ -54,7 +54,7 @@ ContractSingle = React.createClass({
   },
 
   _logger() {
-    //Utils.cl("live from template ____data: "+this.data.isCurrentLive+" sess: "+Session.get('isLive'));
+    Utils.cl("-----RENDERING CONTRACT SINGLE-------");
   },
 
   // ToDo: Put this into own component
@@ -162,10 +162,11 @@ ContractSingle = React.createClass({
   },
 
   render () {
+    this._logger();
     if (this.data.dataLoading) {
       return (<Loading />);
     } else {
-      this._logger();
+
       return (
           <div style={{"padding":"0 1em"}}>
             <div className="row">

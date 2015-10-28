@@ -352,11 +352,9 @@ ContractAdd = React.createClass({
                     rows={2}
                     ref="note" />
                 </p>
-
               </div>
 
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />
-
 
               <Snackbar
                   ref="errorSnackbar"
@@ -364,9 +362,6 @@ ContractAdd = React.createClass({
                   action="okay"/>
 
             </form>
-
-
-
             {dialogHere}
           </div>
       )

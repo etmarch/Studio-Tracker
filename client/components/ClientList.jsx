@@ -44,7 +44,7 @@ ClientListing = React.createClass({
           initiallyOpen={true}
           leftCheckbox={<Avatar style={avatarStyle}>{client.name.charAt(0)}</Avatar>}
           secondaryText={client.email+'  '+client.phone+'  '+client.address}
-          rightAvatar={<RaisedButton label="View Contracts" primary={true} />} />
+          rightAvatar={<RaisedButton label="View Contracts" primary={true} linkButton={true} href={clientPath} />} />
         <ListDivider inset={false} />
       </div>
     });
