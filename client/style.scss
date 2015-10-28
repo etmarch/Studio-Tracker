@@ -59,15 +59,10 @@ a, button {
  */
 
 .live-light {
-    display: inline-block;
-    border:1px solid grey;
-    width:30px;
-    height:30px;
-    border-radius: 100%;
-    vertical-align: middle;
-    background:lightgray;
+    > button {
+    }
     &.active {
-        background:lime;
+       //background:lime;
     }
 }
 
@@ -78,10 +73,13 @@ a, button {
         padding-top: 0;
         letter-spacing: 0;
         font-size: 20px;
-        font-weight: 400;
+        font-weight: 200;
         color: rgba(255, 255, 255, 0.87);
         line-height: 64px;
     }
+  .clock-components {
+    margin-right:.5em;
+  }
 }
 
 
@@ -133,3 +131,5 @@ button span.material-icons {
 .person-add:before { content: "person_add"; }
 
 .keyboard-arrow-right:before { content: "keyboard_arrow_right"; }
+
+.insert-invitation:before { content: "insert_invitation"; }

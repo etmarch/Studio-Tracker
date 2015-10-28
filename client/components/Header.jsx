@@ -7,7 +7,7 @@
 
 
 // Pulling in the Material-Ui components
-const {AppBar, LeftNav, FontIcon, Paper} = MUI;
+const {AppBar, LeftNav, FontIcon, Paper, IconButton} = MUI;
 
 Header = React.createClass({
 
@@ -26,31 +26,33 @@ Header = React.createClass({
   },
 
   // Shows / hides the side menu
-  _toggleLeftNav(e) {
+  onToggleLeftNav(e) {
     e.preventDefault();
     this.refs.leftNav.toggle();
   },
 
   // Handle clicks on links on the left menu
-  _leftNavChange(e, selectedIndex, menuItem) {
+  onLeftNavChange(e, selectedIndex, menuItem) {
     //Utils.cl(e.target+"  Menu Item Object: "+JSON.stringify(menuItem));
     e.preventDefault();
     FlowRouter.go(menuItem.route);
   },
 
   render () {
-
-    let fontStyle = {
+    let theFontStyle = {
       top: 5,
       right: 2,
       color: 'rgba(0, 0, 0, 0.5)'
-    }
+    };
 
     let clockPanel = (
-          <span className="clockFont"><h3>
-            <FontIcon className="material-icons schedule" style={fontStyle} />
-            {moment(this.data.currentTime).format("h:mm A  dddd, MMMM Do YYYY")}</h3>
-          </span>
+        <span className="clockFont">
+          <h3>
+            <FontIcon className="material-icons schedule" style={theFontStyle} />
+            <span className="clock-components">{moment(this.data.currentTime).format("h:mm A")}</span>
+            <span><FontIcon className="material-icons insert-invitation" style={{right: '-5px', top: '5px', color: 'rgba(0, 0, 0, 0.4)'}} /> {moment(this.data.currentTime).format("Do MMMM")}</span>
+          </h3>
+        </span>
     );
 
     // Sample Code for Links in the left hidden nav menu
@@ -69,7 +71,7 @@ Header = React.createClass({
           <div>
             <AppBar
                 title="Studio Tracker"
-                onLeftIconButtonTouchTap={this._toggleLeftNav}
+                onLeftIconButtonTouchTap={this.onToggleLeftNav}
                 className="container-fluid">
 
               {clockPanel}
@@ -82,7 +84,7 @@ Header = React.createClass({
                   docked={false}
                   menuItems={sideMenuLinks}
                   header={<h3 className='logo centered'>Navigation</h3>}
-                  onChange={this._leftNavChange}/>
+                  onChange={this.onLeftNavChange}/>
 
             </AppBar>
           </div>
@@ -93,14 +95,33 @@ Header = React.createClass({
 
 LiveLight = React.createClass({
   propTypes: {
-    // This component gets the contract to display through a React prop.
+    isLiveContract: React.PropTypes.bool
   },
   render() {
+    let lightStyles = {
+      display: 'inline-block',
+    borderRadius: '50px',
+    borderColor: 'grey',
+    padding: '0px'
+    };
     // checking if a contract is currently being worked on
-    const lightClassName = this.props.isLiveContract ? "live-light active" : "live-light ";
+    let lightClassName = this.props.isLiveContract ? "live-light active" : "live-light ";
+    let iconClassName = this.props.isLiveContract ? "flash-on" : "flash-off";
+    lightStyles.background = this.props.isLiveContract ? "lime" : "aliceblue";
+
+   
 
     return (
-        <div className={lightClassName} />
+
+        <div className={lightClassName}>
+        <IconButton
+            style={lightStyles}
+            touch={true}
+            disabled={!this.props.isLiveContract}
+            iconClassName={"material-icons "+iconClassName}
+            tooltip={this.props.isLiveContract ? "Working!" : "Idle"}
+            />
+        </div>
     );
   }
 });

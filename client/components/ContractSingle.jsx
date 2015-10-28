@@ -37,7 +37,7 @@ ContractSingle = React.createClass({
   },
 
   propTypes: {
-    contractId: String
+    contractId: React.PropTypes.string
   },
 
   // This mixin makes the getMeteorData method work
@@ -56,7 +56,7 @@ ContractSingle = React.createClass({
   _logger() {
     Utils.cl("-----RENDERING CONTRACT SINGLE-------");
   },
-  
+
   activeButtonPress() { // This will turn the state of app to 'live' and the 'isLive' field to true of current app
     //let theLive = Contracts.findOne(this.props.contractId).isLive();
     Utils.cl("ActiveButtonPress --- "+this.data.isCurrentLive);
@@ -142,7 +142,7 @@ ContractSingle = React.createClass({
 
 ActivitiesList = React.createClass({
   propTypes: {
-    activities: Array
+    activities: React.PropTypes.Array
   },
   render() {
     if (!this.props.activities) {
@@ -181,7 +181,7 @@ ActivitiesList = React.createClass({
 
 CostsList = React.createClass({
   propTypes: {
-    costs: Array
+    costs: React.PropTypes.Array
   },
   render() {
     if (!this.props.costs) {
@@ -219,7 +219,7 @@ CostsList = React.createClass({
 
 NotesList = React.createClass({
   propTypes: {
-    notes: Array
+    notes: React.PropTypes.Array
   },
   render() {
     if (!this.props.notes) {
