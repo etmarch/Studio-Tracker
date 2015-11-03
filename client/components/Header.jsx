@@ -38,22 +38,24 @@ Header = React.createClass({
     FlowRouter.go(menuItem.route);
   },
 
-  render () {
+  _makeNav () {
     let theFontStyle = {
       top: 5,
       right: 2,
       color: 'rgba(0, 0, 0, 0.5)'
     };
-
-    let clockPanel = (
+    return (
         <span className="clockFont">
           <h3>
-            <FontIcon className="material-icons schedule" style={theFontStyle} />
+            <FontIcon className="material-icons schedule" style={theFontStyle}/>
             <span className="clock-components">{moment(this.data.currentTime).format("h:mm A")}</span>
-            <span><FontIcon className="material-icons insert-invitation" style={{right: '-5px', top: '5px', color: 'rgba(0, 0, 0, 0.4)'}} /> {moment(this.data.currentTime).format("Do MMMM")}</span>
+            <span><FontIcon className="material-icons insert-invitation"
+                            style={{right: '-5px', top: '5px', color: 'rgba(0, 0, 0, 0.4)'}}/> {moment(this.data.currentTime).format("Do MMMM")}</span>
           </h3>
-        </span>
-    );
+        </span>);
+  },
+
+  render () {
 
     // Sample Code for Links in the left hidden nav menu
     let sideMenuLinks = [
@@ -74,7 +76,7 @@ Header = React.createClass({
                 onLeftIconButtonTouchTap={this.onToggleLeftNav}
                 className="container-fluid">
 
-              {clockPanel}
+              {this._makeNav()}
 
               <LiveLight
                   isLiveContract={this.data.isLiveSession}/>
@@ -100,27 +102,27 @@ LiveLight = React.createClass({
   render() {
     let lightStyles = {
       display: 'inline-block',
-    borderRadius: '50px',
-    borderColor: 'grey',
-    padding: '0px'
+      borderRadius: '50px',
+      borderColor: 'grey',
+      padding: '0px'
     };
     // checking if a contract is currently being worked on
     let lightClassName = this.props.isLiveContract ? "live-light active" : "live-light ";
     let iconClassName = this.props.isLiveContract ? "flash-on" : "flash-off";
-    lightStyles.background = this.props.isLiveContract ? "lime" : "aliceblue";
+    lightStyles.background = this.props.isLiveContract ? "lime" : "whitesmoke";
 
-   
+
 
     return (
 
         <div className={lightClassName}>
-        <IconButton
-            style={lightStyles}
-            touch={true}
-            disabled={!this.props.isLiveContract}
-            iconClassName={"material-icons "+iconClassName}
-            tooltip={this.props.isLiveContract ? "Working!" : "Idle"}
-            />
+          <IconButton
+              style={lightStyles}
+              touch={true}
+              disabled={!this.props.isLiveContract}
+              iconClassName={"material-icons "+iconClassName}
+              tooltip={this.props.isLiveContract ? "Working!" : "Idle"}
+              />
         </div>
     );
   }

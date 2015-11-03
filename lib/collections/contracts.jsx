@@ -43,7 +43,7 @@ Contracts.attachSchema(new SimpleSchema({
     type: Date,
     optional: true
   },
-  'costs.$.content': { // Message for what the cost was spent on
+  'costs.$.type': { // Message for what the cost was spent on
     type: String,
     optional: true
   },
