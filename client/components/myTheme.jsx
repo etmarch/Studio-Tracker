@@ -14,7 +14,7 @@ myTheme = {
     accent3Color: Colors.grey500,
     textColor: Colors.lightBlack,
     alternateTextColor: Colors.white,
-    canvasColor: Colors.lightBlack,
+    canvasColor: Colors.white,
     borderColor: Colors.grey300,
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
   }

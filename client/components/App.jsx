@@ -2,7 +2,8 @@
 
 // Material-UI Componenets
 const {
-    Styles
+    Styles,
+    AppCanvas
     } = MUI;
 
 
@@ -45,7 +46,7 @@ App = React.createClass({
       return (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>)
     } else {
       return (
-          <div>
+          <AppCanvas>
             <Header liveState={this.state.liveContract}/>
 
             <div className="container">
@@ -53,7 +54,7 @@ App = React.createClass({
                 {this.props.content()}
               </div>
             </div>
-          </div>
+          </AppCanvas>
       );
     }
   }
