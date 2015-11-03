@@ -4,12 +4,9 @@
 const Colors = MUI.Styles.Colors;
 
 const {
-    Avatar,
-    Checkbox,
     List,
     ListItem,
     ListDivider,
-    FlatButton,
     Styles,
     FontIcon
     } = MUI;
@@ -30,7 +27,7 @@ Dashboard = React.createClass({
   },
 
   // This mixin makes the getMeteorData method work
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, TimerMixin],
 
   // Retrieve the required data
   getMeteorData() {

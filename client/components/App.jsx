@@ -2,8 +2,7 @@
 
 // Material-UI Componenets
 const {
-    Styles,
-    Card
+    Styles
     } = MUI;
 
 

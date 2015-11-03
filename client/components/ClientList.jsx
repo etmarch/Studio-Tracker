@@ -5,12 +5,9 @@
 
 const {
     Avatar,
-    Checkbox,
     List,
     ListItem,
     ListDivider,
-    FlatButton,
-    Styles,
     RaisedButton
     } = MUI;
 

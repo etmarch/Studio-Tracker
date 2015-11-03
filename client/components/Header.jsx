@@ -7,7 +7,7 @@
 
 
 // Pulling in the Material-Ui components
-const {AppBar, LeftNav, FontIcon, Paper, IconButton} = MUI;
+const {AppBar, LeftNav, FontIcon, IconButton} = MUI;
 
 Header = React.createClass({
 
