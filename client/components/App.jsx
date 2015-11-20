@@ -8,7 +8,7 @@ const {
 
 
 // Init the material-ui framework
-const {ThemeManager, LightRawTheme, DarkRawTheme} = Styles;
+const {ThemeManager} = Styles;
 
 // App component - represents the whole app
 App = React.createClass({
@@ -49,9 +49,11 @@ App = React.createClass({
           <AppCanvas>
             <Header liveState={this.state.liveContract}/>
 
-            <div className="container">
-              <div className="content">
-                {this.props.content()}
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="box">
+                  {this.props.content()}
+                </div>
               </div>
             </div>
           </AppCanvas>

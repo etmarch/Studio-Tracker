@@ -19,10 +19,18 @@ DocHead.addLink({
 });
 
 // Load Bootstrap
+/*
 DocHead.addLink({
   rel: "stylesheet",
   type: "text/css",
   href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+});*/
+
+// Load Material Icons
+DocHead.addLink({
+    rel: "stylesheet",
+    type: "text/css",
+    href: "https://cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css"
 });
 
 // Load Material Icons
@@ -34,15 +42,8 @@ DocHead.addLink({
 
 
 // Setting the class on the root element
-let theStyle = {
-  backgroundColor: Colors.grey200,
-  minHeight: "100vh",
-  paddingBottom: "2em"
-};
-
 ReactLayout.setRootProps({
-  className: "app-canvas",
-  style: theStyle
+  className: "app-canvas"
 });
 
 
