@@ -42,22 +42,22 @@ App = React.createClass({
   render() {
 
     // Take user to login page if not currently signed in
-    if (!this.data.currentUser) {
-      return (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>)
-    } else {
+      let renderHTML = (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>);
+      // Take user to login page if not currently signed in
+
       return (
           <AppCanvas>
-            <Header liveState={this.state.liveContract}/>
+              <Header liveState={this.state.liveContract}/>
 
-            <div className="row">
-              <div className="col-xs-12">
-                <div className="box">
-                  {this.props.content()}
-                </div>
+              <div className="row">
+                  <div className="col-xs-12">
+                      <div className="box">
+                          {this.data.currentUser ? this.props.content() : renderHTML }
+                      </div>
+                  </div>
               </div>
-            </div>
           </AppCanvas>
       );
     }
-  }
+
 });

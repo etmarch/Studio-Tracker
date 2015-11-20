@@ -137,7 +137,7 @@ ContractSingle = React.createClass({
 
 ActivitiesList = React.createClass({
   propTypes: {
-    activities: React.PropTypes.Array
+    activities: React.PropTypes.array
   },
   render() {
     if (!this.props.activities) {
@@ -176,7 +176,7 @@ ActivitiesList = React.createClass({
 
 CostsList = React.createClass({
   propTypes: {
-    costs: React.PropTypes.Array
+    costs: React.PropTypes.array
   },
   render() {
     if (!this.props.costs) {
@@ -214,7 +214,7 @@ CostsList = React.createClass({
 
 NotesList = React.createClass({
   propTypes: {
-    notes: React.PropTypes.Array
+    notes: React.PropTypes.array
   },
   render() {
     if (!this.props.notes) {

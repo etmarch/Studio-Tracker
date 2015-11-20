@@ -26,12 +26,6 @@ DocHead.addLink({
   href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
 });*/
 
-// Load Material Icons
-DocHead.addLink({
-    rel: "stylesheet",
-    type: "text/css",
-    href: "https://cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css"
-});
 
 // Load Material Icons
 DocHead.addLink({
