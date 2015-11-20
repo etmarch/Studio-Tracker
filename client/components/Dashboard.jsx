@@ -68,14 +68,12 @@ Dashboard = React.createClass({
       return (<Loading />);
     } else {
       return (
-          <div className="row">
-            <div className="jumbotron">
+          <div className="">
               <h3>Welcome, Marcel</h3>
-              <div className="panel panel-default">
+              <div className="">
                 <p>Recently Live</p>
                 <p>Contract Name</p>
               </div>
-            </div>
             <List subheader="Current Contracts">
               {contracts}
             </List>

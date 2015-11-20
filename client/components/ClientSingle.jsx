@@ -60,7 +60,7 @@ ClientSingle = React.createClass({
       return (<Loading />);
     } else {
       return (
-          <div className="row">
+          <div className="">
 
             <Card>
               <CardHeader

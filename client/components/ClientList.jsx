@@ -52,7 +52,7 @@ ClientListing = React.createClass({
       return (<Loading />);
     } else {
       return (
-          <div className="row">
+          <div className="">
             <List subheader="All Clients">
               {this.renderClients()}
             </List>

@@ -1,8 +1,9 @@
 // Loading Component
 Loading = React.createClass({
   render () {
-    return (
-        <SpinnerView />
+    return (<div>
+    <SpinnerView />
+      </div>
     )
   }
 });
