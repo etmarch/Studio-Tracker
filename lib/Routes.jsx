@@ -4,7 +4,7 @@
 
 
 
-let Colors = MUI.Styles.Colors; // Pull in Colors for root styling
+let Colors = mui.Styles.Colors; // Pull in Colors for root styling
 
 //DocHead calls to set <head> element correctly
 

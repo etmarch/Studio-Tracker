@@ -9,7 +9,7 @@ const {
     ListItem,
     ListDivider,
     RaisedButton
-    } = MUI;
+    } = mui;
 
 ClientListing = React.createClass({
 
@@ -35,15 +35,15 @@ ClientListing = React.createClass({
     // Get contracts from this.data.contracts
     return this.data.clients.map((client) => {
       let clientPath = `/clients/${ client._id}`;
-      return <div><ListItem
+      return <ListItem
           key={client._id}
           primaryText={<a href={clientPath}>{client.name}</a>}
           initiallyOpen={true}
           leftCheckbox={<Avatar style={avatarStyle}>{client.name.charAt(0)}</Avatar>}
           secondaryText={client.email+'  '+client.phone+'  '+client.address}
-          rightAvatar={<RaisedButton label="View Contracts" primary={true} linkButton={true} href={clientPath} />} />
+          rightAvatar={<RaisedButton label="View Contracts" primary={true} linkButton={true} href={clientPath} />} >
         <ListDivider inset={false} />
-      </div>
+      </ListItem>
     });
   },
 

@@ -8,7 +8,7 @@ const {
     Dialog,
     FontIcon,
     SelectField
-    } = MUI;
+    } = mui;
 
 AddCostButton = React.createClass({
 

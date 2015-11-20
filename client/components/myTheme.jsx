@@ -1,6 +1,6 @@
-var Spacing = MUI.Styles.Spacing;
-var Colors = MUI.Styles.Colors;
-var ColorManipulator = MUI.Utils.ColorManipulator;
+var Spacing = mui.Styles.Spacing;
+var Colors = mui.Styles.Colors;
+var ColorManipulator = mui.Utils.ColorManipulator;
 
 myTheme = {
   spacing: Spacing,

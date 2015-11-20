@@ -15,7 +15,7 @@ const {
     FontIcon,
     SelectField,
     Snackbar
-    } = MUI;
+    } = mui;
 
 ContractAdd = React.createClass({
 
@@ -294,17 +294,17 @@ ContractAdd = React.createClass({
               <div className="panel panel-default">
                 <p>Step 2: Fill out contract details</p>
 
-                <p><TextField
+                <TextField
                     hintText="Contract Title"
                     ref="title"
-                    type="text" /></p>
+                    type="text" />
 
-                <p><TextField
+                <TextField
                     hintText="Address of Contract"
                     ref="address"
                     type="text" />
-                </p>
-                <p>
+
+
                   <DatePicker
                       hintText="Contract Deadline"
                       ref="dueDate"
@@ -312,7 +312,7 @@ ContractAdd = React.createClass({
                       maxDate={maxDate}
                       autoOk={true}
                       disableYearSelection={true} />
-                </p>
+
 
                 <TextField
                     hintText="Price ($)"
@@ -320,27 +320,27 @@ ContractAdd = React.createClass({
                     min="0"
                     ref="price" />
 
-                <p>
+
                   <TextField
                       hintText="Cost Estimation ($)"
                       type="number"
                       min="0"
                       ref="costEstimation" />
-                </p>
-                <p>
+
+
                   <TextField
                       hintText="Hours Estimation"
                       type="number"
                       min="0"
                       ref="hourEstimation" />
-                </p>
-                <p>   <TextField
+
+                   <TextField
                     hintText="Any Notes/Comments to attach"
                     type="text"
                     multiLine={true}
                     rows={2}
                     ref="note" />
-                </p>
+
               </div>
 
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />

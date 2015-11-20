@@ -15,7 +15,7 @@ const {
     Card,
     CardHeader,
     CardText
-    } = MUI;
+    } = mui;
 
 ClientSingle = React.createClass({
 
@@ -24,7 +24,7 @@ ClientSingle = React.createClass({
   },
 
   propTypes: {
-    clientId: String
+    clientId: React.PropTypes.string
   },
 
   // This mixin makes the getMeteorData method work

@@ -1,7 +1,7 @@
 // Dashboard Page/Component Route
 
 
-const Colors = MUI.Styles.Colors;
+const Colors = mui.Styles.Colors;
 
 const {
     List,
@@ -9,7 +9,7 @@ const {
     ListDivider,
     Styles,
     FontIcon
-    } = MUI;
+    } = mui;
 
 // Init the material-ui framework
 const {ThemeManager, LightRawTheme} = Styles;
@@ -49,16 +49,16 @@ Dashboard = React.createClass({
     // Get contracts from this.data.contracts
     return this.data.contracts.map((contract) => {
       let contractPath = `/contracts/${ contract._id}`;
-      return <div><ListItem
+      return <ListItem
           key={contract._id}
           primaryText={<a href={contractPath}>{contract.title}</a>}
           //onTouch={this._navigateToContract}
           initiallyOpen={false}
           disabled={true}
           secondaryText={"Started: "+moment(contract.dateDue).format('hh:mm:ss A L')}
-          rightIcon={<a href={contractPath}><FontIcon className="material-icons keyboard-arrow-right" style={{"left":"-.2em"}}/></a>} />
+          rightIcon={<a href={contractPath}><FontIcon className="material-icons keyboard-arrow-right" style={{"left":"-.2em"}}/></a>} >
         <ListDivider inset={false} />
-      </div>
+      </ListItem>
     });
   },
 
