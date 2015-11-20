@@ -17,6 +17,7 @@ const {
     Snackbar
     } = MUI;
 
+
 ContractAdd = React.createClass({
 
   contextTypes: {
@@ -198,55 +199,60 @@ ContractAdd = React.createClass({
             actionFocus="submit"
             modal={this.state.modal}
             ref="clientModal">
-          <TextField
-              hintText="Client Name"
-              style={{"marginRight":"10px"}}
-              ref="cName"
-              type="text" />
+          <p>
+            <TextField
+                hintText="Client Name"
+                style={{"marginRight":"10px"}}
+                ref="cName"
+                type="text" />
 
 
-          <TextField
-              hintText="Client Phone"
-              ref="cPhone"
-              type="number" />
+            <TextField
+                hintText="Client Phone"
+                ref="cPhone"
+                type="number" />
+          </p>
+          <p>
+            <TextField
+                hintText="Client Email Address"
+                ref="cEmail"
+                type="email"
+                style={{"marginRight":"10px"}} />
 
-          <TextField
-              hintText="Client Email Address"
-              ref="cEmail"
-              type="email"
-              style={{"marginRight":"10px"}} />
+            <Checkbox
+                name="Is Contractor"
+                label="Is this client a contractor?"
+                ref="cContractor"
+                style={{"display":"inline-block", "width":"initial"}} />
+          </p>
+          <p>
+            <TextField
+                hintText="Client Street Address"
+                ref="cStreet"
+                type="text"
+                style={{"marginRight":"10px"}} />
 
-          <Checkbox
-              name="Is Contractor"
-              label="Is this client a contractor?"
-              ref="cContractor"
-              style={{"display":"inline-block", "width":"initial"}} />
+            <TextField
+                hintText="Client City"
+                ref="cCity"
+                type="text" />
 
-          <TextField
-              hintText="Client Street Address"
-              ref="cStreet"
-              type="text"
-              style={{"marginRight":"10px"}} />
+            <SelectField
+                value={this.state.selectedState}
+                onChange={this._handleSelectState}
+                hintText="Select a State"
+                menuItems={stateList}
+                displayMember="name"
+                valueMember="name"
+                ref="selectState"
+                style={{"marginRight":"10px"}} />
 
-          <TextField
-              hintText="Client City"
-              ref="cCity"
-              type="text" />
+            <TextField
+                hintText="Client Zipcode"
+                ref="cZipcode"
+                type="text" />
 
-          <SelectField
-              value={this.state.selectedState}
-              onChange={this._handleSelectState}
-              hintText="Select a State"
-              menuItems={stateList}
-              displayMember="name"
-              valueMember="name"
-              ref="selectState"
-              style={{"marginRight":"10px"}} />
-
-          <TextField
-              hintText="Client Zipcode"
-              ref="cZipcode"
-              type="text" />
+          </p>
         </Dialog>
     );
 
@@ -344,6 +350,12 @@ ContractAdd = React.createClass({
               </div>
 
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />
+
+              <Snackbar
+                  ref="errorSnackbar"
+                  message="Fill out all fields"
+                  action="okay"/>
+
             </form>
             {dialogHere}
           </div>

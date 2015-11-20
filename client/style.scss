@@ -6,16 +6,12 @@ body {
     margin:0;
 }
 
-.app-canvas {
-    min-height: 100vh;
-    padding-bottom: 2em;
-}
-
 .content {
     margin-top:2em;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     border-radius:0;
     //padding:1em;
+    background-color: #ffffff;
 }
 
 .container {
