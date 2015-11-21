@@ -1,7 +1,7 @@
 // Dashboard Page/Component Route
 
 
-const Colors = MUI.Styles.Colors;
+const {SvgIcons} = MUI.Libs;
 
 const {
     List,
@@ -56,7 +56,7 @@ Dashboard = React.createClass({
           initiallyOpen={false}
           disabled={true}
           secondaryText={"Started: "+moment(contract.dateDue).format('hh:mm:ss A L')}
-          rightIcon={<a href={contractPath}><FontIcon className="material-icons keyboard-arrow-right" style={{"left":"-.2em"}}/></a>} >
+          rightIcon={<a href={contractPath}><SvgIcons.HardwareKeyboardArrowRight /></a>} >
         <ListDivider inset={false} />
       </ListItem>
     });

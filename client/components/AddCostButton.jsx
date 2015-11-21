@@ -10,6 +10,8 @@ const {
     SelectField
     } = MUI;
 
+const {SvgIcons} = MUI.Libs;
+
 AddCostButton = React.createClass({
 
     contextTypes: {
@@ -86,7 +88,7 @@ AddCostButton = React.createClass({
                     labelPosition="after"
                     style={{verticalAlign: "top"}}
                     onClick={this._displayModal}>
-                    <FontIcon className="material-icons person-add" style={{"left":".2em"}}/>
+                    <SvgIcons.SocialAddPerson style={{"marginRight":".1em"}}/>
                     <span className="font-btn">Add Client</span>
                 </RaisedButton>
 

@@ -19,6 +19,7 @@ Contracts.allow({
 });
 
 Meteor.methods({
+
   contractInsert: function(contract) {
     check(this.userId, String);
     check(contract, {
@@ -30,21 +31,15 @@ Meteor.methods({
       notes: [Object],
       clientId: String
     });
-
     // ToDo: add additional security (relying on schemas right now)
-
     Utils.clJ(contract);
-
     let clientName = Clients.findOne(contract.clientId).name;
-
     let fullContract = _.extend(contract, {
       currentHours: 0,
       status: 'active',
       clientName: clientName,
       activities: []
     });
-
-    //Utils.clJ(fullContract);
 
     var contractId = Contracts.insert(fullContract);
     if (!contractId) {
@@ -53,8 +48,9 @@ Meteor.methods({
       return contractId;
     }
   },
+
   /* Accepts an object with id, timestamp, and isLive properties
-  */
+   */
   addContractActivity: function(contract) {
     Utils.clJ(contract);
     check(this.userId, String);
@@ -89,13 +85,13 @@ Meteor.methods({
       modifier.$set["currentHours"] = parseInt(updatedHours);
 
       return Contracts.update({_id: contract.id }, modifier , function (error, result) {
-            if (error) {
-              throw new Meteor.Error("updateFailed", 'Contract Not Updated Properly ' + error);
-            } else {
-              Utils.cl("updated hours -- after CLOSE! "+result);
-              return result;
-            }
-          });
+        if (error) {
+          throw new Meteor.Error("updateFailed", 'Contract Not Updated Properly ' + error);
+        } else {
+          Utils.cl("updated hours -- after CLOSE! "+result);
+          return result;
+        }
+      });
 
     } else {
 
@@ -117,4 +113,12 @@ Meteor.methods({
           });
     }
   }
+
+  /*
+  *   Adding a cost to a contract - updating the contract
+  */
+
+
+
+
 });

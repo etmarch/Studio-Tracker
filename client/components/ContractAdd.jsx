@@ -129,7 +129,6 @@ ContractAdd = React.createClass({
     if (!name || !street || !phone || !email || !contractor || !zipcode || !state ) {
       // Make sAlert here for the error message
       sAlert.error('Fill out each field correctly!');
-      this.refs.errorSnackbar.show();
       //this.refs.clientModal.dismiss();
     } else {
       // insert client document
@@ -150,12 +149,12 @@ ContractAdd = React.createClass({
         if (error) {
           sAlert.error(error.reason);
         } else {
-          Utils.cl("successful! "+newClientId);
+          sAlert.success("Client Added Successfully!");
           this.selectedClient(newClientId)
         }
       });
     }
-    this.refs.clientModal.dismiss(); // Hide the modal
+    this.refs.clientModal._dismiss(); // Close modal ToDo: This is depreciated or a hack
   },
 
   _handleSelectValueChange(e, selectedIndex, menuItem) {
@@ -171,7 +170,7 @@ ContractAdd = React.createClass({
   },
 
   _displayModal() {
-    this.refs.clientModal.show();
+    this.refs.clientModal._show(); // ToDo: this is depreciated
   },
 
   render () {
@@ -196,57 +195,64 @@ ContractAdd = React.createClass({
             actions={clientModalActions}
             style={{"textAlign":"center"}}
             actionFocus="submit"
-            modal={this.state.modal}
-            ref="clientModal">
-          <TextField
-              hintText="Client Name"
-              style={{"marginRight":"10px"}}
-              ref="cName"
-              type="text" />
+            ref="clientModal"
+            autoDetectWindowHeight={true}>
+          <div>
+            <TextField
+                hintText="Client Name"
+                style={{"marginRight":"10px"}}
+                ref="cName"
+                type="text" />
+          </div>
 
-
-          <TextField
-              hintText="Client Phone"
-              ref="cPhone"
-              type="number" />
-
-          <TextField
-              hintText="Client Email Address"
-              ref="cEmail"
-              type="email"
-              style={{"marginRight":"10px"}} />
-
-          <Checkbox
-              name="Is Contractor"
-              label="Is this client a contractor?"
-              ref="cContractor"
-              style={{"display":"inline-block", "width":"initial"}} />
-
-          <TextField
-              hintText="Client Street Address"
-              ref="cStreet"
-              type="text"
-              style={{"marginRight":"10px"}} />
-
-          <TextField
-              hintText="Client City"
-              ref="cCity"
-              type="text" />
-
-          <SelectField
-              value={this.state.selectedState}
-              onChange={this._handleSelectState}
-              hintText="Select a State"
-              menuItems={stateList}
-              displayMember="name"
-              valueMember="name"
-              ref="selectState"
-              style={{"marginRight":"10px"}} />
-
+          <div>
+            <TextField
+                hintText="Client Phone"
+                ref="cPhone"
+                type="number" />
+          </div>
+          <div>
+            <TextField
+                hintText="Client Email Address"
+                ref="cEmail"
+                type="email"
+                style={{"marginRight":"10px"}} />
+          </div>
+          <div>
+            <TextField
+                hintText="Client Street Address"
+                ref="cStreet"
+                type="text"
+                style={{"marginRight":"10px"}} />
+          </div>
+          <div>
+            <TextField
+                hintText="Client City"
+                ref="cCity"
+                type="text" />
+          </div>
+          <div>
+            <SelectField
+                value={this.state.selectedState}
+                onChange={this._handleSelectState}
+                hintText="Select a State"
+                menuItems={stateList}
+                displayMember="name"
+                valueMember="name"
+                ref="selectState"
+                style={{"marginRight":"10px"}} />
+          </div>
           <TextField
               hintText="Client Zipcode"
               ref="cZipcode"
               type="text" />
+          <div>
+            <Checkbox
+                name="Is Contractor"
+                label="Is this client a contractor?"
+                ref="cContractor"
+                style={{"display":"inline-block", "width":"initial"}} />
+          </div>
         </Dialog>
     );
 
@@ -280,12 +286,13 @@ ContractAdd = React.createClass({
                 <div style={spanStyle}>
                   <span className="label label-default">OR</span>
                 </div>
+
                 <RaisedButton
                     primary={true}
                     labelPosition="before"
                     style={{verticalAlign: "top"}}
                     onClick={this._displayModal}>
-                  <SvgIcons.SocialPersonAdd style={{"margin-left":".3em"}} />
+                  <SvgIcons.SocialPersonAdd style={{"marginLeft":".3em"}} />
                   <span className="font-btn">Add Client</span>
                 </RaisedButton>
 
@@ -293,12 +300,12 @@ ContractAdd = React.createClass({
 
               <div className="panel panel-default">
                 <p>Step 2: Fill out contract details</p>
-
-                <TextField
-                    hintText="Contract Title"
-                    ref="title"
-                    type="text" />
-
+                <div>
+                  <TextField
+                      hintText="Contract Title"
+                      ref="title"
+                      type="text" />
+                </div>
                 <TextField
                     hintText="Address of Contract"
                     ref="address"
@@ -312,34 +319,35 @@ ContractAdd = React.createClass({
                     autoOk={true}
                     disableYearSelection={true} />
 
-
-                <TextField
-                    hintText="Price ($)"
-                    type="number"
-                    min="0"
-                    ref="price" />
-
-
-                <TextField
-                    hintText="Cost Estimation ($)"
-                    type="number"
-                    min="0"
-                    ref="costEstimation" />
-
-
-                <TextField
-                    hintText="Hours Estimation"
-                    type="number"
-                    min="0"
-                    ref="hourEstimation" />
-
-                <TextField
-                    hintText="Any Notes/Comments to attach"
-                    type="text"
-                    multiLine={true}
-                    rows={2}
-                    ref="note" />
-
+                <div>
+                  <TextField
+                      hintText="Price ($)"
+                      type="number"
+                      min="0"
+                      ref="price" />
+                </div>
+                <div>
+                  <TextField
+                      hintText="Cost Estimation ($)"
+                      type="number"
+                      min="0"
+                      ref="costEstimation" />
+                </div>
+                <div>
+                  <TextField
+                      hintText="Hours Estimation"
+                      type="number"
+                      min="0"
+                      ref="hourEstimation" />
+                </div>
+                <div>
+                  <TextField
+                      hintText="Any Notes/Comments to attach"
+                      type="text"
+                      multiLine={true}
+                      rows={2}
+                      ref="note" />
+                </div>
               </div>
 
               <RaisedButton type="submit" label="Submit" className="button-submit" primary={true} />

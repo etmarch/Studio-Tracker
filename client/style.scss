@@ -27,6 +27,9 @@ body {
     h1 {
         display:none;
     }
+    .container-fluid {
+        padding:0;
+    }
 }
 /*
  * Helpers
@@ -81,6 +84,9 @@ a, button {
         font-weight: 200;
         color: rgba(255, 255, 255, 0.87);
         line-height: 64px;
+        @media (max-width: 800px) {
+            font-size:14px;
+        }
     }
   .clock-components {
     margin-right:.5em;
@@ -107,7 +113,8 @@ form.add-contract {
  * Icons from https://www.google.com/design/icons/
  */
 
-button svg {
+// Centering icons in top nav and in buttons
+button svg, h3 svg {
     vertical-align: middle;
 }
 

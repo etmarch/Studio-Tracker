@@ -42,18 +42,17 @@ Header = React.createClass({
 
   _makeNav () {
     let theFontStyle = {
-      top: 5,
-      right: 2,
-      color: 'rgba(0, 0, 0, 0.5)'
+      marginRight:".1em",
+      color: 'rgba(0, 0, 0, 0.3)'
     };
     return (
         <span className="clockFont">
           <h3>
-            <SvgIcons.EditorInsertInvitation style={theFontStyle} />
+            <SvgIcons.ActionSchedule style={theFontStyle} />
             <span className="clock-components">{moment(this.data.currentTime).format("h:mm A")}</span>
             <span>
-              <SvgIcons.ActionSchedule style={{right: '-5px', top: '5px', color: 'rgba(0, 0, 0, 0.4)'}}/>
-              {moment(this.data.currentTime).format("Do MMMM")}
+              <SvgIcons.EditorInsertInvitation style={theFontStyle}/>
+              {moment(this.data.currentTime).format("Do MMM")}
             </span>
           </h3>
         </span>);
@@ -111,7 +110,7 @@ LiveLight = React.createClass({
     };
     // checking if a contract is currently being worked on
     let lightClassName = this.props.isLiveContract ? "live-light active" : "live-light ";
-    let iconClassName = this.props.isLiveContract ? (<SvgIcons.ImageFlashOn />) : (<SvgIcons.ImageFlashOn />);
+    let iconClassName = this.props.isLiveContract ? (<SvgIcons.ImageFlashOn />) : (<SvgIcons.ImageFlashOff />);
     lightStyles.background = this.props.isLiveContract ? "lime" : "whitesmoke";
 
     return (
