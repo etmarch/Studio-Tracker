@@ -3,7 +3,7 @@
 */
 
 body {
-    //margin:0;
+    margin:0;
     padding:0;
 }
 
@@ -24,7 +24,7 @@ body {
 }
 
 @media (max-width: 800px) {
-    .container-fluid h1 {
+    h1 {
         display:none;
     }
 }
@@ -107,34 +107,8 @@ form.add-contract {
  * Icons from https://www.google.com/design/icons/
  */
 
-button span.material-icons {
+button svg {
     vertical-align: middle;
 }
 
-.phone:before { content: "phone"; }
 
-.contacts:before { content: "contacts"; }
-
-.mode-edit:before { content: "mode_edit"; }
-
-.insert-photo:before { content: "insert_photo"; }
-
-.flash-off:before { content: "flash_off"; }
-
-.flash-on:before { content: "flash_on"; }
-
-.add-circle:before { content: "add_circle"; }
-
-.schedule:before { content: "schedule"; }
-
-.insert-invitation:before { content: "insert_invitation"; }
-
-.account-circle:before { content: "account_circle"; }
-
-.timer:before { content: "timer"; }
-
-.person-add:before { content: "person_add"; }
-
-.keyboard-arrow-right:before { content: "keyboard_arrow_right"; }
-
-.insert-invitation:before { content: "insert_invitation"; }

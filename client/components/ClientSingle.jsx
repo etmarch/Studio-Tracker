@@ -61,7 +61,6 @@ ClientSingle = React.createClass({
     } else {
       return (
           <div className="">
-
             <Card>
               <CardHeader
                   title={this.data.client.name+'  '+Helpers.formatPhoneNumber(this.data.client.phone)}

@@ -24,6 +24,7 @@ const {
     } = MUI;
 
 const Colors = MUI.Styles.Colors;
+const {SvgIcons} = MUI.Libs;
 
 ContractSingle = React.createClass({
 
@@ -82,53 +83,50 @@ ContractSingle = React.createClass({
     } else {
 
       return (
-          <div style={{"padding":"0 1em"}}>
-            <div className="row">
-              <div className="">
-                <Card>
-                  <CardHeader
-                      title={this.data.contract.title}
-                      subtitle={this.data.contract.clientName ? this.data.contract.clientName : this.data.contract.clientId}
-                      avatar={this.clientLink()}/>
-                  <CardText>
+          <div>
+            <Card>
+              <CardHeader
+                  title={this.data.contract.title}
+                  subtitle={this.data.contract.clientName ? this.data.contract.clientName : this.data.contract.clientId}
+                  avatar={this.clientLink()}/>
+              <CardText>
 
-                    <div className="centered active-button">
-                      <FloatingActionButton onClick={this.activeButtonPress} backgroundColor={(this.data.isCurrentLive ? Colors.red300 : Colors.green300)}>
-                        <FontIcon className="material-icons add-circle" />
-                      </FloatingActionButton>
-                    </div>
+                <div className="centered active-button">
+                  <FloatingActionButton onClick={this.activeButtonPress} backgroundColor={(this.data.isCurrentLive ? Colors.red300 : Colors.green300)}>
+                    <SvgIcons.ContentAddCircle />
+                  </FloatingActionButton>
+                </div>
 
-                    <div className="panel panel-default centered">
-                      <div className="row">
-                        <div className="label label-primary col-sm-3">EST: {this.data.contract.hourEstimation} hrs</div>
-                        <div className="label label-info col-sm-3">ACT: {this.data.contract.currentHours} hrs</div>
-                        <div className="label label-warning col-sm-3">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</div>
-                        <div className="label label-default col-sm-3">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </div>
-                        <div className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</div>
-                      </div>
-                    </div>
+                <div className="panel panel-default centered">
+                  <div className="row">
+                    <div className="label label-primary col-sm-3">EST: {this.data.contract.hourEstimation} hrs</div>
+                    <div className="label label-info col-sm-3">ACT: {this.data.contract.currentHours} hrs</div>
+                    <div className="label label-warning col-sm-3">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</div>
+                    <div className="label label-default col-sm-3">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </div>
+                    <div className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</div>
+                  </div>
+                </div>
 
-                    <Tabs>
-                      <Tab label="Activity">
-                        <h4>Activity Log:</h4>
-                        {<ActivitiesList activities={this.data.contract.activities} />}
-                      </Tab>
+                <Tabs>
+                  <Tab label="Activity">
+                    <h4>Activity Log:</h4>
+                    {<ActivitiesList activities={this.data.contract.activities} />}
+                  </Tab>
 
-                      <Tab label="Costs">
-                        {<CostsList costs={this.data.contract.costs} />}
-                      </Tab>
+                  <Tab label="Costs">
+                    {<CostsList costs={this.data.contract.costs} />}
+                  </Tab>
 
-                      <Tab label="Notes">
-                        <h4>Notes</h4>
-                        {<NotesList notes={this.data.contract.notes} />}
-                      </Tab>
-                    </Tabs>
+                  <Tab label="Notes">
+                    <h4>Notes</h4>
+                    {<NotesList notes={this.data.contract.notes} />}
+                  </Tab>
+                </Tabs>
 
-                  </CardText>
-                </Card>
-              </div>
-            </div>
+              </CardText>
+            </Card>
           </div>
+
       )
     }
   }

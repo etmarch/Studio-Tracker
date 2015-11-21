@@ -17,6 +17,8 @@ const {
     Snackbar
     } = MUI;
 
+const {SvgIcons} = MUI.Libs;
+
 ContractAdd = React.createClass({
 
   contextTypes: {
@@ -158,14 +160,12 @@ ContractAdd = React.createClass({
 
   _handleSelectValueChange(e, selectedIndex, menuItem) {
     e.preventDefault();
-    //console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
     let selectedValue = e.target.value;
     this.selectedClient(selectedValue); // Client selected, update state
   },
 
   _handleSelectState(e, selectedIndex, menuItem) {
     e.preventDefault();
-    //console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
     let selectedValue = e.target.value;
     this.selectedState(selectedValue); // Client selected, update state
   },
@@ -282,10 +282,10 @@ ContractAdd = React.createClass({
                 </div>
                 <RaisedButton
                     primary={true}
-                    labelPosition="after"
+                    labelPosition="before"
                     style={{verticalAlign: "top"}}
                     onClick={this._displayModal}>
-                  <FontIcon className="material-icons person-add" style={{"left":".2em"}}/>
+                  <SvgIcons.SocialPersonAdd style={{"margin-left":".3em"}} />
                   <span className="font-btn">Add Client</span>
                 </RaisedButton>
 
@@ -304,13 +304,13 @@ ContractAdd = React.createClass({
                     ref="address"
                     type="text" />
 
-                  <DatePicker
-                      hintText="Contract Deadline"
-                      ref="dueDate"
-                      minDate={minDate}
-                      maxDate={maxDate}
-                      autoOk={true}
-                      disableYearSelection={true} />
+                <DatePicker
+                    hintText="Contract Deadline"
+                    ref="dueDate"
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    autoOk={true}
+                    disableYearSelection={true} />
 
 
                 <TextField
@@ -320,20 +320,20 @@ ContractAdd = React.createClass({
                     ref="price" />
 
 
-                  <TextField
-                      hintText="Cost Estimation ($)"
-                      type="number"
-                      min="0"
-                      ref="costEstimation" />
+                <TextField
+                    hintText="Cost Estimation ($)"
+                    type="number"
+                    min="0"
+                    ref="costEstimation" />
 
 
-                  <TextField
-                      hintText="Hours Estimation"
-                      type="number"
-                      min="0"
-                      ref="hourEstimation" />
+                <TextField
+                    hintText="Hours Estimation"
+                    type="number"
+                    min="0"
+                    ref="hourEstimation" />
 
-                  <TextField
+                <TextField
                     hintText="Any Notes/Comments to attach"
                     type="text"
                     multiLine={true}

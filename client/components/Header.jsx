@@ -9,6 +9,8 @@
 // Pulling in the Material-Ui components
 const {AppBar, LeftNav, FontIcon, IconButton} = MUI;
 
+let {SvgIcons} = MUI.Libs;
+
 Header = React.createClass({
 
   propTypes: {
@@ -47,10 +49,12 @@ Header = React.createClass({
     return (
         <span className="clockFont">
           <h3>
-            <FontIcon className="material-icons schedule" style={theFontStyle}/>
+            <SvgIcons.EditorInsertInvitation style={theFontStyle} />
             <span className="clock-components">{moment(this.data.currentTime).format("h:mm A")}</span>
-            <span><FontIcon className="material-icons insert-invitation"
-                            style={{right: '-5px', top: '5px', color: 'rgba(0, 0, 0, 0.4)'}}/> {moment(this.data.currentTime).format("Do MMMM")}</span>
+            <span>
+              <SvgIcons.ActionSchedule style={{right: '-5px', top: '5px', color: 'rgba(0, 0, 0, 0.4)'}}/>
+              {moment(this.data.currentTime).format("Do MMMM")}
+            </span>
           </h3>
         </span>);
   },
@@ -87,7 +91,6 @@ Header = React.createClass({
                   menuItems={sideMenuLinks}
                   header={<h3 className='logo centered'>Navigation</h3>}
                   onChange={this.onLeftNavChange}/>
-
             </AppBar>
           </div>
       )
@@ -108,10 +111,8 @@ LiveLight = React.createClass({
     };
     // checking if a contract is currently being worked on
     let lightClassName = this.props.isLiveContract ? "live-light active" : "live-light ";
-    let iconClassName = this.props.isLiveContract ? "flash-on" : "flash-off";
+    let iconClassName = this.props.isLiveContract ? (<SvgIcons.ImageFlashOn />) : (<SvgIcons.ImageFlashOn />);
     lightStyles.background = this.props.isLiveContract ? "lime" : "whitesmoke";
-
-
 
     return (
 
@@ -120,9 +121,9 @@ LiveLight = React.createClass({
               style={lightStyles}
               touch={true}
               disabled={!this.props.isLiveContract}
-              iconClassName={"material-icons "+iconClassName}
-              tooltip={this.props.isLiveContract ? "Working!" : "Idle"}
-              />
+              tooltip={this.props.isLiveContract ? "Working!" : "Idle"} >
+            {iconClassName}
+           </IconButton>
         </div>
     );
   }

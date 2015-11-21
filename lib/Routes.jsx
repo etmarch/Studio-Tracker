@@ -24,7 +24,7 @@ DocHead.addLink({
   rel: "stylesheet",
   type: "text/css",
   href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-});*/
+});
 
 
 // Load Material Icons
@@ -32,7 +32,7 @@ DocHead.addLink({
   rel: "stylesheet",
   type: "text/css",
   href: "https://fonts.googleapis.com/icon?family=Material+Icons"
-});
+});*/
 
 
 // Setting the class on the root element
