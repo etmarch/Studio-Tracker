@@ -9,3 +9,7 @@ Helpers.formatDatePrimary = function(date) {
 Helpers.formatPhoneNumber = function(phone) {
   return ("("+ phone.substr(0, 3) +") "+phone.substr(3, 3)+"-"+phone.substr(6, 4));
 };
+
+Helpers.formatMilliToMin = function(milliseconds) {
+  return ((milliseconds / 1000) / 60).toFixed(1) + " mins";
+};

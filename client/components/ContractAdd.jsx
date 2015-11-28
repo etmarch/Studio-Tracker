@@ -103,7 +103,7 @@ ContractAdd = React.createClass({
     Utils.clJ(contractData);
 
     // Call Server Insert Function
-    Meteor.call('contractInsert', contractData, (error, newContractId) => {
+    Meteor.call('contract.insert', contractData, (error, newContractId) => {
       if (error) {
         sAlert.error(error.reason);
       } else {
@@ -145,7 +145,7 @@ ContractAdd = React.createClass({
         isContractor: contractor
       };
 
-      Meteor.call('clientInsert', newClient, (error, newClientId) => {
+      Meteor.call('client.insert', newClient, (error, newClientId) => {
         if (error) {
           sAlert.error(error.reason);
         } else {

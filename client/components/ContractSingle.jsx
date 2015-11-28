@@ -61,7 +61,7 @@ ContractSingle = React.createClass({
       isLive: this.data.isCurrentLive
     };
 
-    Meteor.call('addContractActivity', contract, function(error, result) {
+    Meteor.call('contract.addActivity', contract, function(error, result) {
       if (error) {
         //Session.set('errorMessage', "The update of the contract failed!");
         alert(error);
@@ -95,15 +95,16 @@ ContractSingle = React.createClass({
                   <FloatingActionButton onClick={this.activeButtonPress} backgroundColor={(this.data.isCurrentLive ? Colors.red300 : Colors.green300)}>
                     <SvgIcons.ContentAddCircle />
                   </FloatingActionButton>
+
+                 <AddCostButton contractId={this.data.contract._id} />
                 </div>
 
                 <div className="panel panel-default centered">
                   <div className="row">
                     <div className="label label-primary col-sm-3">EST: {this.data.contract.hourEstimation} hrs</div>
-                    <div className="label label-info col-sm-3">ACT: {this.data.contract.currentHours} hrs</div>
+                    <div className="label label-info col-sm-3">ACT: {Helpers.formatMilliToMin(this.data.contract.currentMillisecs)} hrs, COSTS: {this.data.contract.costTotal}</div>
                     <div className="label label-warning col-sm-3">RATIO: {Math.round((this.data.contract.currentHours / this.data.contract.hourEstimation) * 100)}% EST</div>
-                    <div className="label label-default col-sm-3">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} </div>
-                    <div className="label label-success">DUE: {moment(this.data.contract.dateDue).format('L')}</div>
+                    <div className="label label-default col-sm-3">Due: {moment(this.data.contract.dateDue).endOf('day').fromNow()} - {moment(this.data.contract.dateDue).format('L')}</div>
                   </div>
                 </div>
 
@@ -142,14 +143,14 @@ ActivitiesList = React.createClass({
       return <div className="centered">No activity yet, get working!</div>;
     }
     let size = _.size(this.props.activities);
-    //Utils.cl('# of activities  :'+size);
+    Utils.cl('# of activities  :'+size);
 
     let activityRows = this.props.activities.map((activity) => {
       //Utils.clJ(activity);
       return <TableRow key={Random.id()}>
-        <TableRowColumn>{Helpers.formatDatePrimary(activity.timeStamp)}</TableRowColumn>
-        <TableRowColumn>{activity.isLive ? `Start!` : `Stop!`}</TableRowColumn>
-        <TableRowColumn>{moment(activity.timeStamp).fromNow()}</TableRowColumn>
+        <TableRowColumn>{Helpers.formatDatePrimary(activity.startStamp)}</TableRowColumn>
+        <TableRowColumn>{ (activity.sessionTime === 0) ? "Active!" : Helpers.formatMilliToMin(activity.sessionTime)  }</TableRowColumn>
+        <TableRowColumn>{moment(activity.endStamp).fromNow()}</TableRowColumn>
       </TableRow>
     });
 
@@ -160,7 +161,7 @@ ActivitiesList = React.createClass({
               displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn tooltip='Date'>Date</TableHeaderColumn>
-              <TableHeaderColumn tooltip='Cost'>Cost</TableHeaderColumn>
+              <TableHeaderColumn tooltip='Duration'>Duration</TableHeaderColumn>
               <TableHeaderColumn tooltip='Time Ago'>Time Ago</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -184,7 +185,7 @@ CostsList = React.createClass({
     let costRows = this.props.costs.map((cost) => {
       return <TableRow key={Random.id()}>
         <TableRowColumn>{moment(cost.date).format('L')}</TableRowColumn>
-        <TableRowColumn>{cost.content}</TableRowColumn>
+        <TableRowColumn>{cost.type}</TableRowColumn>
         <TableRowColumn>${cost.amount}</TableRowColumn>
       </TableRow>
     });

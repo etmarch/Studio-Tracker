@@ -45,12 +45,21 @@ Contracts.attachSchema(new SimpleSchema({
   },
   'costs.$.type': { // Message for what the cost was spent on
     type: String,
-    optional: true
+    optional: true,
+    allowedValues: ['Materials', 'Parking', 'Gas', 'Lunch', 'Other']
   },
   'costs.$.amount': { // Actual monetary value
     type: Number,
     optional: true,
-    decimal: true
+    decimal: true,
+    min: 0,
+    max: 10000
+  },
+  'costTotal': {
+    type: Number,
+    optional: true,
+    decimal: true,
+    defaultValue: 0
   },
   payments: { // Array of all costs logged for this contract
     type: [Object],
@@ -60,7 +69,7 @@ Contracts.attachSchema(new SimpleSchema({
     type: Date,
     optional: true
   },
-  'payments.$.content': { // Message for what the cost was spent on
+  'payments.$.note': { // Optional Note
     type: String,
     optional: true
   },
@@ -134,7 +143,7 @@ Contracts.attachSchema(new SimpleSchema({
     defaultValue: false
   },
   // ToDo: automatically update number when activity is posted
-  currentHours: {
+  currentMillisecs: {
     type: Number,
     decimal: true,
     optional: true,
@@ -155,12 +164,13 @@ Contracts.attachSchema(new SimpleSchema({
     optional: true
   },
   'activities.$.endStamp': { // If switching live, set true, if ending session, set false
-    type: Boolean,
+    type: Date,
     optional: true
   },
   'activities.$.sessionTime': { // ToDo switch to milliseconds if need to
     type: Number,
-    optional: true
+    optional: true,
+    decimal: true
   },
   lastActive: { // Basically keeps track of last updated
     type: Date,

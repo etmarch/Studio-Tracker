@@ -23,18 +23,15 @@ AddCostButton = React.createClass({
     },
 
     onSubmit(e) {
-        e.preventDefault();
-
-        let amount = this.refs.amount.getValue();
+        //e.preventDefault();
+        let amount = Number(this.refs.amount.getValue());
         let contractId = this.props.contractId;
         let type = this.state.selectedType;
-
+        Utils.cl("Type - "+ typeof amount);
         // validate data before client insert
-        if (!amount || !contractId || !type ) {
+        if ((!amount || typeof amount !== "number") || !contractId || !type ) {
             // Make sAlert here for the error message
             sAlert.error('Fill out each field correctly!');
-            this.refs.errorSnackbar.show();
-            //this.refs.clientModal.dismiss();
         } else {
             // insert client document
             let newCost = {
@@ -43,7 +40,7 @@ AddCostButton = React.createClass({
                 contractId: contractId
             };
 
-            Meteor.call('addCost', newCost, (error, newCostId) => {
+            Meteor.call('contract.addCost', newCost, (error, newCostId) => {
                 if (error) {
                     sAlert.error(error.reason);
                 } else {
@@ -51,7 +48,7 @@ AddCostButton = React.createClass({
                 }
             });
         }
-        this.refs.clientModal.dismiss(); // Hide the modal
+        this.refs.addContractModal._dismiss(); // Hide the modal
     },
 
     getInitialState: function () {
@@ -60,7 +57,7 @@ AddCostButton = React.createClass({
         };
     },
 
-    _handleSelectType(e, selectedIndex, menuItem) {
+    _handleCostSelectType(e, selectedIndex, menuItem) {
         e.preventDefault();
         //console.log(this.refs.selectField.props.menuItems.length); // gets number of menu options
         let selectedValue = e.target.value;
@@ -73,6 +70,11 @@ AddCostButton = React.createClass({
         })
     },
 
+
+    _displayCostModal() {
+        this.refs.addContractModal._show(); // ToDo: this is depreciated
+    },
+
     render: function () {
 
         let addCostModalActions = [
@@ -80,6 +82,41 @@ AddCostButton = React.createClass({
             { text: 'Submit', onTouchTap: this.onSubmit, ref: 'submit' }
         ];
 
+        //let typeList = Contracts.simpleSchema()._schema["costs.$.type"].allowedValues;
+        let typeList = [
+            { payload:"Materials", name: "Materials"},
+            { payload:"Parking", name: "Parking"},
+            { payload:"Gas", name: "Gas"},
+            { payload:"Lunch",  name: "Lunch"},
+            { payload:"Other",  name: "Other"}
+        ]
+
+        let dialogWrapper = (
+            <Dialog
+                title="New Cost"
+                actions={addCostModalActions}
+                style={{"textAlign":"center", "minHeight": "300px"}}
+                actionFocus="submit"
+                ref="addContractModal"
+                autoDetectWindowHeight={true}
+                autoScrollBodyContent={true}>
+                <div><TextField
+                    hintText="How Much"
+                    style={{"marginRight":"10px"}}
+                    ref="amount"
+                    type="number" />
+                </div>
+                <SelectField
+                    value={this.state.selectedType}
+                    onChange={this._handleCostSelectType}
+                    hintText="Select a Type"
+                    menuItems={typeList}
+                    displayMember="name"
+                    //valueMember="name"
+                    ref="selectType"
+                    style={{"marginRight":"10px"}} />
+            </Dialog>
+        );
 
         return (
             <div>
@@ -87,36 +124,13 @@ AddCostButton = React.createClass({
                     primary={true}
                     labelPosition="after"
                     style={{verticalAlign: "top"}}
-                    onClick={this._displayModal}>
-                    <SvgIcons.SocialAddPerson style={{"marginRight":".1em"}}/>
-                    <span className="font-btn">Add Client</span>
+                    onClick={this._displayCostModal}>
+                    <div>
+                        <SvgIcons.ContentAddCircle style={{"marginRight":".1em"}}/>
+                        <span className="font-btn">Add Cost</span>
+                    </div>
                 </RaisedButton>
-
-
-
-                <Dialog
-                    title="New Cost"
-                    actions={addCostModalActions}
-                    style={{"textAlign":"center"}}
-                    actionFocus="submit"
-                    modal={this.state.modal}
-                    ref="addContractModal">
-                    <TextField
-                        hintText="How Much"
-                        style={{"marginRight":"10px"}}
-                        ref="amount"
-                        type="number" />
-
-                    <SelectField
-                        value={this.state.selectedType}
-                        onChange={this._handleSelectType}
-                        hintText="Select a Type"
-                        menuItems={typeList}
-                        displayMember="name"
-                        valueMember="name"
-                        ref="selectType"
-                        style={{"marginRight":"10px"}} />
-                </Dialog>
+                {dialogWrapper}
             </div>
 
         );

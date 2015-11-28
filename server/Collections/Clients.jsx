@@ -21,7 +21,7 @@ Clients.allow({
 
 // Server-side Methods for handling Client data
 Meteor.methods({
-  clientInsert: function(client) {
+  "client.insert": function(client) {
     // check(this.userId, String);
     check(client, {
       email: String,
@@ -37,7 +37,7 @@ Meteor.methods({
     if (!client.name) {
       throw new Meteor.Error(422, 'Name should not be blank');
     }
-    if (!client.phone) {
+    if (!client.phone || (client.phone.length !== 10) ) {
       throw new Meteor.Error(422, 'Phone should not be blank');
     }
     if (!client.email) {

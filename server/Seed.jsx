@@ -16,7 +16,7 @@ Meteor.startup(() => {
     _.each(_.range(5), function () {
       var randomEmail = faker.internet.email();
       var randomName = faker.name.findName();
-      var randomPhone = faker.phone.phoneNumberFormat();
+      var randomPhone = "9145678976";
       let randomAddress = {
         street: faker.address.streetAddress(),
         city: faker.address.city(),
@@ -54,14 +54,15 @@ Meteor.startup(() => {
           {time: noteTime,
           content: noteMessage}
         ],
-        costs: [{
-          date: new Date(),
-          content: faker.lorem.sentence(),
-          amount: _.random(50, 250)
-        }],
-        currentHours: _.random(5, 50),
-        address: faker.address.streetAddress(),
-
+        costs: [],
+        activities: [],
+        currentMillisecs: 0,
+        address: {
+          street:faker.address.streetAddress(),
+          city: faker.address.city(),
+          state: faker.address.stateAbbr(),
+          zip: faker.address.zipCode()
+        }
       });
 
       // Log the created data Ids

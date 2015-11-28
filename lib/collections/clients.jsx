@@ -34,7 +34,6 @@ Clients.attachSchema(new SimpleSchema({
   address: {
     type: AddressSchema,
     optional: true,
-    max: 200,
     label: "Client Address"
   },
   phone: {

@@ -11,4 +11,5 @@ Meteor.startup(() => {
   Meteor.setInterval(()=>{
     Contracts.update(saidCont._id, {$inc: {currentHours: 1}});
   }, 5000);*/
+    Meteor.call('activateMailman', true);
 });
