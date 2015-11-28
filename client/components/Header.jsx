@@ -7,7 +7,12 @@
 
 
 // Pulling in the Material-Ui components
-const {AppBar, LeftNav, FontIcon, IconButton} = MUI;
+const {
+    AppBar,
+    LeftNav,
+    IconButton,
+    RaisedButton
+    } = MUI;
 
 let {SvgIcons} = MUI.Libs;
 
@@ -80,6 +85,8 @@ Header = React.createClass({
                 className="container-fluid">
 
               {this._makeNav()}
+
+              <div>{Meteor.userId() ? <RaisedButton label="Logout" onClick={Meteor.logout} /> : <RaisedButton label="Login" linkButton={true} href="/login" />}</div>
 
               <LiveLight
                   isLiveContract={this.data.isLiveSession}/>

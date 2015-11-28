@@ -18,23 +18,6 @@ DocHead.addLink({
   href: "https://fonts.googleapis.com/css?family=Roboto:400,300,500"
 });
 
-// Load Bootstrap
-/*
-DocHead.addLink({
-  rel: "stylesheet",
-  type: "text/css",
-  href: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-});
-
-
-// Load Material Icons
-DocHead.addLink({
-  rel: "stylesheet",
-  type: "text/css",
-  href: "https://fonts.googleapis.com/icon?family=Material+Icons"
-});*/
-
-
 // Setting the class on the root element
 ReactLayout.setRootProps({
   className: "app-canvas"
@@ -58,6 +41,21 @@ FlowRouter.route('/', {
         }
     );
   }
+});
+
+// Login
+FlowRouter.route('/login', {
+    name: 'login',
+    action: function(params) {
+        Utils.cl(this.name+'  '+JSON.stringify(params));
+        DocHead.setTitle("Log In");
+        ReactLayout.render(App, {
+                content() {
+                    return <Login />;
+                }
+            }
+        );
+    }
 });
 
 // Contract Listing

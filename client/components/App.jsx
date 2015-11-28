@@ -33,20 +33,25 @@ App = React.createClass({
     mixins: [ReactMeteorData],
 
     getMeteorData() {
-        let handle = Meteor.subscribe('lastActive');
+        let handle = Meteor.subscribe('lastActive'); // ToDO: Unused still
         return {
             currentUser: Meteor.user() // To check if current user is logged in
         }
     },
 
+    handleLogin(){
+        FlowRouter.go('/');
+    },
+
     render() {
 
         // Take user to login page if not currently signed in
-        let renderHTML = (<div className="btn btn-sm"> <AccountsUIWrapper /> </div>);
+        let renderHTML = (<Accounts.ui.LoginFormSet redirect={this.handleLogin}/>);
         // Take user to login page if not currently signed in
 
         return (
             <AppCanvas>
+                <Accounts.ui.Dialogs />
                 <Header liveState={this.state.liveContract}/>
                 <div className="container-fluid">
                     <div className="row">
