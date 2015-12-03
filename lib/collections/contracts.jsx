@@ -163,11 +163,11 @@ Contracts.attachSchema(new SimpleSchema({
     type: Date,
     optional: true
   },
-  'activities.$.endStamp': { // If switching live, set true, if ending session, set false
+  'activities.$.endStamp': {
     type: Date,
     optional: true
   },
-  'activities.$.sessionTime': { // ToDo switch to milliseconds if need to
+  'activities.$.sessionTime': { // In Milliseconds
     type: Number,
     optional: true,
     decimal: true

@@ -57,13 +57,11 @@ ContractSingle = React.createClass({
     //let theLive = Contracts.findOne(this.props.contractId).isLive();
     Utils.cl("ActiveButtonPress --- "+this.data.isCurrentLive);
     contract = {
-      id: this.data.contract._id,
-      isLive: this.data.isCurrentLive
+      id: this.data.contract._id
     };
 
     Meteor.call('contract.addActivity', contract, function(error, result) {
       if (error) {
-        //Session.set('errorMessage', "The update of the contract failed!");
         alert(error);
       } else {
         Utils.cl("result "+result); // Always undefined

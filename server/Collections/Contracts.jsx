@@ -5,15 +5,15 @@
  */
 Contracts.allow({
   insert: function (userId, doc) {
-    return !!userId;
+    return false;
   },
 
   update: function (userId, doc, fields, modifier) {
-    return !!userId;
+    return false;
   },
 
   remove: function (userId, doc) {
-    return !!userId;
+    return false;
   }
 });
 
@@ -50,48 +50,50 @@ Meteor.methods({
   /* Accepts an object with id, timestamp, and isLive properties
    */
   "contract.addActivity": function(contract) {
-    Utils.clJ(contract);
+    //Utils.clJ(contract);
     check(this.userId, String);
     check(contract, {
-      id: String,
-      isLive: Boolean
+      id: String
     });
 
     let servTime = new Date();
-
     let currentContract = Contracts.findOne(contract.id);
-    Utils.cl("before break ---- normalisLive() "+currentContract.isLive());
+
+    //Utils.clJ(actsList[indexNum]); DEBUG
 
     // if isLive is true, end of session
-    if (contract.isLive === true) {
+    if (MongoConfig.getKey('isCurrentlyLive') === true) {
 
-      let indexNum = _.size(currentContract.activities); // get index of latest
+      let actsList = currentContract.activities;
+
+      let indexNum = _.size(actsList) - 1; // get index of latest
       indexNum < 1 ? indexNum = 1 : indexNum;
 
       // ToDo: For all Date/Time stuff, need to convert to Date object before saving
-      let sessionStartDate = _.last(currentContract.activities).startStamp;
+      let sessionStartDate = actsList[indexNum].startStamp;
 
       let timeDiff = (servTime.getTime() - sessionStartDate.getTime());
-      let updatedHours = (currentContract.currentMillisecs + timeDiff);
+      let updatedMillisecs = (currentContract.currentMillisecs + timeDiff);
 
-      Utils.cl("ABOUT TO CLOSE CONTRACT __ INDEX: "+indexNum);
       let modifier = { $set: {} };
-      modifier.$set["activities." + indexNum + ".endStamp"] = servTime;
+      modifier.$set["activities." + indexNum  + ".endStamp"] = servTime;
       modifier.$set["activities." + indexNum + ".startStamp"] = sessionStartDate;
       modifier.$set["activities." + indexNum + ".sessionTime"] = parseInt(timeDiff);
       modifier.$set["isCurrentlyLive"] = false;
-      modifier.$set["currentMillisecs"] = parseInt(updatedHours);
+      modifier.$set["currentMillisecs"] = parseInt(updatedMillisecs);
 
       return Contracts.update({_id: contract.id }, modifier , function (error, result) {
         if (error) {
           throw new Meteor.Error("updateFailed", 'Contract Not Updated Properly ' + error);
         } else {
-          Utils.cl("updated hours -- after CLOSE! "+result);
+          Utils.cl("SERV  -- "+currentContract.title+" is no longer active");
+          MongoConfig.setKey('lastActiveId', currentContract._id);
+          MongoConfig.setKey('isCurrentlyLive', false);
           return result;
         }
       });
     } else {
-      //let thisis = {startStamp: servTime, endStamp: null, sessionTime: parseInt(0)};
+
       return Contracts.update(
           {
             _id: contract.id
@@ -103,7 +105,9 @@ Meteor.methods({
             if (error) {
               throw new Meteor.Error("updateFailed", 'Contract Not Updated Properly ' + error);
             } else {
-              Utils.cl("Start! "+result);
+              Utils.cl("SERV  -- "+currentContract.title+" is now currently active!");
+              MongoConfig.setKey('lastActiveId', currentContract._id);
+              MongoConfig.setKey('isCurrentlyLive', true);
               return result;
             }
           });

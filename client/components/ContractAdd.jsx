@@ -106,6 +106,7 @@ ContractAdd = React.createClass({
     Meteor.call('contract.insert', contractData, (error, newContractId) => {
       if (error) {
         sAlert.error(error.reason);
+        console.error("Contract wasnt inserted because... ", error.reason);
       } else {
         // Success, update UI and Redirect
         Utils.cl("successful! "+newContractId);
