@@ -21,15 +21,7 @@ Meteor.startup(function () {
     // }
   });
 
-  Session.setDefault('isLive', false);
-
-  Tracker.autorun(function() {
-    Utils.cl("-------- AUTORUN STARTING---------");
-    let handle = Meteor.subscribe('lastActive');
-    if (handle.ready()) {
-      Session.set('isLive', MongoConfig.getKey('isCurrentlyLive'));
-    }
-  });
+  Session.setDefault('isLive', MongoConfig.getKey('isCurrentlyLive'));
 
   TimeSync.loggingEnabled = false;
 });
@@ -38,4 +30,15 @@ Meteor.startup(function () {
 // AccountsUI config toDo: Disable registration (since its internal app)
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
+});
+
+
+
+Tracker.autorun(function() {
+  Utils.cl("-------- AUTORUN STARTING---------");
+  let handle = Meteor.subscribe('lastActive');
+   if (handle.ready()) {
+   Session.set('isLive', MongoConfig.getKey('isCurrentlyLive'));
+   }
+  //Session.set('isLive', MongoConfig.getKey('isCurrentlyLive'));
 });

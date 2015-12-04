@@ -24,18 +24,20 @@ App = React.createClass({
     },
 
     // Initialize the 'liveContract' App State
-    getInitialState() {
+    /*getInitialState() {
         return {
             liveContract: false
         }
-    },
+    },*/
 
     mixins: [ReactMeteorData],
 
     getMeteorData() {
         let handle = Meteor.subscribe('lastActive'); // ToDO: Unused still
         return {
-            currentUser: Meteor.user() // To check if current user is logged in
+            isDataReady: handle.ready(),
+            currentUser: Meteor.user(), // To check if current user is logged in
+            isLiveContract: Session.get('isLive')
         }
     },
 
@@ -52,7 +54,7 @@ App = React.createClass({
         return (
             <AppCanvas>
                 <Accounts.ui.Dialogs />
-                <Header liveState={this.state.liveContract}/>
+                <Header isLiveSession={this.data.isLiveContract}/>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-xs-12">

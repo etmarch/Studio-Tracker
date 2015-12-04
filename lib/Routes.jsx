@@ -19,13 +19,20 @@ DocHead.addLink({
 });
 
 // Setting the class on the root element
+
 ReactLayout.setRootProps({
-  className: "app-canvas"
+    className: "app-canvas"
 });
 
 
 /*
-*   Defining Routes for Flow Router
+*  ToDo: Use when properly implementing SSR router
+
+if (Meteor.isServer) {
+    var timeInMillis = 1000 * 10; // 10 secs
+    FlowRouter.setPageCacheTimeout(timeInMillis);
+    FlowRouter.setDeferScriptLoading(true);
+}
 */
 
 // Home - Dashboard
@@ -64,7 +71,7 @@ FlowRouter.route('/contracts', {
   action: function(params) {
     DocHead.setTitle("Contracts");
     Utils.cl(this.name+'  '+JSON.stringify(params));
-    renderLayoutWith(<Dashboard />);
+    renderLayoutWith(<ContractList />);
   }
 });
 

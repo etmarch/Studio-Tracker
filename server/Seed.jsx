@@ -61,7 +61,7 @@ Meteor.startup(() => {
           street:faker.address.streetAddress(),
           city: faker.address.city(),
           state: faker.address.stateAbbr(),
-          zip: faker.address.zipCode()
+          zip: '10522'
         }
       });
 

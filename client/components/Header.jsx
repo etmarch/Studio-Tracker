@@ -19,16 +19,16 @@ let {SvgIcons} = MUI.Libs;
 Header = React.createClass({
 
   propTypes: {
-    liveState: React.PropTypes.bool
+    isLiveSession: React.PropTypes.bool
   },
 
   mixins: [ReactMeteorData],
 
-  getMeteorData() {
+  getMeteorData() { // ToDo: Make this component as dumb as possible and pass this all in from App
     return {
       currentUser: Meteor.user(),
       currentTime: TimeSync.serverTime(null, 1000),
-      isLiveSession: Session.get('isLive')
+      //isLiveSession: Session.get('isLive')
     }
   },
 
@@ -89,7 +89,7 @@ Header = React.createClass({
               <div>{Meteor.userId() ? <RaisedButton label="Logout" onClick={Meteor.logout} /> : <RaisedButton label="Login" linkButton={true} href="/login" />}</div>
 
               <LiveLight
-                  isLiveContract={this.data.isLiveSession}/>
+                  isLiveContract={this.props.isLiveSession}/>
 
               <LeftNav
                   ref="leftNav"

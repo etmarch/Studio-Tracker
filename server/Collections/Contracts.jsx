@@ -66,11 +66,15 @@ Meteor.methods({
 
       let actsList = currentContract.activities;
 
-      let indexNum = _.size(actsList) - 1; // get index of latest
-      indexNum < 1 ? indexNum = 1 : indexNum;
+      let indexNum = _.size(actsList) - 1; // can only be 1 or greater if live is true
+      //indexNum < 2 ? indexNum = 0 : indexNum - 1;
 
       // ToDo: For all Date/Time stuff, need to convert to Date object before saving
       let sessionStartDate = actsList[indexNum].startStamp;
+
+      if (!sessionStartDate) {
+        throw new Meteor.Error("AddActivityFailed", "Add Activity Failed - ")
+      }
 
       let timeDiff = (servTime.getTime() - sessionStartDate.getTime());
       let updatedMillisecs = (currentContract.currentMillisecs + timeDiff);

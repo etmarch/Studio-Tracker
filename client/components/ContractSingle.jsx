@@ -64,7 +64,7 @@ ContractSingle = React.createClass({
       if (error) {
         alert(error);
       } else {
-        Utils.cl("result "+result); // Always undefined
+        Utils.cl("successful!");
       }
     });
   },

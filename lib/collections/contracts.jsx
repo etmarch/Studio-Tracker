@@ -184,7 +184,7 @@ Contracts.attachSchema(new SimpleSchema({
     }
   },
   address: {
-    type: String, // ToDO: Change to the AddressSchema - Defined in the Client Schema
+    type: AddressSchema,
     optional: true
   }
 }));
