@@ -31,7 +31,7 @@ AddCostButton = React.createClass({
         // validate data before client insert
         if ((!amount || typeof amount !== "number") || !contractId || !type ) {
             // Make sAlert here for the error message
-            sAlert.error('Fill out each field correctly!');
+            console.error('Fill out each field correctly!');
         } else {
             // insert client document
             let newCost = {
@@ -42,7 +42,7 @@ AddCostButton = React.createClass({
 
             Meteor.call('contract.addCost', newCost, (error, newCostId) => {
                 if (error) {
-                    sAlert.error(error.reason);
+                    console.error(error.reason);
                 } else {
                     Utils.cl("successful! "+newCostId);
                 }

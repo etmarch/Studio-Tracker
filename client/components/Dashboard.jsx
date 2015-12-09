@@ -33,9 +33,9 @@ Dashboard = React.createClass({
     // Retrieve the required data
     getMeteorData() {
         let query = {};
-        //let handleCon = Meteor.subscribe("allContracts");
-        //let handleCli = Meteor.subscribe("allClients");
-        
+        let handleCon = Meteor.subscribe("allContracts");
+        let handleCli = Meteor.subscribe("allClients");
+
         return {
             contracts: Contracts.find(query, {sort: {createdAt: -1}}).fetch(),
             contractsLoading: ! (handleCon.ready() && handleCli.ready())

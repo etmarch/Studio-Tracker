@@ -47,12 +47,21 @@ App = React.createClass({
 
     render() {
 
+        let lang={
+            waiting:'Waiting for server, system will reconnect in ',
+            waitingAfter:' second.',
+            connecting:'Connecting...',
+            offline:'Offline! Please check your network.',
+            retryNow:'Reconnect Now!'
+        }
+
         // Take user to login page if not currently signed in
         let renderHTML = (<Accounts.ui.LoginFormSet redirect={this.handleLogin}/>);
         // Take user to login page if not currently signed in
 
         return (
             <AppCanvas>
+                <ConnectStatus lang={lang} />
                 <Accounts.ui.Dialogs />
                 <Header isLiveSession={this.data.isLiveContract}/>
                 <div className="container-fluid">

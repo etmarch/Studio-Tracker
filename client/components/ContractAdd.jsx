@@ -73,7 +73,7 @@ ContractAdd = React.createClass({
 
     if (!title || !dateDue || !price || !hourEstimation || !costEstimation || !note ) {
       // Make sAlert here for the error message
-      sAlert.error('Fill out each field correctly!');
+      alert('Fill out each field correctly!');
       this.refs.errorSnackbar.show();
     }
 
@@ -105,12 +105,12 @@ ContractAdd = React.createClass({
     // Call Server Insert Function
     Meteor.call('contract.insert', contractData, (error, newContractId) => {
       if (error) {
-        sAlert.error(error.reason);
+        alert(error.reason);
         console.error("Contract wasnt inserted because... ", error.reason);
       } else {
         // Success, update UI and Redirect
         Utils.cl("successful! "+newContractId);
-        sAlert.success("New Contract Created! "+newContractId);
+        alert("New Contract Created! "+newContractId);
         FlowRouter.go('/'+newContractId);
       }
     });
@@ -129,7 +129,7 @@ ContractAdd = React.createClass({
     // validate data before client insert
     if (!name || !street || !phone || !email || !contractor || !zipcode || !state ) {
       // Make sAlert here for the error message
-      sAlert.error('Fill out each field correctly!');
+      alert('Fill out each field correctly!');
       //this.refs.clientModal.dismiss();
     } else {
       // insert client document
@@ -148,9 +148,9 @@ ContractAdd = React.createClass({
 
       Meteor.call('client.insert', newClient, (error, newClientId) => {
         if (error) {
-          sAlert.error(error.reason);
+          alert(error.reason);
         } else {
-          sAlert.success("Client Added Successfully!");
+          alert("Client Added Successfully!");
           this.selectedClient(newClientId)
         }
       });
